@@ -5,7 +5,7 @@ import com.epam.hotel.exception.DAOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface UserDAO1 {
+public interface UserDAO {
 
     User loginUser(User user) throws DAOException;
 

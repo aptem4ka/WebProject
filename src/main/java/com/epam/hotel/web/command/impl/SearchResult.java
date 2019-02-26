@@ -1,6 +1,5 @@
 package com.epam.hotel.web.command.impl;
 
-import com.epam.hotel.dao.UserDao;
 import com.epam.hotel.entity.Room;
 import com.epam.hotel.entity.room_info.AllocationType;
 import com.epam.hotel.entity.room_info.RoomType;
@@ -14,18 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 
 public class SearchResult implements Command {
 
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("searchResult command");
         Room room=new Room();
 
-        room.setType(RoomType.valueOf(req.getParameter("type").toUpperCase()));
-        Date resFrom, resTo;
+        String typestring=req.getParameter("type");
+        if (typestring!=null) {
+            room.setType(RoomType.valueOf(req.getParameter("type").toUpperCase()));
+        }
+
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         try {
             room.setResFrom(format.parse(req.getParameter("resFrom")));
@@ -33,9 +36,12 @@ public class SearchResult implements Command {
         }catch (ParseException e){
             //TODO error page
         }
+       // System.out.println(resFrom+"   "+resTo);
+        int days = daysBetween(room.getResFrom(), room.getResTo());
+        System.out.println(days);
         room.setAllocation(AllocationType.valueOf(req.getParameter("allocation").toUpperCase()));
         room.setChildren(Integer.parseInt(req.getParameter("children")));
-
+        System.out.println(room.getType()+" "+ room.getAllocation()+" "+room.getResFrom()+" "+room.getResTo());
         List<Room> roomList=null;
 
         try {
@@ -47,13 +53,21 @@ public class SearchResult implements Command {
         //roomList=UserDao.searchRooms(req);
 
         req.setAttribute("roomList",roomList);
+        req.setAttribute("days", days);
+        req.setAttribute("resFrom", room.getResFrom());
+        req.setAttribute("resTo",room.getResTo());
+        req.setAttribute("children", room.getChildren());
+        req.setAttribute("allocation", room.getAllocation());
 
        try {
-           req.getRequestDispatcher("/jsp/SearchResult.jsp").forward(req,resp);
+           req.getRequestDispatcher("/WEB-INF/jsp/SearchResult.jsp").forward(req,resp);
        }catch (Exception e){
-           System.out.println("temp exception in SearchResult Command");
+
        }
+    }
 
 
+    public int daysBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 }

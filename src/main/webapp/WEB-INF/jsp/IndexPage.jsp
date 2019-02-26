@@ -23,7 +23,7 @@
 
         <div class="col-md-7">
             <h1 style="font-style: italic; font-weight: bold; text-align: center"><span style="color: darkturquoise">&lt;</span>epam<span style="color: darkturquoise">&gt;</span> Hotel</h1><hr/>
-                КАКОЕ-ТО ОПИСАНИЕ ОТЕЛЯ, ХЗ<hr/>
+                Страница в процессе разработки<hr/>
                 <div id="demo" class="carousel slide auto" data-ride="carousel">
 
                     <!-- The slideshow -->

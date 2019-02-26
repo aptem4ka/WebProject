@@ -1,22 +1,29 @@
 package com.epam.hotel.dao.util;
 
+import com.epam.hotel.exception.DAOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class ConnectionManager {
     public static Connection connection;
     public static String url;
 
-    public static Connection getConnection() throws Exception{
+    //TEMP METHOD
 
+    public static Connection getConnection() throws ClassNotFoundException, SQLException{
 
-     //String url = "jdbc:mysql://localhost:3306/hoteldb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String url = "jdbc:mysql://localhost:3306/hoteldb?useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        ResourceBundle resourceBundle=ResourceBundle.getBundle("DBConnection");
 
-        //Class.forName("com.mysql.cj.jdbc.Driver");
-        Class.forName("com.mysql.jdbc.Driver");
-    connection= DriverManager.getConnection(url, "root","LGD802g2");
+        String url = resourceBundle.getString("database.url");
+        String login = resourceBundle.getString("database.login");
+        String pass = resourceBundle.getString("database.password");
+        Class.forName(resourceBundle.getString("database.driver"));
+
+        connection = DriverManager.getConnection(url, login, pass);
 
     return connection;
     }

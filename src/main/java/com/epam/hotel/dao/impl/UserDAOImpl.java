@@ -1,10 +1,10 @@
 package com.epam.hotel.dao.impl;
 
 import com.epam.hotel.dao.ParentDao;
-import com.epam.hotel.dao.UserDAO1;
-import com.epam.hotel.dao.util.EncryptMD5;
+import com.epam.hotel.dao.UserDAO;
+import com.epam.hotel.dao.util.SQLConstants;
+import com.epam.hotel.dao.util.SqlQuery;
 import com.epam.hotel.entity.User;
-import com.epam.hotel.entity.role.AccountRole;
 import com.epam.hotel.exception.DAOException;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -14,36 +14,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class UserDAOImpl extends ParentDao implements UserDAO1 {
-    private static final String VALIDATE_USER_QUERY = "SELECT * FROM users WHERE  email=? AND password=?;";
-    private static final String LOGIN = "SELECT * FROM users WHERE email=?;";
-    private static final String CHECK_EMAIL_QUERY = "SELECT * FROM users WHERE email=?;";
-    private static final String REGISTER_QUERY = "INSERT INTO users (name,surname,email,phone,password) values (?,?,?,?,?);";
+public class UserDAOImpl extends ParentDao implements UserDAO {
 
     @Override
     public User loginUser(User user) throws DAOException{
       try { Connection connection = getConnection();
-       PreparedStatement statement=connection.prepareStatement(LOGIN);
+       PreparedStatement statement=connection.prepareStatement(SqlQuery.LOGIN);
 
        statement.setString(1, user.getEmail());
-      // statement.setString(2, EncryptMD5.encrypt(user.getPassword()));
-        //  System.out.println(EncryptMD5.encrypt(user.getPassword()));
+
 
         ResultSet resultSet=statement.executeQuery();
         if (!resultSet.next()){
             user.setValid(false);
         }
-        else if (BCrypt.checkpw(user.getPassword(),resultSet.getString("password"))){
+        else if (BCrypt.checkpw(user.getPassword(),resultSet.getString(SQLConstants.PASSWORD))){
 
-            user.setUserID(resultSet.getInt("userID"));
-            user.setEmail(resultSet.getString("email"));
-            user.setRole(resultSet.getString("role"));
-            user.setName(resultSet.getString("name"));
-            user.setSurname(resultSet.getString("surname"));
+            user.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+            user.setEmail(resultSet.getString(SQLConstants.EMAIL));
+            user.setRole(resultSet.getString(SQLConstants.ROLE));
+            user.setName(resultSet.getString(SQLConstants.NAME));
+            user.setSurname(resultSet.getString(SQLConstants.SURNAME));
             user.setValid(true);
         }
       }catch (SQLException e){
-          throw new DAOException("Login user DAO error", e);
+          throw new DAOException(e);
       }
         return user;
     }
@@ -57,15 +52,14 @@ public class UserDAOImpl extends ParentDao implements UserDAO1 {
 
         try {
             connection=getConnection();
-        preparedStatement=connection.prepareStatement(CHECK_EMAIL_QUERY);
-        preparedStatement.setString(1,email);
+            preparedStatement=connection.prepareStatement(SqlQuery.CHECK_EMAIL_QUERY);
+            preparedStatement.setString(1,email);
 
-        resultSet=preparedStatement.executeQuery();
+            resultSet=preparedStatement.executeQuery();
 
-        return !resultSet.next();
+            return !resultSet.next();
         }catch (SQLException e){
-            System.out.println("temp exception in userDAO checkEmail");
-            throw new DAOException("Error while checking email",e);
+            throw new DAOException(e);
         }
     }
 
@@ -74,7 +68,7 @@ public class UserDAOImpl extends ParentDao implements UserDAO1 {
     public void registerUser(User user) throws DAOException{
        try {
            Connection connection = getConnection();
-           PreparedStatement preparedStatement = connection.prepareStatement(REGISTER_QUERY);
+           PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.REGISTER_QUERY);
            preparedStatement.setString(1, user.getName());
            preparedStatement.setString(2, user.getSurname());
            preparedStatement.setString(3, user.getEmail());
@@ -83,16 +77,11 @@ public class UserDAOImpl extends ParentDao implements UserDAO1 {
            preparedStatement.setString(5, pass);
            preparedStatement.execute();
 
-
-
        }catch (SQLException e){
-           throw new DAOException("Register user DAO error", e);
+           throw new DAOException(e);
        }
 
     }
-
-
-
 
 
 }

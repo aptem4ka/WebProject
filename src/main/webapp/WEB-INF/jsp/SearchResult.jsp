@@ -22,17 +22,27 @@
                     Попробуйте выбрать номер другого типа, или изменить период пребывания.
                 </c:if>
                 <c:if test="${not empty requestScope.roomList}">
-                <c:set value="${requestScope.roomList[0]}" var="it" scope="request"/>
+
                 <div >
                     <div>
                         <h2>Данные брони</h2>
+                        <h5>Период бронирования: <fmt:formatDate value="${requestScope.resFrom}" type="date"/> - <fmt:formatDate value="${requestScope.resTo}" type="date"/><br/>
+                            Дополнительные спальные места для детей: ${requestScope.children}<br/>
+                            Принцип размещения: ${requestScope.allocation}<br/>
+                        </h5>
+
+                        <hr/>
+                        <c:forEach items="${requestScope.roomList}" var="it">
                         Тип номера: ${it.type}<br/>
-                        Принцип размещения: ${it.allocation}<br/>
-                        Дополнительные спальные места для детей: ${it.children}<br/>
-                        Бронь с <fmt:formatDate value="${it.resFrom}" type="date"/> по <fmt:formatDate value="${it.resTo}" type="date"/>
+                            Цена за сутки: ${it.price}<br/>
+
+
+
+                        <c:set value="${it.price}" var="price"/>
+                            <c:set value="${requestScope.days}" var="days"/>
+                        <h5>Цена за период пребывания: ${price*days}</h5>
                         <hr/>
-                        <h3>Цена: ${it.price}</h3>
-                        <hr/>
+                        </c:forEach>
                     </div>
                     <div align="center">
                         <c:if test="${sessionScope.currentUser!=null}">

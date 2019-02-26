@@ -1,6 +1,8 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 
 import javax.print.DocFlavor;
 import javax.servlet.ServletException;
@@ -14,14 +16,14 @@ public class ChangeLocaleCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session=req.getSession(false);
-        session.setAttribute("locale",req.getParameter("locale"));
+        session.setAttribute(StringConstants.LOCALE, req.getParameter(StringConstants.LOCALE));
 
-        String prevPage=(String)session.getAttribute("prevURL");
+        String prevPage=(String)session.getAttribute(StringConstants.PREV_PAGE_URL);
 
         if (prevPage!=null){
             resp.sendRedirect(prevPage);
         }else {
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect(URLConstants.GO_TO_INDEX);
         }
 
     }

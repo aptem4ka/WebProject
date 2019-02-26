@@ -5,6 +5,8 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,22 +22,25 @@ public class RegisterCommand implements Command {
             UserService service=ServiceFactory.getInstance().getUserService();
             boolean confirmRegistration;
 
+           user.setEmail(req.getParameter(StringConstants.EMAIL));
+           user.setName(req.getParameter(StringConstants.NAME));
+           user.setSurname(req.getParameter(StringConstants.SURNAME));
+           user.setPassword(req.getParameter(StringConstants.PASSWORD));
 
-           user.setEmail(req.getParameter("email"));
-           user.setName(req.getParameter("name"));
-           user.setSurname(req.getParameter("surname"));
-           user.setPassword(req.getParameter("password"));
-           user.setPhone(req.getParameter("phone"));
+           if (req.getParameter(StringConstants.PHONE)!=null){
+               user.setPhone(req.getParameter(StringConstants.PHONE));
+           }
+
         try {
            confirmRegistration=service.checkRegistrationForm(user,req);
 
            if (confirmRegistration){
                service.registerUser(user);
-               req.getSession().setAttribute("currentUser",user);
-               resp.sendRedirect((String)req.getSession().getAttribute("prevURL"));
+               req.getSession().setAttribute(StringConstants.CURRENT_USER, user);
+               resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
            }else {
-               String formErrors=(String)req.getAttribute("formErrors");
-               resp.sendRedirect("ControllerServlet?command=register_page&"+formErrors);
+               String formErrors=(String)req.getAttribute(StringConstants.REGISTRATION_FORM_ERRORS);
+               resp.sendRedirect(URLConstants.RETRY_REGISTRATION_COMMAND +formErrors);
            }
 
         }catch (ServiceException e){

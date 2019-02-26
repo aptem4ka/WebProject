@@ -11,7 +11,6 @@ import com.epam.hotel.service.validation.impl.EmailValidator;
 import com.epam.hotel.service.validation.impl.PasswordValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class UserServiceImpl implements UserService {
 
@@ -19,19 +18,16 @@ public class UserServiceImpl implements UserService {
     public User loginUser(User user) throws ServiceException {
 
         if (!new EmailValidator().isValid(user.getEmail()) || !new PasswordValidator().isValid(user.getPassword())){
-            System.out.println("validation failed");
             user.setValid(false);
             return user;
         }
-        System.out.println("validation succeded");
         try {
-            user = DaoFactory.getInstance().getUserDAO1().loginUser(user);
+            user = DaoFactory.getInstance().getUserDAO().loginUser(user);
         }catch (DAOException e){
-            throw new ServiceException("Login service error", e);
+            throw new ServiceException(e);
         }
         return user;
     }
-
 
 
     @Override
@@ -41,9 +37,9 @@ public class UserServiceImpl implements UserService {
         }
 
         try {
-            return DaoFactory.getInstance().getUserDAO1().checkEmail(email);
+            return DaoFactory.getInstance().getUserDAO().checkEmail(email);
         }catch (DAOException e){
-            throw new ServiceException("Check email service error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -51,12 +47,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(User user) throws ServiceException{
         if (user==null){
-            throw new ServiceException("Tried to register null user");
+            throw new ServiceException();
         }
     try {
-        DaoFactory.getInstance().getUserDAO1().registerUser(user);
+        DaoFactory.getInstance().getUserDAO().registerUser(user);
     }catch (DAOException e){
-        throw new ServiceException("Register service error", e);
+        throw new ServiceException(e);
     }
     }
 

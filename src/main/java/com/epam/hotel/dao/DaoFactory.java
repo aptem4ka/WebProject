@@ -6,7 +6,7 @@ import com.epam.hotel.dao.impl.UserDAOImpl;
 public class DaoFactory {
     private static final DaoFactory instance=new DaoFactory();
 
-    UserDAO1 userDAO1=new UserDAOImpl();
+    UserDAO userDAO =new UserDAOImpl();
     RoomDAO roomDAO=new RoomDAOImpl();
 
     private DaoFactory(){
@@ -17,8 +17,8 @@ public class DaoFactory {
         return instance;
     }
 
-    public UserDAO1 getUserDAO1() {
-        return userDAO1;
+    public UserDAO getUserDAO() {
+        return userDAO;
     }
 
     public RoomDAO getRoomDAO() {

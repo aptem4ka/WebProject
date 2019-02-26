@@ -6,6 +6,8 @@ import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.ResourceBundleKeys;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
@@ -20,23 +22,26 @@ public class RoomInfoCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String prevURL = new URLFromRequest().createURL(req);
-        req.getSession().setAttribute("prevURL", prevURL);
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
         try {
-            RoomType type = RoomType.valueOf(req.getParameter("type").toUpperCase());
+            RoomType type = RoomType.valueOf(req.getParameter(StringConstants.ROOM_TYPE).toUpperCase());
             List<String> images = ServiceFactory.getInstance().getRoomService().getRoomTypeImages(type);
-            List<String> facilities = new ResourceBundleKeys().getKeysByPattern("facilities." + req.getParameter("type"));
+
+            List<String> facilities = new ResourceBundleKeys()
+                    .getKeysByPattern(StringConstants.FACILITIES_PATTERN + req.getParameter(StringConstants.ROOM_TYPE));
+
             String priceRange = ServiceFactory.getInstance().getRoomService().getPriceRange(type);
 
-            req.setAttribute("priceRange", priceRange);
-            req.setAttribute("facilities", facilities);
-            req.setAttribute("type", type);
-            req.setAttribute("images", images);
+            req.setAttribute(StringConstants.PRICE_RANGE, priceRange);
+            req.setAttribute(StringConstants.FACILITIES, facilities);
+            req.setAttribute(StringConstants.ROOM_TYPE, type);
+            req.setAttribute(StringConstants.IMAGES, images);
         }catch (ServiceException e){
             //TODO error page
         }
 
-        req.getRequestDispatcher("/WEB-INF/jsp/RoomInfo.jsp").forward(req,resp);
+        req.getRequestDispatcher(URLConstants.ROOM_INFO_PAGE).forward(req,resp);
 
 
 

@@ -4,6 +4,7 @@ import com.epam.hotel.entity.room_info.AllocationType;
 import com.epam.hotel.entity.room_info.RoomType;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Room {
     private int roomID;
@@ -82,5 +83,39 @@ public class Room {
 
     public void setChildren(int children) {
         this.children = children;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return roomID == room.roomID &&
+                Double.compare(room.price, price) == 0 &&
+                children == room.children &&
+                available == room.available &&
+                type == room.type &&
+                allocation == room.allocation &&
+                resFrom.equals(room.resFrom) &&
+                resTo.equals(room.resTo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomID, type, allocation, resFrom, resTo, price, children, available);
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomID=" + getRoomID() +
+                ", type=" + getType() +
+                ", allocation=" + getAllocation() +
+                ", resFrom=" + getResFrom() +
+                ", resTo=" + getResTo() +
+                ", price=" + getPrice() +
+                ", children=" + getChildren() +
+                ", available=" + isAvailable() +
+                '}';
     }
 }

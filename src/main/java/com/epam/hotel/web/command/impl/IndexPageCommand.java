@@ -3,6 +3,8 @@ package com.epam.hotel.web.command.impl;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 
 
@@ -20,19 +22,18 @@ public class IndexPageCommand implements Command {
         String prevURL = new URLFromRequest().createURL(req);
         HttpSession session=req.getSession();
         Set<String> images=null;
-        if (session.getAttribute("carouselImages")==null){
-            System.out.println("getting images for index page from DAO");
+        if (session.getAttribute(StringConstants.CAROUSEL_IMAGES)==null){
             try {
                  images = ServiceFactory.getInstance().getRoomService().getAllRoomImages();
             }catch (ServiceException e){
                 //TODO error page
             }
-            req.setAttribute("carouselImages",images);
+            req.setAttribute(StringConstants.CAROUSEL_IMAGES,images);
         }
 
-        req.getSession().setAttribute("prevURL", prevURL);
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/IndexPage.jsp").forward(req,resp);
+        req.getRequestDispatcher(URLConstants.INDEX_PAGE).forward(req,resp);
 
     }
 }

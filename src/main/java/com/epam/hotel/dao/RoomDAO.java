@@ -1,5 +1,6 @@
 package com.epam.hotel.dao;
 
+import com.epam.hotel.entity.Room;
 import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.DAOException;
 
@@ -17,5 +18,9 @@ public interface RoomDAO {
     List<String> getRoomPreviews() throws DAOException;
 
     String getPriceRange(RoomType type) throws DAOException;
+
+    List<Room> getRoomsByType(Room room) throws DAOException;
+
+    List<Room> getRoomsIgnoreType(Room room) throws DAOException;
 
 }

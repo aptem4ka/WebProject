@@ -21,18 +21,15 @@
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
 
         <div class="col-md-7" style="margin-top: 15px ">
-            <p>
-                Тут идет некое описалово различных типов номеров. Расшифровка аббревиатур, характеризующих тип номера.
-                После принятия фильтров должен отобразиться список номеров, удовлетворяющих критериям поиска
-            </p>
+
             <p>
                 <button class="btn btn-info dropdown-toggle" type="button" data-toggle="collapse" data-target="#buttoncollapse" aria-expanded="false" aria-controls="Collapse">
                     найти номер любого типа
                 </button>
             </p>
             <div class="collapse" id="buttoncollapse">
-                <form action="${pageScope.request.contextPath}/ControllerServlet" method="get">
-                    <input type="hidden" name="command" value="room_list"/>
+                <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
+                    <input type="hidden" name="command" value="search_result"/>
                 <div style="max-width: 300px">
                     <div>
                         Дата заселения:
@@ -88,7 +85,7 @@
                         </div>
                         <div style="font-size: 10pt">
                             <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_info&type=${fn:toLowerCase(type)}"
-                               class="btn btn-info" role="button">Найти номер</a>
+                               class="btn btn-info" role="button">Информация о номере</a>
                         </div>
                     </div>
 

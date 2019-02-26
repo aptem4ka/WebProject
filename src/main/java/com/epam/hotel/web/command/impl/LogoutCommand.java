@@ -1,6 +1,7 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.URLConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ public class LogoutCommand implements Command {
 
         HttpSession session=req.getSession(false);
         session.invalidate();
-        resp.sendRedirect("index.jsp");
+        resp.sendRedirect(URLConstants.GO_TO_INDEX);
 
       }
     }

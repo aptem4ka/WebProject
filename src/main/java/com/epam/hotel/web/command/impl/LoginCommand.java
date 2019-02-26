@@ -5,6 +5,8 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,28 +22,27 @@ public class LoginCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         User user=new User();
-        user.setEmail(req.getParameter("email"));
-        user.setPassword(req.getParameter("password"));
-        UserService service=ServiceFactory.getInstance().getUserService();
+        user.setEmail(req.getParameter(StringConstants.EMAIL));
+        user.setPassword(req.getParameter(StringConstants.PASSWORD));
 
         try {
-            user=service.loginUser(user);
+            user=ServiceFactory.getInstance().getUserService().loginUser(user);
         }catch (ServiceException e){
             //TODO error page
         }
 
         if (user.isValid()){
             HttpSession session=req.getSession();
-            session.setAttribute("currentUser",user);
+            session.setAttribute(StringConstants.CURRENT_USER,user);
 
-            if ((String)session.getAttribute("prevURL")!=null){
-                resp.sendRedirect((String)req.getSession().getAttribute("prevURL"));
+            if ((String)session.getAttribute(StringConstants.PREV_PAGE_URL)!=null){
+                resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
             }else {
-                resp.sendRedirect("index.jsp");
+                resp.sendRedirect(URLConstants.GO_TO_INDEX);
             }
 
         }else {
-            resp.sendRedirect("ControllerServlet?command=login_page");
+            resp.sendRedirect(URLConstants.LOGIN_PAGE_COMMAND);
         }
 
 

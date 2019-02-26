@@ -2,6 +2,8 @@ package com.epam.hotel.entity;
 
 import com.epam.hotel.entity.role.AccountRole;
 
+import java.util.Objects;
+
 
 public class User {
     private int userID;
@@ -78,5 +80,39 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userID == user.userID &&
+                valid == user.valid &&
+                password.equals(user.password) &&
+                email.equals(user.email) &&
+                name.equals(user.name) &&
+                surname.equals(user.surname) &&
+                phone.equals(user.phone) &&
+                role.equals(user.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userID, password, email, name, surname, phone, role, valid);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + getUserID() +
+                ", password='" + getPassword() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", surname='" + getSurname() + '\'' +
+                ", phone='" + getPhone() + '\'' +
+                ", role='" + getRole() + '\'' +
+                ", valid=" + isValid() +
+                '}';
     }
 }
