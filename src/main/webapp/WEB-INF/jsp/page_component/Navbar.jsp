@@ -48,7 +48,7 @@
                                     <label for="exampleDropdownFormPassword2">Password</label>
                                     <input type="password" name="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
                                 </div>
-                                <button type="submit" class="btn btn-secondary" >${signin}</button>
+                                <button type="submit" class="btn btn-success" >${signin}</button>
                             </form>
                         </div>
                     </li>
@@ -61,11 +61,14 @@
 
             </c:if>
             <c:if test="${sessionScope.currentUser!=null}">
+                    <li class="nav-item py-0" style="margin: 5px">
+                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=profile" class="btn btn-outline-success">Личный кабинет</a>
+                    </li>
 
                     <li class="nav-item py-0" style="margin: 5px">
 
                         <a href="${pageContext.request.contextPath}/ControllerServlet?command=logout" class="btn btn-secondary" role="button">${signout}</a>
-                        </form>
+
                     </li>
 
             </c:if>

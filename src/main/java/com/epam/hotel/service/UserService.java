@@ -1,5 +1,6 @@
 package com.epam.hotel.service;
 
+import com.epam.hotel.entity.RegistrationForm;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
 
@@ -9,11 +10,11 @@ public interface UserService {
 
     User loginUser(User user) throws ServiceException;
 
-    void registerUser(User user) throws ServiceException;
+    void registerUser(RegistrationForm form) throws ServiceException;
 
     boolean checkEmail(String email) throws ServiceException;
 
-    boolean checkRegistrationForm(User user, HttpServletRequest req) throws ServiceException;
+    String checkRegistrationForm(RegistrationForm form) throws ServiceException;
 
 
 }

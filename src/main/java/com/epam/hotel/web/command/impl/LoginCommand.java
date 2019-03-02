@@ -16,6 +16,7 @@ import java.io.IOException;
 
 
 public class LoginCommand implements Command {
+    private UserService userService=ServiceFactory.getInstance().getUserService();
 
 
     @Override
@@ -26,7 +27,7 @@ public class LoginCommand implements Command {
         user.setPassword(req.getParameter(StringConstants.PASSWORD));
 
         try {
-            user=ServiceFactory.getInstance().getUserService().loginUser(user);
+            user=userService.loginUser(user);
         }catch (ServiceException e){
             //TODO error page
         }

@@ -15,7 +15,6 @@ public class EmailValidator implements Validator {
         }
 
         String stringEmail=(String)email;
-        System.out.println("email matcher: "+ stringEmail.matches(EMAIL_PATTERN));
         return stringEmail.matches(EMAIL_PATTERN);
 
     }

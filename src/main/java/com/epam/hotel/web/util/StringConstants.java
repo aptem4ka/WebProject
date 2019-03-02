@@ -6,6 +6,7 @@ public class StringConstants {
     public final static String NAME = "name";
     public final static String SURNAME = "surname";
     public final static String PASSWORD = "password";
+    public final static String REPEAT_PASSWORD = "repeat";
     public final static String PHONE = "phone";
 
 
@@ -22,6 +23,7 @@ public class StringConstants {
     public final static String REGISTRATION_FORM_ERRORS = "formErrors";
     public final static String CAROUSEL_IMAGES = "carouselImages";
     public final static String LOCALE = "locale";
+    public final static String ALLOCATIONS = "allocations";
 
 
 

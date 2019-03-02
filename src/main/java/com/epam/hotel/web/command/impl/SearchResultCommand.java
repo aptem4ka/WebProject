@@ -4,8 +4,11 @@ import com.epam.hotel.entity.Room;
 import com.epam.hotel.entity.room_info.AllocationType;
 import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.ServiceException;
+import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,40 +20,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class SearchResult implements Command {
+public class SearchResultCommand implements Command {
+    RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
-
+//TEMP CLASS
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String prevURL = new URLFromRequest().createURL(req);
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+
         Room room=new Room();
 
-        String typestring=req.getParameter("type");
-        if (typestring!=null) {
-            room.setType(RoomType.valueOf(req.getParameter("type").toUpperCase()));
-        }
+        initRoom(room,req);
 
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            room.setResFrom(format.parse(req.getParameter("resFrom")));
-            room.setResTo(format.parse(req.getParameter("resTo")));
-        }catch (ParseException e){
-            //TODO error page
-        }
-       // System.out.println(resFrom+"   "+resTo);
-        int days = daysBetween(room.getResFrom(), room.getResTo());
-        System.out.println(days);
-        room.setAllocation(AllocationType.valueOf(req.getParameter("allocation").toUpperCase()));
-        room.setChildren(Integer.parseInt(req.getParameter("children")));
-        System.out.println(room.getType()+" "+ room.getAllocation()+" "+room.getResFrom()+" "+room.getResTo());
         List<Room> roomList=null;
 
         try {
-            roomList= ServiceFactory.getInstance().getRoomService().getRoomsByRequest(room);
+            roomList= roomService.roomsByRequest(room);
         }catch (ServiceException e){
             //TODO error page
         }
 
-        //roomList=UserDao.searchRooms(req);
+        int days = daysBetween(room.getResFrom(), room.getResTo());
 
         req.setAttribute("roomList",roomList);
         req.setAttribute("days", days);
@@ -67,7 +58,28 @@ public class SearchResult implements Command {
     }
 
 
-    public int daysBetween(Date d1, Date d2){
+    private int daysBetween(Date d1, Date d2){
+
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+    private Room initRoom(Room room, HttpServletRequest req){
+
+        String typestring=req.getParameter("type");
+        if (typestring!=null) {
+            room.setType(RoomType.valueOf(req.getParameter("type").toUpperCase()));
+        }
+
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            room.setResFrom(format.parse(req.getParameter("resFrom")));
+            room.setResTo(format.parse(req.getParameter("resTo")));
+        }catch (ParseException e){
+            //TODO error page
+        }
+        room.setAllocation(AllocationType.valueOf(req.getParameter("allocation").toUpperCase()));
+        room.setChildren(Integer.parseInt(req.getParameter("children")));
+
+        return room;
     }
 }

@@ -2,6 +2,7 @@ package com.epam.hotel.service.impl;
 
 import com.epam.hotel.dao.DaoFactory;
 import com.epam.hotel.entity.Room;
+import com.epam.hotel.entity.room_info.AllocationType;
 import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.exception.ServiceException;
@@ -11,44 +12,61 @@ import java.util.*;
 public class RoomServiceImpl implements RoomService {
 
     @Override
-    public List<RoomType> getRoomTypes() throws ServiceException {
+    public List<RoomType> roomTypes() throws ServiceException {
 
         try {
-            return DaoFactory.getInstance().getRoomDAO().getRoomTypes();
-        }catch (DAOException e){
-            throw new ServiceException(e);
-        }
-
-    }
-
-    @Override
-    public Set<String> getAllRoomImages() throws ServiceException {
-        try {
-            return DaoFactory.getInstance().getRoomDAO().getAllRoomImages();
+            return DaoFactory.getInstance().getRoomDAO().roomTypes();
         }catch (DAOException e){
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<String> getRoomTypeImages(RoomType type) throws ServiceException {
+    public List<AllocationType> allocationsForType(RoomType type) throws ServiceException {
         if (type==null){
-            throw new ServiceException();
+            throw new ServiceException("Null type error");
         }
+
         try {
-            return DaoFactory.getInstance().getRoomDAO().getTypeRoomImages(type);
+            return DaoFactory.getInstance().getRoomDAO().allocationsForType(type);
         }catch (DAOException e){
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public Map<RoomType,String> getRoomPreviews() throws ServiceException {
+    public List<AllocationType> allocationsIgnoreType() throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public Set<String> allRoomImages() throws ServiceException {
+        try {
+            return DaoFactory.getInstance().getRoomDAO().allRoomImages();
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<String> roomTypeImages(RoomType type) throws ServiceException {
+        if (type==null){
+            throw new ServiceException("Type is null");
+        }
+        try {
+            return DaoFactory.getInstance().getRoomDAO().roomImagesByType(type);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Map<RoomType,String> roomPreviews() throws ServiceException {
         Map<RoomType,String> previews=new HashMap<>();
-        List<RoomType> types=getRoomTypes();
+        List<RoomType> types= roomTypes();
         List<String> previewLinks;
         try {
-            previewLinks=DaoFactory.getInstance().getRoomDAO().getRoomPreviews();
+            previewLinks=DaoFactory.getInstance().getRoomDAO().roomPreviews();
         }catch (DAOException e){
             throw new ServiceException(e);
         }
@@ -67,33 +85,29 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public String getPriceRange(RoomType type) throws ServiceException {
+    public String priceRange(RoomType type) throws ServiceException {
         if (type==null){
-            throw new ServiceException();
+            throw new ServiceException("Type is null");
         }
 
         try {
-            return DaoFactory.getInstance().getRoomDAO().getPriceRange(type);
+            return DaoFactory.getInstance().getRoomDAO().priceRange(type);
         }catch (DAOException e){
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<Room> getRoomsByRequest(Room room) throws ServiceException {
+    public List<Room> roomsByRequest(Room room) throws ServiceException {
         if (room.getAllocation()==null){
-            throw new ServiceException();
+            throw new ServiceException("Allocation is null");
         }
         if (room.getResFrom().after(room.getResTo()) ||room.getResFrom().before(new Date())){
-            throw new ServiceException();
+            throw new ServiceException("Incorrect date");
         }
 
         try {
-            if (room.getType()==null){
-                return DaoFactory.getInstance().getRoomDAO().getRoomsIgnoreType(room);
-            }else {
-                return DaoFactory.getInstance().getRoomDAO().getRoomsByType(room);
-            }
+            return DaoFactory.getInstance().getRoomDAO().roomSearchResult(room);
         }catch (DAOException e){
             throw new ServiceException(e);
         }

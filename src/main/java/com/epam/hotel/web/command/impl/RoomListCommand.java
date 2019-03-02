@@ -17,6 +17,7 @@ import java.util.Map;
 
 
 public class RoomListCommand implements Command {
+    private RoomService roomService=ServiceFactory.getInstance().getRoomService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +27,7 @@ public class RoomListCommand implements Command {
     req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
     try {
-        roomPreviews=ServiceFactory.getInstance().getRoomService().getRoomPreviews();
+        roomPreviews=roomService.roomPreviews();
     }catch (ServiceException e){
         //TODO error page
     }

@@ -1,5 +1,6 @@
 package com.epam.hotel.service;
 
+import com.epam.hotel.service.impl.OrderServiceImpl;
 import com.epam.hotel.service.impl.RoomServiceImpl;
 import com.epam.hotel.service.impl.UserServiceImpl;
 
@@ -8,6 +9,7 @@ public class ServiceFactory {
 
     private final UserService userService=new UserServiceImpl();
     private final RoomService roomService=new RoomServiceImpl();
+    private final OrderService orderService=new OrderServiceImpl();
 
 
     private ServiceFactory(){
@@ -23,5 +25,9 @@ public class ServiceFactory {
 
     public RoomService getRoomService() {
         return roomService;
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.hotel.web.command.impl;
 
+import com.epam.hotel.entity.room_info.AllocationType;
 import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
@@ -15,9 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public class RoomInfoCommand implements Command {
+    private RoomService roomService=ServiceFactory.getInstance().getRoomService();
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -26,13 +28,16 @@ public class RoomInfoCommand implements Command {
 
         try {
             RoomType type = RoomType.valueOf(req.getParameter(StringConstants.ROOM_TYPE).toUpperCase());
-            List<String> images = ServiceFactory.getInstance().getRoomService().getRoomTypeImages(type);
+            List<String> images = roomService.roomTypeImages(type);
+            List<AllocationType> allocations = roomService.allocationsForType(type);
 
             List<String> facilities = new ResourceBundleKeys()
                     .getKeysByPattern(StringConstants.FACILITIES_PATTERN + req.getParameter(StringConstants.ROOM_TYPE));
 
-            String priceRange = ServiceFactory.getInstance().getRoomService().getPriceRange(type);
+            String priceRange = roomService.priceRange(type);
 
+
+            req.setAttribute(StringConstants.ALLOCATIONS, allocations);
             req.setAttribute(StringConstants.PRICE_RANGE, priceRange);
             req.setAttribute(StringConstants.FACILITIES, facilities);
             req.setAttribute(StringConstants.ROOM_TYPE, type);

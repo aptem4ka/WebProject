@@ -48,7 +48,7 @@
 
                             <div style="color: red">Неправильный логин или пароль</div>
 
-                        <p class="text-center"> <button type="submit" class="btn btn-link">Sign in</button> </p>
+                        <p class="text-center"> <button type="submit" class="btn btn-link">${signin}</button> </p>
                     </form>
                 </article>
             </div>

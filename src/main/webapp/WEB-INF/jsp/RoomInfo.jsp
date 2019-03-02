@@ -104,10 +104,11 @@
 
                         <div>
                             Принцип размещения:<br/>
+                            <c:forEach items="${requestScope.allocations}" var="it">
+                                <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(it)}" var="allocationDesc"/>
+                                <input type="radio" id="${it}" name="allocation" value="${it}" checked> ${allocationDesc}<br/>
+                            </c:forEach>
 
-                            <input type="radio" id="SNGL" name="allocation" value="SNGL"><label for="SNGL"> STD - одноместный номер с односпальной кроватью</label><br/>
-                            <input type="radio" id="DBL" name="allocation" value="DBL"><label for="DBL"> DBL - двухместный номер с двуспальной кроватью</label><br/>
-                            <input type="radio" id="TWN" name="allocation" value="TWN"><label for="TWN"> TWN - двухместный номер с двумя односпальными кроватями</label><br/>
                             <hr/>
                         </div>
 

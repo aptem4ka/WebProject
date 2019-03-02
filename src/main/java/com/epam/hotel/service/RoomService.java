@@ -1,6 +1,7 @@
 package com.epam.hotel.service;
 
 import com.epam.hotel.entity.Room;
+import com.epam.hotel.entity.room_info.AllocationType;
 import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.ServiceException;
 
@@ -12,15 +13,19 @@ import java.util.Set;
 
 public interface RoomService {
 
-    List<RoomType> getRoomTypes() throws ServiceException;
+    List<RoomType> roomTypes() throws ServiceException;
 
-    Set<String> getAllRoomImages() throws ServiceException;
+    List<AllocationType> allocationsForType(RoomType type) throws ServiceException;
 
-    List<String> getRoomTypeImages(RoomType type) throws ServiceException;
+    List<AllocationType> allocationsIgnoreType() throws ServiceException;
 
-    Map<RoomType,String> getRoomPreviews() throws ServiceException;
+    Set<String> allRoomImages() throws ServiceException;
 
-    String getPriceRange(RoomType type) throws ServiceException;
+    List<String> roomTypeImages(RoomType type) throws ServiceException;
 
-    List<Room> getRoomsByRequest(Room room) throws ServiceException;
+    Map<RoomType,String> roomPreviews() throws ServiceException;
+
+    String priceRange(RoomType type) throws ServiceException;
+
+    List<Room> roomsByRequest(Room room) throws ServiceException;
 }

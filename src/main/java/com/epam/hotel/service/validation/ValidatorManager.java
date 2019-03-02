@@ -1,9 +1,6 @@
 package com.epam.hotel.service.validation;
 
-import com.epam.hotel.service.validation.impl.EmailValidator;
-import com.epam.hotel.service.validation.impl.NameValidator;
-import com.epam.hotel.service.validation.impl.PasswordValidator;
-import com.epam.hotel.service.validation.impl.PhoneValidator;
+import com.epam.hotel.service.validation.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +14,7 @@ public class ValidatorManager {
         validators.put(ValidatorName.PASSWORD, new PasswordValidator());
         validators.put(ValidatorName.NAME, new NameValidator());
         validators.put(ValidatorName.PHONE, new PhoneValidator());
+        validators.put(ValidatorName.DATE, new DateValidator());
 
     }
 

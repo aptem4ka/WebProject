@@ -74,10 +74,13 @@
             </form>
             <p style="color:red; text-align: center; font-size: 8pt">
                 <c:if test="${param.incorrectName eq true}">
-                *Неверное имя или фамилия<br/>
+                *Неверное имя или фамилия. Поле должно содержать только латиницу или кириллицу<br/>
             </c:if>
                 <c:if test="${param.incorrectPassword eq true}">
                     *Пароль должен состоять из 3-16 латинских букв и цифр<br/>
+                </c:if>
+                <c:if test="${param.passwordsMatch eq false}">
+                    *Введенные Вами пароли не совпадают<br/>
                 </c:if>
                 <c:if test="${param.incorrectEmail eq true}">
                     *Неверный или неуникальный адрес электронной почты<br/>

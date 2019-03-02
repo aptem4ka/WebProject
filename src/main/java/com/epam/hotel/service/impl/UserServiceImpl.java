@@ -1,10 +1,13 @@
 package com.epam.hotel.service.impl;
 
 import com.epam.hotel.dao.DaoFactory;
+import com.epam.hotel.dao.UserDAO;
+import com.epam.hotel.entity.RegistrationForm;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.UserService;
+import com.epam.hotel.service.validation.Validator;
 import com.epam.hotel.service.validation.ValidatorManager;
 import com.epam.hotel.service.validation.ValidatorName;
 import com.epam.hotel.service.validation.impl.EmailValidator;
@@ -14,15 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 
 public class UserServiceImpl implements UserService {
 
+    UserDAO userDAO=DaoFactory.getInstance().getUserDAO();
+    ValidatorManager validatorManager=ValidatorManager.getInstance();
+
     @Override
     public User loginUser(User user) throws ServiceException {
 
-        if (!new EmailValidator().isValid(user.getEmail()) || !new PasswordValidator().isValid(user.getPassword())){
+        if (!validatorManager.getValidator(ValidatorName.EMAIL).isValid(user.getEmail())
+                || !validatorManager.getValidator(ValidatorName.PASSWORD).isValid(user.getPassword())){
             user.setValid(false);
             return user;
         }
         try {
-            user = DaoFactory.getInstance().getUserDAO().loginUser(user);
+            user = userDAO.loginUser(user);
         }catch (DAOException e){
             throw new ServiceException(e);
         }
@@ -32,12 +39,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkEmail(String email) throws ServiceException {
-        if (!ValidatorManager.getInstance().getValidator(ValidatorName.EMAIL).isValid(email)){
-            return false;
+        if (!validatorManager.getValidator(ValidatorName.EMAIL).isValid(email)){
+            throw new ServiceException("Incorrect email");
         }
 
         try {
-            return DaoFactory.getInstance().getUserDAO().checkEmail(email);
+            return userDAO.checkEmail(email);
         }catch (DAOException e){
             throw new ServiceException(e);
         }
@@ -45,39 +52,40 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void registerUser(User user) throws ServiceException{
-        if (user==null){
-            throw new ServiceException();
+    public void registerUser(RegistrationForm form) throws ServiceException{
+        if (form==null){
+            throw new ServiceException("Null user");
         }
     try {
-        DaoFactory.getInstance().getUserDAO().registerUser(user);
+        userDAO.registerUser(form);
     }catch (DAOException e){
         throw new ServiceException(e);
     }
     }
 
     @Override
-    public boolean checkRegistrationForm(User user, HttpServletRequest req) throws ServiceException {
-        boolean confirmRegistration=true;
-        ValidatorManager validatorManager=ValidatorManager.getInstance();
-        StringBuilder builder=new StringBuilder();
+    public String checkRegistrationForm(RegistrationForm form) throws ServiceException {
 
-        if (!checkEmail(user.getEmail())){
-            builder.append("incorrectEmail=true&");
-            confirmRegistration=false;
-        }
-        if (!user.getPassword().equals(req.getParameter("repeat"))
-                || !validatorManager.getValidator(ValidatorName.PASSWORD).isValid(user.getPassword())) {
-            builder.append("incorrectPassword=true&");
-            confirmRegistration=false;
-        }
-        if (!validatorManager.getValidator(ValidatorName.NAME).isValid(user.getName())
-                ||!validatorManager.getValidator(ValidatorName.NAME).isValid(user.getSurname())){
-            builder.append("incorrectName=true");
-            confirmRegistration=false;
-        }
-        req.setAttribute("formErrors",builder.toString());
+        String registerErrors="";
 
-        return confirmRegistration;
+        if (!checkEmail(form.getEmail())){
+            registerErrors+="incorrectEmail=true&";
+        }
+
+        if (!validatorManager.getValidator(ValidatorName.PASSWORD).isValid(form.getPassword())) {
+            registerErrors+="incorrectPassword=true&";
+        }else {
+            if (!form.getPassword().equals(form.getConfirmPassword())){
+                registerErrors+="passwordsMatch=false&";
+            }
+        }
+
+        if (!validatorManager.getValidator(ValidatorName.NAME).isValid(form.getName())
+                ||!validatorManager.getValidator(ValidatorName.NAME).isValid(form.getSurname())){
+            registerErrors+="incorrectName=true&";
+        }
+
+
+        return registerErrors;
     }
 }

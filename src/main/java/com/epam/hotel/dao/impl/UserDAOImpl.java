@@ -4,6 +4,7 @@ import com.epam.hotel.dao.ParentDao;
 import com.epam.hotel.dao.UserDAO;
 import com.epam.hotel.dao.util.SQLConstants;
 import com.epam.hotel.dao.util.SqlQuery;
+import com.epam.hotel.entity.RegistrationForm;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
 import org.mindrot.jbcrypt.BCrypt;
@@ -65,15 +66,15 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
 
     @Override
-    public void registerUser(User user) throws DAOException{
+    public void registerUser(RegistrationForm form) throws DAOException{
        try {
            Connection connection = getConnection();
            PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.REGISTER_QUERY);
-           preparedStatement.setString(1, user.getName());
-           preparedStatement.setString(2, user.getSurname());
-           preparedStatement.setString(3, user.getEmail());
-           preparedStatement.setString(4, user.getPhone());
-           String pass=BCrypt.hashpw(user.getPassword(),BCrypt.gensalt());
+           preparedStatement.setString(1, form.getName());
+           preparedStatement.setString(2, form.getSurname());
+           preparedStatement.setString(3, form.getEmail());
+           preparedStatement.setString(4, form.getPhone());
+           String pass=BCrypt.hashpw(form.getPassword(),BCrypt.gensalt());
            preparedStatement.setString(5, pass);
            preparedStatement.execute();
 
