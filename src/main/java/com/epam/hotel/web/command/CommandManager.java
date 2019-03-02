@@ -22,6 +22,7 @@ public class CommandManager {
         commands.put(CommandName.ROOM_INFO, new RoomInfoCommand());
         commands.put(CommandName.PROFILE, new ProfileCommand());
         commands.put(CommandName.BOOK, new BookCommand());
+        commands.put(CommandName.ORDER_DETAILS, new OrderDetailsCommand());
     }
 
     public static CommandManager getInstance() {

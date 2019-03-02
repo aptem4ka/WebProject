@@ -51,7 +51,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                     </div>
-                    <input name="phone" class="form-control" placeholder="Phone(not requied)" type="text">
+                    <input name="phone" class="form-control" placeholder="Phone(not requied) ex. +375291234567" type="text">
                 </div> <!-- form-group// -->
 
                 <div class="form-group input-group">
@@ -84,6 +84,9 @@
                 </c:if>
                 <c:if test="${param.incorrectEmail eq true}">
                     *Неверный или неуникальный адрес электронной почты<br/>
+                </c:if>
+                <c:if test="${param.incorrectPhone eq true}">
+                    *Неверный формат номера телефона<br/>
                 </c:if>
             </p>
             <p style="color:red;text-align: center"></p>

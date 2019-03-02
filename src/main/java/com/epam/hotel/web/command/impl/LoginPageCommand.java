@@ -13,8 +13,8 @@ import java.io.IOException;
 public class LoginPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String prevURL = new URLFromRequest().createURL(req);
-        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+       // String prevURL = new URLFromRequest().createURL(req);
+        // req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         req.getRequestDispatcher(URLConstants.LOGIN_PAGE).forward(req,resp);
     }
 }

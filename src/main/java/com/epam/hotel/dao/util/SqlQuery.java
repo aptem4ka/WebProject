@@ -26,4 +26,5 @@ public class SqlQuery {
     public static final String REGISTER_QUERY = "INSERT INTO users (name,surname,email,phone,password) values (?,?,?,?,?);";
     public static final String ADD_ORDER = "INSERT INTO orders (userID, roomID, resFrom, resTo) VALUES (?,?,?,?);";
     public static final String ADD_UNREGISTERED_USER = "INSERT INTO unregistered_users (orderID, name, surname, phone) VALUES (?,?,?,?);";
+    public static final String USER_ORDERS_STATISTICS ="SELECT * FROM orders WHERE userID=?;";
 }

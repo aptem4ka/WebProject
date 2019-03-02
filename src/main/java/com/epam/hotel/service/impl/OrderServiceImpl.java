@@ -10,9 +10,24 @@ import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.validation.ValidatorManager;
 import com.epam.hotel.service.validation.ValidatorName;
 
+import java.util.List;
+
 public class OrderServiceImpl implements OrderService {
     private ValidatorManager validatorManager=ValidatorManager.getInstance();
     private OrderDAO orderDAO=DaoFactory.getInstance().getOrderDAO();
+
+    @Override
+    public List<Order> userBookingStatistics(int userID) throws ServiceException {
+        if (userID==0){
+            throw new ServiceException("Null userID error");
+        }
+
+        try {
+            return orderDAO.userBookingStatistics(userID);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
 
     @Override
     public Order registeredUserBooking(Order order) throws ServiceException {
@@ -21,14 +36,11 @@ public class OrderServiceImpl implements OrderService {
                 || order.getResFrom().after(order.getResTo())){
             throw new ServiceException("Incorrect date error");
         }
-
         try {
             return orderDAO.registeredUserBooking(order);
         }catch (DAOException e){
             throw new ServiceException(e);
         }
-
-
     }
 
     @Override

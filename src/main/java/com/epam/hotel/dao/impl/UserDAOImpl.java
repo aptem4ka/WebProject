@@ -36,6 +36,7 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
             user.setRole(resultSet.getString(SQLConstants.ROLE));
             user.setName(resultSet.getString(SQLConstants.NAME));
             user.setSurname(resultSet.getString(SQLConstants.SURNAME));
+            user.setPhone(resultSet.getString(SQLConstants.PHONE));
             user.setValid(true);
         }
       }catch (SQLException e){

@@ -11,6 +11,7 @@
     <fmt:message bundle="${loc}" key="locale.menubar.about" var="about"/>
     <fmt:message bundle="${loc}" key="locale.menubar.main" var="main"/>
     <fmt:message bundle="${loc}" key="locale.menubar.rooms" var="rooms"/>
+    <fmt:message bundle="${loc}" key="locale.menubar.check" var="check"/>
 
 
 
@@ -23,6 +24,7 @@
        class="list-group-item list-group-item-action list-group-item-light">${main}</a>
     <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_list"
        class="list-group-item list-group-item-action list-group-item-light">${rooms}</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light">${check}</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-light">${about}</a>
 
 </div>

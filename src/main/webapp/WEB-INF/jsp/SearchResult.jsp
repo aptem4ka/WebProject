@@ -43,7 +43,7 @@
                             </c:if>
 
                         <h2>Данные брони</h2>
-                        <h5>Период бронирования: ${resFrom} - <fmt:formatDate value="${requestScope.resTo}" type="date"/><br/>
+                        <h5>Период бронирования: ${resFrom} - ${resTo}<br/>
                             Принцип размещения: ${requestScope.allocation}<br/>
                             Дополнительные спальные места для детей: ${requestScope.children}<br/>
 

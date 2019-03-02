@@ -9,6 +9,7 @@ public class Order {
     private int roomID;
     private Date resFrom;
     private Date resTo;
+    private Status status = Status.PROCESSING;
 
     public int getOrderID() {
         return orderID;
@@ -50,6 +51,14 @@ public class Order {
         this.resTo = resTo;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,4 +86,9 @@ public class Order {
                 ", resTo=" + getResTo() +
                 '}';
     }
+
+    public static enum Status{
+        PROCESSING, APPLIED, CANCELLED;
+    }
+
 }

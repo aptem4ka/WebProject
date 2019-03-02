@@ -26,8 +26,7 @@ public class SearchResultCommand implements Command {
 //TEMP CLASS
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String prevURL = new URLFromRequest().createURL(req);
-        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+
 
         Room room=new Room();
 

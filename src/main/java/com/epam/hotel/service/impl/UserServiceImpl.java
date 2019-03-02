@@ -85,7 +85,12 @@ public class UserServiceImpl implements UserService {
             registerErrors+="incorrectName=true&";
         }
 
+        if (!form.getPhone().equals("")) {
+            if (!validatorManager.getValidator(ValidatorName.PHONE).isValid(form.getPhone())) {
+                registerErrors+="incorrectPhone=true&";
+            }
+        }
 
-        return registerErrors;
+                return registerErrors;
+        }
     }
-}

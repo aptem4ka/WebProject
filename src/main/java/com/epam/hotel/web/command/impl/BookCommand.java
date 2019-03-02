@@ -11,6 +11,7 @@ import com.epam.hotel.web.command.Command;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,6 +24,7 @@ public class BookCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Order order=new Order();
+        HttpSession session=req.getSession();
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
 
         try {
@@ -32,7 +34,7 @@ public class BookCommand implements Command {
             //TODO error page
         }
         order.setRoomID(Integer.parseInt(req.getParameter("roomID")));
-        User user = (User)req.getSession(false).getAttribute("currentUser");
+        User user = (User)session.getAttribute("currentUser");
 
         try {
         if (user!=null){
@@ -43,16 +45,17 @@ public class BookCommand implements Command {
             user.setName(req.getParameter("name"));
             user.setSurname(req.getParameter("surname"));
             user.setPhone(req.getParameter("phone"));
-
+            System.out.println("before unregisteredUserBooking");
             order = orderService.unregisteredUserBooking(order, user);
         }
+        session.setAttribute("order", order);
 
         }catch (ServiceException e){
             System.out.println("error adding order");
             //TODO error page
         }
 
-            req.getRequestDispatcher("/WEB-INF/jsp/IndexPage.jsp");
+            resp.sendRedirect("ControllerServlet?command=order_details");
 
 
 
