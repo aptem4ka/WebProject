@@ -22,18 +22,17 @@ public class RoomListCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    Map<RoomType,String> roomPreviews = null;
-    String prevURL = new URLFromRequest().createURL(req);
-    req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+        Map<RoomType,String> roomPreviews = null;
+        String prevURL = new URLFromRequest().createURL(req);
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+        try {
+            roomPreviews=roomService.roomPreviews();
+        }catch (ServiceException e){
+            //TODO error page
+        }
+        req.setAttribute(StringConstants.ROOM_PREVIEWS, roomPreviews);
 
-    try {
-        roomPreviews=roomService.roomPreviews();
-    }catch (ServiceException e){
-        //TODO error page
-    }
-    req.setAttribute(StringConstants.ROOM_PREVIEWS, roomPreviews);
-
-    req.getRequestDispatcher(URLConstants.ROOM_LIST_PAGE).forward(req,resp);
+        req.getRequestDispatcher(URLConstants.ROOM_LIST_PAGE).forward(req,resp);
 
 
     }

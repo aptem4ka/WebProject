@@ -7,6 +7,7 @@ import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
@@ -21,19 +22,20 @@ public class ProfileCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
         String prevURL = new URLFromRequest().createURL(req);
+
+        HttpSession session = req.getSession();
         session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
-        User user = (User)session.getAttribute("currentUser");
+        User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
         try {
             List<Order> orderList=orderService.userBookingStatistics(user.getUserID());
 
-            req.setAttribute("orderList", orderList);
+            req.setAttribute(StringConstants.ORDER_LIST, orderList);
         }catch (ServiceException e){
             //TODO error page
         }
 
-        req.getRequestDispatcher("/WEB-INF/jsp/Profile.jsp").forward(req,resp);
+        req.getRequestDispatcher(URLConstants.PROFILE_PAGE).forward(req,resp);
 
     }
 }

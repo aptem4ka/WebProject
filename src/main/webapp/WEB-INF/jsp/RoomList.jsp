@@ -20,7 +20,9 @@
 
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
 
-        <div class="col-md-7" style="margin-top: 15px ">
+        <div class="col-md-7" style="margin-left:-15px">
+            <div class="card bg-light">
+                <article class="card-body mx-auto">
 
             <p>
                 <button class="btn btn-info dropdown-toggle" type="button" data-toggle="collapse" data-target="#buttoncollapse" aria-expanded="false" aria-controls="Collapse">
@@ -81,8 +83,8 @@
                             <h5>${roomType}</h5><hr/>
                         </div>
                         <div style="font-size: 10pt">
-                            ${roomDesc}<hr/>
-                        </div>
+                            ${roomDesc}
+                        </div><br/>
                         <div style="font-size: 10pt">
                             <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_info&type=${fn:toLowerCase(type)}"
                                class="btn btn-info" role="button">Информация о номере</a>
@@ -90,13 +92,16 @@
                     </div>
 
                 </div>
+                <hr/>
 
             </c:forEach>
-
-
+                </article>
+        </div>
         </div>
 
     </div>
+
 </div>
+<jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>
 </body>
 </html>

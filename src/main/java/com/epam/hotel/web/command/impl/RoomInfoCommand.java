@@ -36,7 +36,6 @@ public class RoomInfoCommand implements Command {
 
             String priceRange = roomService.priceRange(type);
 
-
             req.setAttribute(StringConstants.ALLOCATIONS, allocations);
             req.setAttribute(StringConstants.PRICE_RANGE, priceRange);
             req.setAttribute(StringConstants.FACILITIES, facilities);

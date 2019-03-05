@@ -1,64 +1,54 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.entity.Order;
-import com.epam.hotel.entity.Room;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class BookCommand implements Command {
-    OrderService orderService= ServiceFactory.getInstance().getOrderService();
+    private OrderService orderService= ServiceFactory.getInstance().getOrderService();
+
+
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Order order=new Order();
         HttpSession session=req.getSession();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
 
         try {
-            order.setResFrom(dateFormat.parse(req.getParameter("resFrom")));
-            order.setResTo(dateFormat.parse(req.getParameter("resTo")));
-        }catch (ParseException e){
-            //TODO error page
-        }
-        order.setRoomID(Integer.parseInt(req.getParameter("roomID")));
-        User user = (User)session.getAttribute("currentUser");
+            order.setResFrom(dateFormat.parse(req.getParameter(StringConstants.RESERVED_FROM)));
+            order.setResTo(dateFormat.parse(req.getParameter(StringConstants.RESERVED_TO)));
+            order.setRoomID(Integer.parseInt(req.getParameter(StringConstants.ROOM_ID)));
+            User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
 
-        try {
-        if (user!=null){
-            order.setUserID(user.getUserID());
-            order = orderService.registeredUserBooking(order);
-        }else {
-            user=new User();
-            user.setName(req.getParameter("name"));
-            user.setSurname(req.getParameter("surname"));
-            user.setPhone(req.getParameter("phone"));
-            System.out.println("before unregisteredUserBooking");
-            order = orderService.unregisteredUserBooking(order, user);
-        }
-        session.setAttribute("order", order);
-
-        }catch (ServiceException e){
-            System.out.println("error adding order");
+            if (user!=null){
+                order.setUserID(user.getUserID());
+                order = orderService.registeredUserBooking(order);
+            }else {
+                user=new User();
+                user.setName(req.getParameter(StringConstants.NAME));
+                user.setSurname(req.getParameter(StringConstants.SURNAME));
+                user.setPhone(req.getParameter(StringConstants.PHONE));
+                order = orderService.unregisteredUserBooking(order, user);
+            }
+            session.setAttribute(StringConstants.ORDER, order);
+        }catch (ServiceException | ParseException e){
             //TODO error page
         }
 
-            resp.sendRedirect("ControllerServlet?command=order_details");
-
-
-
-
+            resp.sendRedirect(URLConstants.ORDER_DETAILS_COMMAND);
     }
 }

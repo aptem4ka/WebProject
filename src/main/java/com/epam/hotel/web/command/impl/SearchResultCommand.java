@@ -8,6 +8,7 @@ import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
@@ -24,35 +25,30 @@ import java.util.List;
 public class SearchResultCommand implements Command {
     RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String prevURL = new URLFromRequest().createURL(req);
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
-        Room room=new Room();
+        Room room = new Room();
         initRoom(room,req);
-        List<Room> roomList=new ArrayList<>();
-
+        List<Room> roomList = new ArrayList<>();
         try {
-            roomList= roomService.roomsByRequest(room);
+            roomList = roomService.roomsByRequest(room);
         }catch (ServiceException e){
             //TODO error page
         }
+            int days = daysBetween(room.getResFrom(), room.getResTo());
+            req.setAttribute(StringConstants.ROOM_LIST, roomList);
+            req.setAttribute(StringConstants.DAYS, days);
+            req.setAttribute(StringConstants.RESERVED_FROM, room.getResFrom());
+            req.setAttribute(StringConstants.RESERVED_TO, room.getResTo());
+            req.setAttribute(StringConstants.CHILDREN, room.getChildren());
+            req.setAttribute(StringConstants.ALLOCATION, room.getAllocation());
 
-        int days = daysBetween(room.getResFrom(), room.getResTo());
+            req.getRequestDispatcher(URLConstants.SEARCH_RESULT_PAGE).forward(req,resp);
 
-        req.setAttribute("roomList",roomList);
-        req.setAttribute("days", days);
-        req.setAttribute("resFrom", room.getResFrom());
-        req.setAttribute("resTo",room.getResTo());
-        req.setAttribute("children", room.getChildren());
-        req.setAttribute("allocation", room.getAllocation());
-
-       try {
-           req.getRequestDispatcher("/WEB-INF/jsp/SearchResult.jsp").forward(req,resp);
-       }catch (Exception e){
-
-       }
     }
 
 
@@ -61,23 +57,21 @@ public class SearchResultCommand implements Command {
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 
-    private Room initRoom(Room room, HttpServletRequest req){
+    private void initRoom(Room room, HttpServletRequest req){
 
-        String typestring=req.getParameter("type");
-        if (typestring!=null) {
-            room.setType(RoomType.valueOf(req.getParameter("type").toUpperCase()));
+        String typeString=req.getParameter(StringConstants.ROOM_TYPE);
+        if (typeString!=null) {
+            room.setType(RoomType.valueOf(typeString.toUpperCase()));
         }
 
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format=new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
         try {
-            room.setResFrom(format.parse(req.getParameter("resFrom")));
-            room.setResTo(format.parse(req.getParameter("resTo")));
+            room.setResFrom(format.parse(req.getParameter(StringConstants.RESERVED_FROM)));
+            room.setResTo(format.parse(req.getParameter(StringConstants.RESERVED_TO)));
         }catch (ParseException e){
             //TODO error page
         }
-        room.setAllocation(AllocationType.valueOf(req.getParameter("allocation").toUpperCase()));
-        room.setChildren(Integer.parseInt(req.getParameter("children")));
-
-        return room;
+        room.setAllocation(AllocationType.valueOf(req.getParameter(StringConstants.ALLOCATION).toUpperCase()));
+        room.setChildren(Integer.parseInt(req.getParameter(StringConstants.CHILDREN)));
     }
 }

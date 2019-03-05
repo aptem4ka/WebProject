@@ -19,18 +19,14 @@ public class UpdateOrderStatusCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Order order = new Order();
-        order.setOrderID(Integer.parseInt(req.getParameter("orderID")));
-        order.setStatus(Order.Status.valueOf(req.getParameter("update_type").toUpperCase()));
-        order.setComment(req.getParameter("comment"));
-
-        //TODO комментарии
-
+        order.setOrderID(Integer.parseInt(req.getParameter(StringConstants.ORDER_ID)));
+        order.setStatus(Order.Status.valueOf(req.getParameter(StringConstants.UPDATE_TYPE).toUpperCase()));
+        order.setComment(req.getParameter(StringConstants.COMMENT));
         try {
             adminService.updateOrderStatus(order);
         }catch (ServiceException e){
             //TODO error page
         }
-
         resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
 
 

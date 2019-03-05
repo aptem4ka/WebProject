@@ -24,7 +24,7 @@
             <p style="text-align: center">Ваша бронь принята на обработку.<br/>
                 Данные заказа можно посмотреть в личном кабинете.
                 <c:if test="${sessionScope.currentUser==null}">
-                "Незарегистрированные пользователи могут проверить статус заказа можно <a href="#">здесь</a>.</p>
+                Незарегистрированные пользователи могут проверить статус заказа <a href="#">здесь</a>.</p>
                 </c:if>
             <div>
                 <ul>
@@ -37,3 +37,8 @@
 
 
         </div>
+    </div>
+</div>
+<jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>
+</body>
+</html>

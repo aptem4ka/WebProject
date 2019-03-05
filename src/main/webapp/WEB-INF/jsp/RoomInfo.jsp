@@ -26,7 +26,9 @@
     <div class="row">
 
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
-        <div class="col-md-7" style="margin-top: 15px ">
+        <div class="col-md-7" style="margin-left:-15px">
+            <div class="card bg-light">
+                <article class="card-body mx-auto">
             <h2>${roomType}</h2>
             <hr/>
             <div>${roomDesc}</div>
@@ -131,6 +133,7 @@
 
             </form>
             </div>
+                </article>
         </div>
 
 
@@ -138,10 +141,10 @@
 
 
     </div>
-</div>
+    </div>
 </div>
 
-
+<jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>
 
 </body>
 </html>

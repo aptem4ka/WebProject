@@ -1,20 +1,18 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
-import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RegisterPageCommand implements Command {
+public class GuestBookingStatusCommand implements Command {
+
+    //TEMPORARY TEST METHOD
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(URLConstants.REGISTER_PAGE).forward(req,resp);
 
+        req.getRequestDispatcher("/WEB-INF/jsp/GuestBookingStatus.jsp").forward(req,resp);
     }
-
 }

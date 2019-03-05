@@ -19,7 +19,7 @@ public class RegisterCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            User user=new User();
+            User user = new User();
 
             String registerErrors="";
             RegistrationForm form=new RegistrationForm();

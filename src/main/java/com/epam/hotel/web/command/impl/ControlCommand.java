@@ -6,6 +6,7 @@ import com.epam.hotel.service.AdminService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
@@ -22,16 +23,15 @@ public class ControlCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String prevURL = new URLFromRequest().createURL(req);
-        HttpSession session=req.getSession();
-        session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         List<Order> orderList = null;
         try {
             orderList = adminService.orderList();
         }catch (ServiceException e){
             //TODO error page
         }
-        req.setAttribute("orderList",orderList);
-        req.getRequestDispatcher("/WEB-INF/jsp/Control.jsp").forward(req,resp );
+        req.setAttribute(StringConstants.ORDER_LIST, orderList);
+        req.getRequestDispatcher(URLConstants.CONTROL_PAGE).forward(req,resp );
 
 
     }

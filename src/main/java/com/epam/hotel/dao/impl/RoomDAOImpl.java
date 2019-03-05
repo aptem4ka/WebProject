@@ -20,18 +20,20 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     @Override
     public List<RoomType> roomTypes() throws DAOException {
         Connection connection = getConnection();
-        Statement statement=null;
-        ResultSet resultSet=null;
         List<RoomType> types=new ArrayList<>();
+        ResultSet resultSet=null;
 
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(SqlQuery.ROOM_TYPES_QUERY);
+        try(PreparedStatement ps = connection.prepareStatement(SqlQuery.ROOM_TYPES_QUERY)) {
+            resultSet = ps.executeQuery();
+
             while (resultSet.next()){
                 types.add(RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
             }
+
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
 
         return types;
@@ -40,18 +42,20 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     @Override
     public List<AllocationType> allocationsForType(RoomType type) throws DAOException {
         Connection connection=getConnection();
-        PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         List<AllocationType> allocationList=new ArrayList<>();
-        try {
-            preparedStatement=connection.prepareStatement(SqlQuery.ALLOCATIONS_FOR_TYPE);
-            preparedStatement.setString(1, type.toString());
-            resultSet=preparedStatement.executeQuery();
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ALLOCATIONS_FOR_TYPE)){
+            ps.setString(1, type.toString());
+            resultSet = ps.executeQuery();
+
             while (resultSet.next()){
                 allocationList.add(AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
             }
+
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
         return allocationList;
     }
@@ -64,18 +68,20 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     @Override
     public Set<String> allRoomImages() throws DAOException{
         Connection connection = getConnection();
-        Statement statement=null;
         ResultSet resultSet=null;
         Set<String> images=new HashSet<>();
-        try {
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(SqlQuery.ALL_ROOM_IMAGES_QUERY);
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ALL_ROOM_IMAGES_QUERY)){
+            resultSet = ps.executeQuery(SqlQuery.ALL_ROOM_IMAGES_QUERY);
+
             while (resultSet.next()){
                 images.add(resultSet.getString(SQLConstants.IMAGE_LINK));
             }
 
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
         return images;
     }
@@ -83,13 +89,13 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     @Override
     public List<String> roomImagesByType(RoomType type) throws DAOException{
         Connection connection = getConnection();
-        ResultSet resultSet=null;
-        List<String> images=new ArrayList<>();
+        List<String> images = new ArrayList<>();
+        ResultSet resultSet = null;
 
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(SqlQuery.ROOM_IMAGES_FOR_TYPE);
-            preparedStatement.setString(1,type.toString());
-            resultSet = preparedStatement.executeQuery();
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ROOM_IMAGES_FOR_TYPE)){
+            ps.setString(1,type.toString());
+            resultSet = ps.executeQuery();
 
             while (resultSet.next()){
                 images.add(resultSet.getString(SQLConstants.IMAGE_LINK));
@@ -97,6 +103,8 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
 
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
 
         return images;
@@ -106,18 +114,20 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     @Override
     public List<String> roomPreviews() throws DAOException{
         Connection connection = getConnection();
-        Statement statement=null;
-        ResultSet resultSet=null;
         List<String> previews=new ArrayList<>();
-        try {
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(SqlQuery.ALL_ROOM_PREVIEWS);
+        ResultSet resultSet=null;
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ALL_ROOM_PREVIEWS)){
+            resultSet=ps.executeQuery();
+
             while (resultSet.next()){
                 previews.add(resultSet.getString(SQLConstants.IMAGE_LINK));
             }
 
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
         return previews;
     }
@@ -126,20 +136,19 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     @Override
     public String priceRange(RoomType type) throws DAOException {
         Connection connection = getConnection();
-        PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         String priceRange=null;
-        try {
-            preparedStatement=connection.prepareStatement(SqlQuery.MIN_AND_MAX_PRICE);
-            preparedStatement.setString(1, type.toString());
-            resultSet=preparedStatement.executeQuery();
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.MIN_AND_MAX_PRICE)){
+            ps.setString(1, type.toString());
+            resultSet=ps.executeQuery();
             resultSet.next();
-
             String min=resultSet.getString(SQLConstants.MIN);
             priceRange=min+" - "+resultSet.getString(SQLConstants.MAX);
 
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
         return priceRange;
     }
@@ -148,24 +157,26 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     public List<Room> roomSearchResult(Room room) throws DAOException {
 
         Connection connection=getConnection();
-        try {
-
+        try (PreparedStatement psIgnoreType = connection.prepareStatement(SqlQuery.FIND_ROOM_IGNORE_TYPE);
+             PreparedStatement psByType = connection.prepareStatement(SqlQuery.FIND_ROOM_BY_TYPE))
+        {
             if (room.getType() == null) {
-                return roomsIgnoreType(connection.prepareStatement(SqlQuery.FIND_ROOM_IGNORE_TYPE), room);
+                return roomsIgnoreType(psIgnoreType, room);
             } else {
-                return roomsByType(connection.prepareStatement(SqlQuery.FIND_ROOM_BY_TYPE), room);
+                return roomsByType(psByType, room);
             }
 
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
     }
 
 
-
-    public List<Room> roomsByType(PreparedStatement preparedStatement, Room room) throws DAOException {
-        ResultSet resultSet=null;
+    private List<Room> roomsByType(PreparedStatement preparedStatement, Room room) throws DAOException {
         List<Room> roomList=new ArrayList<>();
+        ResultSet resultSet=null;
         java.sql.Date resFrom = new java.sql.Date(room.getResFrom().getTime());
         java.sql.Date resTo = new java.sql.Date(room.getResTo().getTime());
 

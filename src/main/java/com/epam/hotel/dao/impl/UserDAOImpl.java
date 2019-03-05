@@ -20,89 +20,88 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     @Override
     public User loginUser(User user) throws DAOException{
-      try { Connection connection = getConnection();
-       PreparedStatement statement=connection.prepareStatement(SqlQuery.LOGIN);
-       statement.setString(1, user.getEmail());
+        Connection connection = getConnection();
 
+        try(PreparedStatement ps=connection.prepareStatement(SqlQuery.LOGIN)) {
 
-        ResultSet resultSet=statement.executeQuery();
-        if (!resultSet.next()){
-            user.setValid(false);
-        }
-        else if (BCrypt.checkpw(user.getPassword(),resultSet.getString(SQLConstants.PASSWORD))){
+            ps.setString(1, user.getEmail());
 
-            user.setUserID(resultSet.getInt(SQLConstants.USER_ID));
-            user.setEmail(resultSet.getString(SQLConstants.EMAIL));
-            user.setRole(resultSet.getString(SQLConstants.ROLE));
-            user.setName(resultSet.getString(SQLConstants.NAME));
-            user.setSurname(resultSet.getString(SQLConstants.SURNAME));
-            user.setPhone(resultSet.getString(SQLConstants.PHONE));
+            ResultSet resultSet=ps.executeQuery();
+            if (!resultSet.next()){
+                user.setValid(false);
+            }
+            else if (BCrypt.checkpw(user.getPassword(),resultSet.getString(SQLConstants.PASSWORD))){
 
-
-            user.setValid(true);
-        }
+                user.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+                user.setEmail(resultSet.getString(SQLConstants.EMAIL));
+                user.setRole(resultSet.getString(SQLConstants.ROLE));
+                user.setName(resultSet.getString(SQLConstants.NAME));
+                user.setSurname(resultSet.getString(SQLConstants.SURNAME));
+                user.setPhone(resultSet.getString(SQLConstants.PHONE));
+                user.setValid(true);
+            }
       }catch (SQLException e){
           throw new DAOException(e);
-      }
+      }finally {
+            releaseConnection(connection);
+        }
         return user;
     }
 
 
     @Override
     public boolean checkEmail(String email) throws DAOException{
-        Connection connection=null;
+        Connection connection=getConnection();
         ResultSet resultSet=null;
-        PreparedStatement preparedStatement=null;
-
-        try {
-            connection=getConnection();
-            preparedStatement=connection.prepareStatement(SqlQuery.CHECK_EMAIL_QUERY);
-            preparedStatement.setString(1,email);
-
-            resultSet=preparedStatement.executeQuery();
-
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.CHECK_EMAIL_QUERY)){
+            ps.setString(1,email);
+            resultSet=ps.executeQuery();
             return !resultSet.next();
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
     }
 
 
     @Override
     public void registerUser(RegistrationForm form) throws DAOException{
-       try {
-           Connection connection = getConnection();
-           PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.REGISTER_QUERY);
-           preparedStatement.setString(1, form.getName());
-           preparedStatement.setString(2, form.getSurname());
-           preparedStatement.setString(3, form.getEmail());
-           preparedStatement.setString(4, form.getPhone());
+        Connection connection = getConnection();
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.REGISTER_QUERY)){
+           ps.setString(1, form.getName());
+           ps.setString(2, form.getSurname());
+           ps.setString(3, form.getEmail());
+           ps.setString(4, form.getPhone());
            String pass=BCrypt.hashpw(form.getPassword(),BCrypt.gensalt());
-           preparedStatement.setString(5, pass);
-           preparedStatement.execute();
+           ps.setString(5, pass);
+           ps.execute();
 
        }catch (SQLException e){
            throw new DAOException(e);
-       }
+       }finally {
+            releaseConnection(connection);
+        }
 
     }
 
     @Override
     public int userDiscount(int userID) throws DAOException {
         Connection connection=getConnection();
-
-        PreparedStatement statement = null;
         ResultSet resultSet = null;
         int discount = 0;
 
-        try {
-            statement = connection.prepareStatement(SqlQuery.USER_APPLIED_ORDERS);
-            statement.setInt(1, userID);
-            resultSet=statement.executeQuery();
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.USER_APPLIED_ORDERS)){
+            ps.setInt(1, userID);
+            resultSet=ps.executeQuery();
             resultSet.next();
             discount = resultSet.getInt("count");
+
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
 
         return discount;
