@@ -23,6 +23,8 @@ public class CommandManager {
         commands.put(CommandName.PROFILE, new ProfileCommand());
         commands.put(CommandName.BOOK, new BookCommand());
         commands.put(CommandName.ORDER_DETAILS, new OrderDetailsCommand());
+        commands.put(CommandName.CONTROL, new ControlCommand());
+        commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatusCommand());
     }
 
     public static CommandManager getInstance() {

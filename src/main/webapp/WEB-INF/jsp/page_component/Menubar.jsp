@@ -24,7 +24,9 @@
        class="list-group-item list-group-item-action list-group-item-light">${main}</a>
     <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_list"
        class="list-group-item list-group-item-action list-group-item-light">${rooms}</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-item-light">${check}</a>
+    <c:if test="${sessionScope.currentUser==null}">
+        <a href="#" class="list-group-item list-group-item-action list-group-item-light">${check}</a>
+    </c:if>
     <a href="#" class="list-group-item list-group-item-action list-group-item-light">${about}</a>
 
 </div>

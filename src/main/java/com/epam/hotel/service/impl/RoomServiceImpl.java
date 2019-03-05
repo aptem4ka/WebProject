@@ -102,7 +102,9 @@ public class RoomServiceImpl implements RoomService {
         if (room.getAllocation()==null){
             throw new ServiceException("Allocation is null");
         }
-        if (room.getResFrom().after(room.getResTo()) ||room.getResFrom().before(new Date())){
+        if (room.getResFrom().after(room.getResTo())
+                || room.getResFrom().before(new Date())
+                || room.getResTo().getTime()==room.getResFrom().getTime()){
             throw new ServiceException("Incorrect date");
         }
 

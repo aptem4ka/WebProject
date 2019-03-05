@@ -27,4 +27,7 @@ public class SqlQuery {
     public static final String ADD_ORDER = "INSERT INTO orders (userID, roomID, resFrom, resTo) VALUES (?,?,?,?);";
     public static final String ADD_UNREGISTERED_USER = "INSERT INTO unregistered_users (orderID, name, surname, phone) VALUES (?,?,?,?);";
     public static final String USER_ORDERS_STATISTICS ="SELECT * FROM orders WHERE userID=?;";
+    public static final String ALL_ORDERS = "SELECT * FROM orders;";
+    public static final String UPDATE_ORDER_STATUS = "UPDATE orders SET status=?, comment=? WHERE orderID=?;";
+    public static final String USER_APPLIED_ORDERS = "SELECT COUNT(*) as count FROM orders WHERE userID=? AND status='APPLIED';";
 }

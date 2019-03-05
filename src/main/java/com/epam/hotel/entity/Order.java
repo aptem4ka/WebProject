@@ -10,6 +10,7 @@ public class Order {
     private Date resFrom;
     private Date resTo;
     private Status status = Status.PROCESSING;
+    private String comment;
 
     public int getOrderID() {
         return orderID;
@@ -57,6 +58,14 @@ public class Order {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override

@@ -24,22 +24,22 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
         List<Order> orderList = new ArrayList<>();
         Order order;
 
-        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYY-MM-DD");
-
         try {
             PreparedStatement preparedStatement=connection.prepareStatement(SqlQuery.USER_ORDERS_STATISTICS);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
-            order=new Order();
+
             while (resultSet.next()) {
+                order=new Order();
                 order.setOrderID(resultSet.getInt("orderID"));
-                order.setResFrom(dateFormat.parse(resultSet.getString("resFrom")));
-                order.setResTo(dateFormat.parse(resultSet.getString("resTo")));
+                order.setResFrom(new java.util.Date(resultSet.getDate("resFrom").getTime()));
+                order.setResTo(new java.util.Date(resultSet.getDate("resTo").getTime()));
                 order.setStatus(Order.Status.valueOf(resultSet.getString("status").toUpperCase()));
+                order.setComment(resultSet.getString("comment"));
                 orderList.add(order);
             }
 
-        }catch (SQLException| ParseException e){
+        }catch (SQLException e){
             throw new DAOException(e);
         }
 
@@ -87,7 +87,6 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
                 executeSuccess = false;
             }
             preparedStatement.close();
-            System.out.println("add ordersuccess is "+ executeSuccess);
             return executeSuccess;
 
         }catch (SQLException e){
@@ -99,7 +98,6 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
         PreparedStatement preparedStatement = null;
 
         try {
-            System.out.println("preparing statemend in unreg user");
             preparedStatement=connection.prepareStatement(SqlQuery.ADD_UNREGISTERED_USER);
             preparedStatement.setInt(1, orderID);
             preparedStatement.setString(2,user.getName());

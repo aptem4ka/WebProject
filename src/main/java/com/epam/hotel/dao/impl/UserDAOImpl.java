@@ -7,6 +7,7 @@ import com.epam.hotel.dao.util.SqlQuery;
 import com.epam.hotel.entity.RegistrationForm;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
+import com.mysql.cj.protocol.Resultset;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
@@ -21,7 +22,6 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
     public User loginUser(User user) throws DAOException{
       try { Connection connection = getConnection();
        PreparedStatement statement=connection.prepareStatement(SqlQuery.LOGIN);
-
        statement.setString(1, user.getEmail());
 
 
@@ -37,6 +37,8 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
             user.setName(resultSet.getString(SQLConstants.NAME));
             user.setSurname(resultSet.getString(SQLConstants.SURNAME));
             user.setPhone(resultSet.getString(SQLConstants.PHONE));
+
+
             user.setValid(true);
         }
       }catch (SQLException e){
@@ -85,5 +87,24 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     }
 
+    @Override
+    public int userDiscount(int userID) throws DAOException {
+        Connection connection=getConnection();
 
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int discount = 0;
+
+        try {
+            statement = connection.prepareStatement(SqlQuery.USER_APPLIED_ORDERS);
+            statement.setInt(1, userID);
+            resultSet=statement.executeQuery();
+            resultSet.next();
+            discount = resultSet.getInt("count");
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }
+
+        return discount;
+    }
 }

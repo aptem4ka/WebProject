@@ -16,5 +16,7 @@ public interface UserService {
 
     String checkRegistrationForm(RegistrationForm form) throws ServiceException;
 
+    int userDiscount(int userID) throws ServiceException;
+
 
 }

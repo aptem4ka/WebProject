@@ -12,6 +12,7 @@ public class User {
     private String name;
     private String surname;
     private String phone;
+    private int discount;
     private String role;
     private boolean valid;
 
@@ -80,6 +81,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 
     @Override

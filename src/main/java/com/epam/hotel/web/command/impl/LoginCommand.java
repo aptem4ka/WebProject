@@ -28,6 +28,12 @@ public class LoginCommand implements Command {
 
         try {
             user=userService.loginUser(user);
+            int discount = userService.userDiscount(user.getUserID());
+            if (discount<=10){
+                user.setDiscount(discount);
+            }else {
+                user.setDiscount(10);
+            }
         }catch (ServiceException e){
             //TODO error page
         }

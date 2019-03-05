@@ -32,7 +32,7 @@
             </div>
             <ul class="navbar-nav ml-auto" >
             <c:if test="${sessionScope.currentUser==null}">
-                    <li class=" nav-item dropdown  dropleft" style="margin: 5px">
+                    <li class="nav-item dropdown  dropleft" style="margin: 5px">
                         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             ${signin}
                         </button>
@@ -61,9 +61,18 @@
 
             </c:if>
             <c:if test="${sessionScope.currentUser!=null}">
-                    <li class="nav-item py-0" style="margin: 5px">
+                <c:set value="USER" var="user"/>
+                <c:set value="ADMIN" var="admin"/>
+                <c:if test="${sessionScope.currentUser.role eq user}">
+                    <li class="nav-item" style="margin: 5px">
                         <a href="${pageContext.request.contextPath}/ControllerServlet?command=profile" class="btn btn-outline-success">Личный кабинет</a>
                     </li>
+                </c:if>
+                <c:if test="${sessionScope.currentUser.role eq admin}">
+                    <li class="nav-item" style="margin: 5px">
+                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=control" class="btn btn-outline-success">Управление</a>
+                    </li>
+                </c:if>
 
                     <li class="nav-item py-0" style="margin: 5px">
 
@@ -81,7 +90,7 @@
                     </a>
                 </li>
                 <li class="nav-item" style="margin: 5px; margin-left: -10px">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/ControllerServlet?command=change_locale&locale=eng">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/ControllerServlet?command=change_locale&locale=en">
                         <img src="${pageContext.request.contextPath}/images/icons/british.jpg" alt="eng">
                     </a>
                 </li>

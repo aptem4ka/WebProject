@@ -93,4 +93,17 @@ public class UserServiceImpl implements UserService {
 
                 return registerErrors;
         }
+
+    @Override
+    public int userDiscount(int userID) throws ServiceException {
+        if (userID<=0){
+            throw new ServiceException("Incorrect userID");
+        }
+
+        try {
+            return userDAO.userDiscount(userID);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
     }
+}

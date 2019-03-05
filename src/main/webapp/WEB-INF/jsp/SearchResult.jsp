@@ -1,9 +1,28 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
+
+    <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+    <fmt:setBundle basename="resources.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.sorry" var="sorry"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.fail" var="search_fail"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.authorize" var="authorize"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.registered" var="registered"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.data" var="booking_data"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.period" var="period_of_stay"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation_type"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
+    <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(requestScope.allocation)}" var="allocation"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.book" var="book"/>
+
+
 
 </head>
 <body>
@@ -17,21 +36,20 @@
         <div class="col-md-7" style="margin: 15px ">
 
                 <c:if test="${empty requestScope.roomList}">
-                    <h3>Извините</h3>
-                    На указанный Вами период нет свободных номеров, удовлетворяющих заданным критериям.<br/>
-                    Попробуйте выбрать номер другого типа, или изменить период пребывания.
+                    <h3>${sorry}</h3>
+                    ${search_fail}
                 </c:if>
                 <c:if test="${not empty requestScope.roomList}">
 
                 <div >
                     <div>
-                        <fmt:formatDate value="${requestScope.resFrom}" type="date" var="resFrom"/>
+                        <fmt:formatDate value="${requestScope.resFrom}" type="date"  var="resFrom" />
                         <fmt:formatDate value="${requestScope.resTo}" type="date" var="resTo"/>
                         <form action="ControllerServlet" method="post">
                             <c:if test="${sessionScope.currentUser == null}">
                                 <hr/>
-                                Введите свои контактные данные или зарегистрируйтесь в системе.<br/>
-                                Зарегистрированные пользователи могут контролировать статус брони в личном кабинете, а также получают скидки с каждым новым посещением отеля.
+                                ${authorize}<br/>
+                                ${registered}
                                 <div class="form-group input-group">
                                     <input name="name" class="form-control" placeholder="Name (ex. Tim)" type="text" required>
                                     <input name="surname" class="form-control" placeholder="Surname (ex. Cook)" type="text" required>
@@ -42,57 +60,37 @@
                                 <hr/>
                             </c:if>
 
-                        <h2>Данные брони</h2>
-                        <h5>Период бронирования: ${resFrom} - ${resTo}<br/>
-                            Принцип размещения: ${requestScope.allocation}<br/>
-                            Дополнительные спальные места для детей: ${requestScope.children}<br/>
+                        <h2>${booking_data}</h2>
+                        <h5>${period_of_stay} ${resFrom} - ${resTo}<br/>
+
+                            ${allocation_type}  ${allocation}<br/>
+                            ${baby_cots} ${requestScope.children}<br/>
 
                         </h5>
 
                         <hr/>
                         <c:forEach items="${requestScope.roomList}" var="it">
+                            <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it.type)}" var="type"/>
 
                                 <input type="hidden" name="command" value="book"/>
-                                Тип номера: ${it.type}<br/>
-                                Цена за сутки: ${it.price}<br/>
+                                ${room_type} ${type}<br/>
+                                ${day_price} ${it.price}<br/>
                                 <c:set value="${it.price}" var="price"/>
                                 <c:set value="${requestScope.days}" var="days"/>
-                                <h5>Цена за период пребывания: ${price*days}</h5>
+                                <h5>${period_price} ${price*days}</h5>
 
                                 <input type="hidden" name="roomID" value="${it.roomID}"/>
                                 <input type="hidden"  name="resFrom" value="${resFrom}"/>
                                 <input type="hidden" name="resTo" value="${resTo}"/>
 
-                                <button type="submit" class="btn btn-info">Забронировать</button>
+                                <button type="submit" class="btn btn-info">${book}</button>
 
 
                         <hr/>
                         </c:forEach>
                         </form>
                     </div>
-                    <div align="center">
-                        <c:if test="${sessionScope.currentUser!=null}">
-                            <form action="ControllerServlet" method="get">
-                                <input type="hidden" name="command" value="book"/>
-                                <input type="hidden" name="resFrom" value="${requestScope.resFrom}"/>
-                                <input type="hidden" name="resTo" value="${requestScope.resTo}"/>
-                                <input type="hidden" name="type" value="${requestScope.resFrom}"/>
-                                <button type="submit" class="btn btn-info">Забронировать</button>
-                            </form>
-                        </c:if>
-                        <c:if test="${sessionScope.currentUser==null}">
 
-                            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#booking" aria-expanded="false" aria-controls="Collapse">
-                                Забронировать
-                            </button>
-
-
-                        <div id="booking" class="collapse" style="color: red">
-                            Только авторизированные пользователи могут оставлять заявки на бронирование
-                        </div>
-                        </c:if>
-
-                    </div>
                     </c:if>
                 </div>
 

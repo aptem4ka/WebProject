@@ -27,9 +27,7 @@ public class ProfileCommand implements Command {
         User user = (User)session.getAttribute("currentUser");
         try {
             List<Order> orderList=orderService.userBookingStatistics(user.getUserID());
-            for (Order order:orderList){
-                System.out.println(order.getOrderID());
-            }
+
             req.setAttribute("orderList", orderList);
         }catch (ServiceException e){
             //TODO error page

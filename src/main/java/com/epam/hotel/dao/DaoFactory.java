@@ -1,5 +1,6 @@
 package com.epam.hotel.dao;
 
+import com.epam.hotel.dao.impl.AdminDAOImpl;
 import com.epam.hotel.dao.impl.OrderDAOImpl;
 import com.epam.hotel.dao.impl.RoomDAOImpl;
 import com.epam.hotel.dao.impl.UserDAOImpl;
@@ -10,6 +11,7 @@ public class DaoFactory {
     UserDAO userDAO =new UserDAOImpl();
     RoomDAO roomDAO=new RoomDAOImpl();
     OrderDAO orderDAO=new OrderDAOImpl();
+    AdminDAO adminDAO=new AdminDAOImpl();
 
     private DaoFactory(){
 
@@ -29,5 +31,9 @@ public class DaoFactory {
 
     public OrderDAO getOrderDAO() {
         return orderDAO;
+    }
+
+    public AdminDAO getAdminDAO() {
+        return adminDAO;
     }
 }

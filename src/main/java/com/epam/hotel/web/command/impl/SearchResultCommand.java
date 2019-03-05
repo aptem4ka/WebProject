@@ -17,22 +17,21 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class SearchResultCommand implements Command {
     RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
-//TEMP CLASS
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        String prevURL = new URLFromRequest().createURL(req);
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
         Room room=new Room();
-
         initRoom(room,req);
-
-        List<Room> roomList=null;
+        List<Room> roomList=new ArrayList<>();
 
         try {
             roomList= roomService.roomsByRequest(room);

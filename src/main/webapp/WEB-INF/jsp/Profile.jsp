@@ -25,7 +25,7 @@
                     <li>Телефон: <c:if test="${empty phone}">Номер отсутствует</c:if>
                                   <c:if test="${not empty phone}">${phone}</c:if>
                     </li>
-                    <li>Персональная скидка: 0%</li>
+                    <li>Персональная скидка: ${sessionScope.currentUser.discount}%</li>
                     <hr/>
                 </ul>
 
@@ -38,15 +38,17 @@
                         <th>Бронь с</th>
                         <th>Бронь по</th>
                         <th>Статус</th>
+                        <th>Комментарий</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${requestScope.orderList}" var="it">
                     <tr>
                         <td>${it.orderID}</td>
-                        <td><fmt:formatDate value="${it.resFrom}" type="date"/></td>
-                        <td><fmt:formatDate value="${it.resTo}" type="date"/></td>
+                        <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
+                        <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                         <td>${it.status}</td>
+                        <td>${it.comment}</td>
                     </tr>
                     </c:forEach>
                     </tbody>

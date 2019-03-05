@@ -13,4 +13,6 @@ public interface UserDAO {
     void registerUser(RegistrationForm form) throws DAOException;
 
     boolean checkEmail(String email) throws DAOException;
+
+    int userDiscount(int userID) throws DAOException;
 }

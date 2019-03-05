@@ -36,7 +36,7 @@ public class IndexPageCommand implements Command {
         }
        // List<AllocationType> allocations = roomService.allocationsForType(type);
 
-        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+        session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
         req.getRequestDispatcher(URLConstants.INDEX_PAGE).forward(req,resp);
 
