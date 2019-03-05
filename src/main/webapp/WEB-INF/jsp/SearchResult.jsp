@@ -7,7 +7,7 @@
 <head>
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="resources.locale" var="loc"/>
+    <fmt:setBundle basename="locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.room.result.sorry" var="sorry"/>
     <fmt:message bundle="${loc}" key="locale.room.result.fail" var="search_fail"/>
     <fmt:message bundle="${loc}" key="locale.room.result.authorize" var="authorize"/>

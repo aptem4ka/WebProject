@@ -24,6 +24,9 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         try {
+
+            logger.debug("debuggg");
+
             ResourceBundle resourceBundle = ResourceBundle.getBundle("DBConnection");
             String url = resourceBundle.getString("database.url");
             String login = resourceBundle.getString("database.login");

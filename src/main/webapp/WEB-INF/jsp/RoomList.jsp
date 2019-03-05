@@ -8,7 +8,7 @@
 <head>
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="resources.locale" var="loc"/>
+    <fmt:setBundle basename="locale" var="loc"/>
 
 
 </head>

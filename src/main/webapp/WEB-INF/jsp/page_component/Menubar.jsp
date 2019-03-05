@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="resources.locale" var="loc"/>
+    <fmt:setBundle basename="locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.menubar.about" var="about"/>
     <fmt:message bundle="${loc}" key="locale.menubar.main" var="main"/>
     <fmt:message bundle="${loc}" key="locale.menubar.rooms" var="rooms"/>

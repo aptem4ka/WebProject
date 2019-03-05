@@ -15,7 +15,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="resources.locale" var="loc"/>
+    <fmt:setBundle basename="locale" var="loc"/>
     <fmt:message bundle="${loc}" key="locale.navbar.signin" var="signin"/>
     <fmt:message bundle="${loc}" key="locale.navbar.register" var="register"/>
     <fmt:message bundle="${loc}" key="locale.navbar.signout" var="signout"/>

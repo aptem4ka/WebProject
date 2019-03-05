@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class UserServiceImpl implements UserService {
 
-    UserDAO userDAO=DaoFactory.getInstance().getUserDAO();
-    ValidatorManager validatorManager=ValidatorManager.getInstance();
+    private UserDAO userDAO=DaoFactory.getInstance().getUserDAO();
+    private ValidatorManager validatorManager=ValidatorManager.getInstance();
 
     @Override
     public User loginUser(User user) throws ServiceException {

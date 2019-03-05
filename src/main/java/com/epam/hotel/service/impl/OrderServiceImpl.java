@@ -18,8 +18,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> userBookingStatistics(int userID) throws ServiceException {
-        if (userID==0){
-            throw new ServiceException("Null userID error");
+        if (userID<=0){
+            throw new ServiceException("Incorrect UserID");
         }
 
         try {

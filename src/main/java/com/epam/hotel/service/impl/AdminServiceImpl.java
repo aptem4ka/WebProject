@@ -15,8 +15,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Order> orderList() throws ServiceException {
-
-
         try {
             return adminDAO.orderList();
         }catch (DAOException e){

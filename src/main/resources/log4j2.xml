@@ -11,12 +11,18 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.memorynotfound" level="debug" additivity="false"/>
 
         <Root level="info">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="FILE"/>
         </Root>
+
+        <Logger level="error" name="com.epam.hotel.dao.util.ConnectionPool" additivity="false">
+            <AppenderRef ref="FILE"/>
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+
+
     </Loggers>
 
 </Configuration>

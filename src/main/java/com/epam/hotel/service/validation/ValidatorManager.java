@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ValidatorManager {
-    public final static ValidatorManager instance=new ValidatorManager();
+    private final static ValidatorManager instance=new ValidatorManager();
     private final Map<ValidatorName, Validator> validators=new HashMap<>();
 
     private ValidatorManager(){
