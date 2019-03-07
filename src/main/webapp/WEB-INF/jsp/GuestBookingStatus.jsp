@@ -24,7 +24,7 @@
 
 
             <div class="card bg-light">
-                <article class="card-body mx-auto" style="width: 400px;">
+                <article class="card-body" style="width: 400px;">
                     <h4 class="card-title mt-3 text-center">Check your booking status</h4><br/>
 
                     <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">

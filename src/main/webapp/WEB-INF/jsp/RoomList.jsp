@@ -22,7 +22,7 @@
 
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
-                <article class="card-body mx-auto">
+                <article class="card-body">
 
             <p>
                 <button class="btn btn-info dropdown-toggle" type="button" data-toggle="collapse" data-target="#buttoncollapse" aria-expanded="false" aria-controls="Collapse">

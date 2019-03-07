@@ -1,6 +1,6 @@
 package com.epam.hotel.web.command.impl;
 
-import com.epam.hotel.entity.room_info.RoomType;
+import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
@@ -22,7 +22,7 @@ public class RoomListCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Map<RoomType,String> roomPreviews = null;
+        Map<Room.RoomType,String> roomPreviews = null;
         String prevURL = new URLFromRequest().createURL(req);
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         try {

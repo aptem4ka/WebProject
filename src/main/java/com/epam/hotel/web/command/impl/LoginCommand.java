@@ -7,6 +7,8 @@ import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.io.IOException;
 
 
 public class LoginCommand implements Command {
+    private final static Logger logger= LogManager.getLogger();
     private UserService userService=ServiceFactory.getInstance().getUserService();
 
 
@@ -35,14 +38,15 @@ public class LoginCommand implements Command {
                 user.setDiscount(10);
             }
         }catch (ServiceException e){
-            //TODO error page
+            logger.warn(e);
         }
 
         if (user.isValid()){
+            logger.info("adding user to the session");
             HttpSession session=req.getSession();
             session.setAttribute(StringConstants.CURRENT_USER,user);
 
-            if ((String)session.getAttribute(StringConstants.PREV_PAGE_URL)!=null){
+            if (session.getAttribute(StringConstants.PREV_PAGE_URL)!=null){
                 resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
             }else {
                 resp.sendRedirect(URLConstants.GO_TO_INDEX);

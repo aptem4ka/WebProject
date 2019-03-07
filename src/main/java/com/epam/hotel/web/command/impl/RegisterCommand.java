@@ -8,6 +8,8 @@ import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +18,10 @@ import java.io.IOException;
 
 public class RegisterCommand implements Command {
     private UserService userService =ServiceFactory.getInstance().getUserService();
+    private final static Logger logger = LogManager.getLogger(RegisterCommand.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            User user = new User();
-
             String registerErrors="";
             RegistrationForm form=new RegistrationForm();
 
@@ -30,7 +31,6 @@ public class RegisterCommand implements Command {
             form.setPassword(req.getParameter(StringConstants.PASSWORD));
             form.setPhone(req.getParameter(StringConstants.PHONE));
             form.setConfirmPassword(req.getParameter(StringConstants.REPEAT_PASSWORD));
-
 
         try {
            registerErrors = userService.checkRegistrationForm(form);
@@ -43,7 +43,7 @@ public class RegisterCommand implements Command {
            }
 
         }catch (ServiceException e){
-           //TODO error page
+           logger.warn(e);
        }
     }
 

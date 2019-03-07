@@ -13,55 +13,47 @@
 
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
 
-        <div class="col-md-7" style="margin-top: 15px ">
-
-                <ul>
-
-                    <li>
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#unprocessed_orders" aria-expanded="false" aria-controls="Collapse">
-                            Необработанные заказы
-                        </button>
+        <div class="col-md-7" style="margin-left: -15px ">
+            <div class="card bg-light">
+                <article class="card-body">
 
 
-                        <div id="unprocessed_orders" class="collapse">
+                            <h4>Забронированные номера</h4>
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>ID заказа</th>
+                                    <th>Заказ</th>
                                     <th>ID юзера</th>
-                                    <th>ID комнаты</th>
+                                    <th>Заказ</th>
                                     <th>Бронь с</th>
                                     <th>Бронь по</th>
-                                    <th>Статус</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${requestScope.orderList}" var="it">
-                                  <c:set value="PROCESSING" var="unprocessed_status"/>
-                                    <c:if test="${it.status eq 'PROCESSING'}">
+                                    <c:if test="${it.resFrom.time gt requestScope.currentDate.time}">
                                     <tr>
                                         <td>${it.orderID}</td>
-                                        <td>${it.userID}</td>
+                                        <td><c:if test="${it.userID=='0'}">Гость</c:if><c:if test="${it.userID!='0'}">${it.userID}</c:if></td>
                                         <td>${it.roomID}</td>
-                                        <td><fmt:formatDate value="${it.resFrom}" type="date"/></td>
-                                        <td><fmt:formatDate value="${it.resTo}" type="date"/></td>
-                                        <td>${it.status}</td>
+                                        <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
+                                        <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                         <td>
                                             <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
                                                 <input type="hidden" name="command" value="update_order_status"/>
                                                 <input type="hidden" name="orderID" value="${it.orderID}"/>
-                                                <ul>
-                                                <li><button type="submit" name="update_type" value="applied">Apply</button></li>
-                                                <li class="dropdown  dropright"><button data-toggle="dropdown" >Cancel</button>
+                                                <ul class="list-unstyled">
+
+                                                <li class="dropdown  dropright"><button data-toggle="dropdown" class="btn btn-danger btn-sm">Cancel</button>
 
                                                     <div class="dropdown-menu" style="width: 300px">
 
                                                             <div class="form-group">
-                                                                <label for="comment"> Comment</label>
+                                                                <label for="comment">Comment</label>
                                                                 <input type="text" name="comment" class="form-control" id="comment" placeholder="Comment">
                                                             </div>
-                                                            <button type="submit" class="btn btn-success" name="update_type" value="cancelled">Cancel order</button>
+                                                            <button type="submit" class="btn btn-danger" name="update_type" value="cancelled">Cancel order</button>
 
                                                     </div>
 
@@ -74,68 +66,73 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
-                        </div>
 
+                    <hr/>
 
-                    </li>
-                    <li>
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#processed_orders" aria-expanded="false" aria-controls="Collapse">
-                            Обработанные заказы
-                        </button>
+                    <h4>Требуется подтверждение</h4>
 
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Заказ</th>
+                            <th>ID юзера</th>
+                            <th>Номер</th>
+                            <th>Бронь с</th>
+                            <th>Бронь по</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${requestScope.orderList}" var="it">
 
-                        <div id="processed_orders" class="collapse">
-                            <table class="table table-striped">
-                                <thead>
+                            <c:if test="${(it.resFrom.time eq requestScope.currentDate.time || it.resFrom.time lt requestScope.currentDate.time) }">
                                 <tr>
-                                    <th>ID заказа</th>
-                                    <th>ID юзера</th>
-                                    <th>ID комнаты</th>
-                                    <th>Бронь с</th>
-                                    <th>Бронь по</th>
-                                    <th>Статус брони</th>
-                                    <th></th>
+                                    <td>${it.orderID}</td>
+                                    <td><c:if test="${it.userID=='0'}">Гость</c:if><c:if test="${it.userID!='0'}">${it.userID}</c:if></td>
+                                    <td>${it.roomID}</td>
+                                    <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
+                                    <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
+                                    <td>
+                                        <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
+                                            <input type="hidden" name="command" value="update_order_status"/>
+                                            <input type="hidden" name="orderID" value="${it.orderID}"/>
+                                            <ul class="list-unstyled">
+
+                                                <li>
+
+                                                    <button type="submit" class="btn btn-success btn-sm" name="update_type" value="completed">Arrived</button>
+
+                                                </li>
+
+                                                <li class="dropdown  dropright nav-item"><button data-toggle="dropdown" class="btn btn-danger btn-sm" >Cancel</button>
+
+                                                    <div class="dropdown-menu" style="width: 300px">
+
+                                                        <div class="form-group">
+                                                            <label for="comment">Comment</label>
+                                                            <input type="text" name="comment" class="form-control" id="comment1" placeholder="Comment">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-danger" name="update_type" value="cancelled">Cancel order</button>
+
+                                                    </div>
+
+                                                </li>
+
+                                            </ul>
+                                        </form>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${requestScope.orderList}" var="it">
-                                    <c:set value="PROCESSING" var="unprocessed_status"/>
-                                    <c:if test="${it.status ne unprocessed_status}">
-                                        <tr>
-                                            <td>${it.orderID}</td>
-                                            <td>${it.userID}</td>
-                                            <td>${it.roomID}</td>
-                                            <td><fmt:formatDate value="${it.resFrom}" type="date"/></td>
-                                            <td><fmt:formatDate value="${it.resTo}" type="date"/></td>
-                                            <td>${it.status}</td>
-                                        </tr>
-                                    </c:if>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
 
-
-                    </li>
-                    <li>
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#registered_users" aria-expanded="false" aria-controls="Collapse">
-                            Зарегистрированные пользователи
-                        </button>
-                    </li>
-                    <li>
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#unregistered_users" aria-expanded="false" aria-controls="Collapse">
-                            Незарегистрированные пользователи
-                        </button>
-                    </li>
-
-                </ul>
-
-
-
-
-
-
+                </article>
         </div>
+        </div>
+        <jsp:include page="/WEB-INF/jsp/page_component/AdminBar.jsp"/>
+    </div>
+</div>
 
             <jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>
 </body>

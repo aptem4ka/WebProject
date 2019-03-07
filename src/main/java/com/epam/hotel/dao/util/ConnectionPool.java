@@ -24,9 +24,6 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         try {
-
-            logger.debug("debuggg");
-
             ResourceBundle resourceBundle = ResourceBundle.getBundle("DBConnection");
             String url = resourceBundle.getString("database.url");
             String login = resourceBundle.getString("database.login");
@@ -41,7 +38,7 @@ public class ConnectionPool {
                 connectionsAvailable.put(DriverManager.getConnection(url,login,pass));
             }
         }catch (ClassNotFoundException|SQLException|InterruptedException e){
-            //TODO log
+            logger.warn(e); throw new RuntimeException(e);
         }
     }
 
@@ -49,10 +46,6 @@ public class ConnectionPool {
         return instance;
     }
 
-    public void init()throws ClassNotFoundException, SQLException, InterruptedException {
-
-
-    }
 
     public Connection takeConnection() throws InterruptedException{
         Connection connection;
@@ -78,6 +71,22 @@ public class ConnectionPool {
         }finally {
             lock.unlock();
         }
+    }
+
+    public void closeConnections(){
+
+       try {
+           for (Connection connection : connectionsTaken) {
+               connection.close();
+           }
+
+           for (Connection connection : connectionsAvailable) {
+               connection.close();
+           }
+       }catch (SQLException e){
+           logger.warn(e);
+       }
+
     }
 
 

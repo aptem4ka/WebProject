@@ -35,6 +35,7 @@ public class StringConstants {
     public final static String ROOM_LIST = "roomList";
     public final static String DAYS = "days";
     public final static String UPDATE_TYPE = "update_type";
+    public final static String CURRENT_DATE = "currentDate";
 
     public final static String REQUEST_DATE_FORMAT = "d MMM yyyy";
 

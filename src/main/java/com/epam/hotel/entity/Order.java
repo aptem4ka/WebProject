@@ -1,15 +1,18 @@
 package com.epam.hotel.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = -1228973035781116234L;
+
     private int orderID;
     private int userID;
     private int roomID;
     private Date resFrom;
     private Date resTo;
-    private Status status = Status.PROCESSING;
+    private Status status = Status.APPLIED;
     private String comment;
 
     public int getOrderID() {
@@ -96,8 +99,8 @@ public class Order {
                 '}';
     }
 
-    public static enum Status{
-        PROCESSING, APPLIED, CANCELLED;
+    public enum Status{
+        APPLIED, ACTIVE, CANCELLED, COMPLETED;
     }
 
 }

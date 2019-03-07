@@ -26,6 +26,7 @@ public class CommandManager {
         commands.put(CommandName.CONTROL, new ControlCommand());
         commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatusCommand());
         commands.put(CommandName.GUEST_BOOKING_STATUS, new GuestBookingStatusCommand());
+        commands.put(CommandName.SEARCH_USER_BY_ORDER, new SearchUserByOrderCommand());
     }
 
     public static CommandManager getInstance() {

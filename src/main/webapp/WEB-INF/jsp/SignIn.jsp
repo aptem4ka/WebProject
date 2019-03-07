@@ -27,7 +27,7 @@
 
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
-                <article class="card-body mx-auto" style="max-width: 800px;">
+                <article class="card-body" style="max-width: 800px;">
                     <h4 class="card-title mt-3 text-center">${signin}</h4>
                     <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
                         <input type="hidden" name="command" value="login"/>

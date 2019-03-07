@@ -5,9 +5,9 @@ import com.epam.hotel.dao.RoomDAO;
 import com.epam.hotel.dao.util.SQLConstants;
 import com.epam.hotel.dao.util.SqlQuery;
 import com.epam.hotel.entity.Room;
-import com.epam.hotel.entity.room_info.AllocationType;
-import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,18 +16,19 @@ import java.util.List;
 import java.util.Set;
 
 public class RoomDAOImpl extends ParentDao implements RoomDAO {
+    private final static Logger logger = LogManager.getLogger(RoomDAOImpl.class);
 
     @Override
-    public List<RoomType> roomTypes() throws DAOException {
+    public List<Room.RoomType> roomTypes() throws DAOException {
         Connection connection = getConnection();
-        List<RoomType> types=new ArrayList<>();
+        List<Room.RoomType> types=new ArrayList<>();
         ResultSet resultSet=null;
 
         try(PreparedStatement ps = connection.prepareStatement(SqlQuery.ROOM_TYPES_QUERY)) {
             resultSet = ps.executeQuery();
 
             while (resultSet.next()){
-                types.add(RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
+                types.add(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
             }
 
         }catch (SQLException e){
@@ -40,16 +41,16 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     }
 
     @Override
-    public List<AllocationType> allocationsForType(RoomType type) throws DAOException {
+    public List<Room.AllocationType> allocationsForType(Room.RoomType type) throws DAOException {
         Connection connection=getConnection();
         ResultSet resultSet=null;
-        List<AllocationType> allocationList=new ArrayList<>();
+        List<Room.AllocationType> allocationList=new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ALLOCATIONS_FOR_TYPE)){
             ps.setString(1, type.toString());
             resultSet = ps.executeQuery();
 
             while (resultSet.next()){
-                allocationList.add(AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
+                allocationList.add(Room.AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
             }
 
         }catch (SQLException e){
@@ -61,7 +62,7 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     }
 
     @Override
-    public List<AllocationType> allocationsIgnoreType() throws DAOException {
+    public List<Room.AllocationType> allocationsIgnoreType() throws DAOException {
         return null;
     }
 
@@ -87,7 +88,7 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     }
 
     @Override
-    public List<String> roomImagesByType(RoomType type) throws DAOException{
+    public List<String> roomImagesByType(Room.RoomType type) throws DAOException{
         Connection connection = getConnection();
         List<String> images = new ArrayList<>();
         ResultSet resultSet = null;
@@ -134,7 +135,7 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
 
 
     @Override
-    public String priceRange(RoomType type) throws DAOException {
+    public String priceRange(Room.RoomType type) throws DAOException {
         Connection connection = getConnection();
         ResultSet resultSet=null;
         String priceRange=null;
@@ -163,6 +164,7 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
             if (room.getType() == null) {
                 return roomsIgnoreType(psIgnoreType, room);
             } else {
+
                 return roomsByType(psByType, room);
             }
 
@@ -179,7 +181,6 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         ResultSet resultSet=null;
         java.sql.Date resFrom = new java.sql.Date(room.getResFrom().getTime());
         java.sql.Date resTo = new java.sql.Date(room.getResTo().getTime());
-
         try {
             preparedStatement.setString(1, room.getType().toString());
             preparedStatement.setString(2, room.getAllocation().toString());
@@ -190,21 +191,35 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
             preparedStatement.setDate(7, resFrom);
             preparedStatement.setDate(8, resTo);
             resultSet=preparedStatement.executeQuery();
+//TODO оптимизировать путем выноса дубликатов в отдельный метод инициализации комнаты
+            while (resultSet.next()){
 
-            if (resultSet.next()){
+
+           //     double price = resultSet.getDouble(SQLConstants.ROOM_PRICE);
+             //   room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
+              //  room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
+                //room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+                //room.setFloor(resultSet.getInt("floor"));
+
+                room = new Room();
                 room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
                 room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
+                room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
+                room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
+                room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+                room.setFloor(resultSet.getInt("floor"));
                 roomList.add(room);
             }
 
         }catch (SQLException e){
+            logger.warn(e);
             throw new DAOException(e);
         }
         return roomList;
     }
 
 
-    public List<Room> roomsIgnoreType(PreparedStatement preparedStatement, Room room) throws DAOException {
+    private List<Room> roomsIgnoreType(PreparedStatement preparedStatement, Room room) throws DAOException {
 
         ResultSet resultSet=null;
         List<Room> roomList=new ArrayList<>();
@@ -225,8 +240,10 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
                 room=new Room();
                 room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
                 room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
-                room.setType(RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
-                room.setAllocation(AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
+                room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
+                room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
+                room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+                room.setFloor(resultSet.getInt("floor"));
                 roomList.add(room);
             }
 

@@ -1,11 +1,12 @@
 package com.epam.hotel.entity;
 
-import com.epam.hotel.entity.role.AccountRole;
-
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 5431448090527565071L;
+
     private int userID;
     private String password;
     private String email;
@@ -123,5 +124,9 @@ public class User {
                 ", role='" + getRole() + '\'' +
                 ", valid=" + isValid() +
                 '}';
+    }
+
+    public enum AccountRole {
+        ADMIN,USER;
     }
 }

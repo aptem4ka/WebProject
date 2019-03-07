@@ -2,8 +2,6 @@ package com.epam.hotel.service.impl;
 
 import com.epam.hotel.dao.DaoFactory;
 import com.epam.hotel.entity.Room;
-import com.epam.hotel.entity.room_info.AllocationType;
-import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
@@ -12,7 +10,7 @@ import java.util.*;
 public class RoomServiceImpl implements RoomService {
 
     @Override
-    public List<RoomType> roomTypes() throws ServiceException {
+    public List<Room.RoomType> roomTypes() throws ServiceException {
 
         try {
             return DaoFactory.getInstance().getRoomDAO().roomTypes();
@@ -22,7 +20,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<AllocationType> allocationsForType(RoomType type) throws ServiceException {
+    public List<Room.AllocationType> allocationsForType(Room.RoomType type) throws ServiceException {
         if (type==null){
             throw new ServiceException("Null type error");
         }
@@ -35,7 +33,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<AllocationType> allocationsIgnoreType() throws ServiceException {
+    public List<Room.AllocationType> allocationsIgnoreType() throws ServiceException {
         return null;
     }
 
@@ -49,7 +47,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<String> roomTypeImages(RoomType type) throws ServiceException {
+    public List<String> roomTypeImages(Room.RoomType type) throws ServiceException {
         if (type==null){
             throw new ServiceException("Type is null");
         }
@@ -61,9 +59,9 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Map<RoomType,String> roomPreviews() throws ServiceException {
-        Map<RoomType,String> previews=new HashMap<>();
-        List<RoomType> types= roomTypes();
+    public Map<Room.RoomType,String> roomPreviews() throws ServiceException {
+        Map<Room.RoomType,String> previews=new HashMap<>();
+        List<Room.RoomType> types= roomTypes();
         List<String> previewLinks;
         try {
             previewLinks=DaoFactory.getInstance().getRoomDAO().roomPreviews();
@@ -71,7 +69,7 @@ public class RoomServiceImpl implements RoomService {
             throw new ServiceException(e);
         }
 
-        for (RoomType type:types){
+        for (Room.RoomType type:types){
 
             for (String string: previewLinks){
 
@@ -85,7 +83,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public String priceRange(RoomType type) throws ServiceException {
+    public String priceRange(Room.RoomType type) throws ServiceException {
         if (type==null){
             throw new ServiceException("Type is null");
         }

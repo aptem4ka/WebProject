@@ -1,7 +1,6 @@
 package com.epam.hotel.web.command.impl;
 
-import com.epam.hotel.entity.room_info.AllocationType;
-import com.epam.hotel.entity.room_info.RoomType;
+import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
@@ -10,6 +9,8 @@ import com.epam.hotel.web.util.ResourceBundleKeys;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class RoomInfoCommand implements Command {
     private RoomService roomService=ServiceFactory.getInstance().getRoomService();
+    private final static Logger logger = LogManager.getLogger(RoomInfoCommand.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,9 +29,9 @@ public class RoomInfoCommand implements Command {
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
         try {
-            RoomType type = RoomType.valueOf(req.getParameter(StringConstants.ROOM_TYPE).toUpperCase());
+            Room.RoomType type = Room.RoomType.valueOf(req.getParameter(StringConstants.ROOM_TYPE).toUpperCase());
             List<String> images = roomService.roomTypeImages(type);
-            List<AllocationType> allocations = roomService.allocationsForType(type);
+            List<Room.AllocationType> allocations = roomService.allocationsForType(type);
 
             List<String> facilities = new ResourceBundleKeys()
                     .getKeysByPattern(StringConstants.FACILITIES_PATTERN + req.getParameter(StringConstants.ROOM_TYPE));

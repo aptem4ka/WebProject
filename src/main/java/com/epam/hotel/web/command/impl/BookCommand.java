@@ -8,6 +8,8 @@ import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,7 @@ import java.text.SimpleDateFormat;
 
 public class BookCommand implements Command {
     private OrderService orderService= ServiceFactory.getInstance().getOrderService();
-
+    private final static Logger logger= LogManager.getLogger(BookCommand.class);
 
 
     @Override
@@ -46,7 +48,7 @@ public class BookCommand implements Command {
             }
             session.setAttribute(StringConstants.ORDER, order);
         }catch (ServiceException | ParseException e){
-            //TODO error page
+            logger.warn(e);
         }
 
             resp.sendRedirect(URLConstants.ORDER_DETAILS_COMMAND);

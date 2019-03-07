@@ -3,6 +3,8 @@ package com.epam.hotel.web.command.impl;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.print.DocFlavor;
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class ChangeLocaleCommand implements Command {
+    private final static Logger logger= LogManager.getLogger(ChangeLocaleCommand.class);
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

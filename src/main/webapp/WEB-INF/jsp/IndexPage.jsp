@@ -12,7 +12,6 @@
 
 <body>
 
-
 <jsp:include page="/WEB-INF/jsp/page_component/Navbar.jsp"/>
 
 <div class="container">

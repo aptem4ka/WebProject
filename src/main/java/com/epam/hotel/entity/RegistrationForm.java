@@ -1,8 +1,11 @@
 package com.epam.hotel.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class RegistrationForm {
+public class RegistrationForm implements Serializable {
+    private static final long serialVersionUID = 1032896608084890089L;
+
     private String name;
     private String surname;
     private String password;

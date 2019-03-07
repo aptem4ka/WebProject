@@ -1,12 +1,12 @@
 package com.epam.hotel.entity;
 
-import com.epam.hotel.entity.room_info.AllocationType;
-import com.epam.hotel.entity.room_info.RoomType;
-
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Room {
+public class Room implements Serializable {
+    private static final long serialVersionUID = 6302590932017315156L;
+
     private int roomID;
     private RoomType type;
     private AllocationType allocation;
@@ -15,6 +15,8 @@ public class Room {
     private double price;
     private int children;
     private boolean available;
+    private WindowView windowView;
+    private int floor;
 
     public Room() {
     }
@@ -85,6 +87,22 @@ public class Room {
         this.children = children;
     }
 
+    public WindowView getWindowView() {
+        return windowView;
+    }
+
+    public void setWindowView(WindowView windowView) {
+        this.windowView = windowView;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -117,5 +135,18 @@ public class Room {
                 ", children=" + getChildren() +
                 ", available=" + isAvailable() +
                 '}';
+    }
+
+    public enum AllocationType {
+        SNGL, DBL, TWN, TRPL, QDPL;
+
+    }
+
+    public enum RoomType {
+        STD, STUDIO, FAMSTUDIO, LUX, BUSINESS;
+    }
+
+    public enum WindowView {
+        CV, PV, IV
     }
 }

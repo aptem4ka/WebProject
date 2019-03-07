@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UpdateOrderStatusCommand implements Command {
-    AdminService adminService = ServiceFactory.getInstance().getAdminService();
+    private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

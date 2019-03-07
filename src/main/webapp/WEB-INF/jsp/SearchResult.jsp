@@ -4,6 +4,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 <head>
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
@@ -21,6 +22,8 @@
     <fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
     <fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
     <fmt:message bundle="${loc}" key="locale.room.result.book" var="book"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.view" var="view"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.floor" var="floor"/>
 
 
 
@@ -33,7 +36,9 @@
 
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
 
-        <div class="col-md-7" style="margin: 15px ">
+        <div class="col-md-7" style="margin-left:-15px ">
+            <div class="card bg-light">
+                <article class="card-body">
 
                 <c:if test="${empty requestScope.roomList}">
                     <h3>${sorry}</h3>
@@ -50,13 +55,27 @@
                                 <hr/>
                                 ${authorize}<br/>
                                 ${registered}
+
                                 <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
                                     <input name="name" class="form-control" placeholder="Name (ex. Tim)" type="text" required>
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
                                     <input name="surname" class="form-control" placeholder="Surname (ex. Cook)" type="text" required>
                                 </div>
+                                <!-- form-group// -->
                                 <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                                    </div>
                                     <input name="phone" class="form-control" placeholder="Phone (ex. +375291234567)" type="text" required>
                                 </div>
+
                                 <hr/>
                             </c:if>
 
@@ -71,9 +90,13 @@
                         <hr/>
                         <c:forEach items="${requestScope.roomList}" var="it">
                             <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it.type)}" var="type"/>
+                            <fmt:message bundle="${loc}" key="locale.room.view.${fn:toLowerCase(it.windowView)}" var="windowView"/>
 
-                                <input type="hidden" name="command" value="book"/>
+
+                            <input type="hidden" name="command" value="book"/>
                                 ${room_type} ${type}<br/>
+                                ${floor} ${it.floor}<br/>
+                                ${view} ${windowView}<br/>
                                 ${day_price} ${it.price}<br/>
                                 <c:set value="${it.price}" var="price"/>
                                 <c:set value="${requestScope.days}" var="days"/>
@@ -97,8 +120,11 @@
 
 
 
+                </article>
+        </div>
 
         </div>
+
     </div>
 </div>
 <jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>

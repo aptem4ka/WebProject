@@ -1,8 +1,6 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.entity.Room;
-import com.epam.hotel.entity.room_info.AllocationType;
-import com.epam.hotel.entity.room_info.RoomType;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
@@ -10,6 +8,8 @@ import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,21 +23,24 @@ import java.util.Date;
 import java.util.List;
 
 public class SearchResultCommand implements Command {
-    RoomService roomService = ServiceFactory.getInstance().getRoomService();
+    private final static Logger logger = LogManager.getLogger(SearchResultCommand.class);
+    private RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String prevURL = new URLFromRequest().createURL(req);
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
-
         Room room = new Room();
         initRoom(room,req);
         List<Room> roomList = new ArrayList<>();
         try {
+            logger.info("trying to find room by request");
             roomList = roomService.roomsByRequest(room);
+            logger.info("got roomList");
         }catch (ServiceException e){
-            //TODO error page
+            logger.warn(e);
         }
             int days = daysBetween(room.getResFrom(), room.getResTo());
             req.setAttribute(StringConstants.ROOM_LIST, roomList);
@@ -46,7 +49,7 @@ public class SearchResultCommand implements Command {
             req.setAttribute(StringConstants.RESERVED_TO, room.getResTo());
             req.setAttribute(StringConstants.CHILDREN, room.getChildren());
             req.setAttribute(StringConstants.ALLOCATION, room.getAllocation());
-
+            logger.info("dispatching to the page");
             req.getRequestDispatcher(URLConstants.SEARCH_RESULT_PAGE).forward(req,resp);
 
     }
@@ -61,17 +64,17 @@ public class SearchResultCommand implements Command {
 
         String typeString=req.getParameter(StringConstants.ROOM_TYPE);
         if (typeString!=null) {
-            room.setType(RoomType.valueOf(typeString.toUpperCase()));
+            room.setType(Room.RoomType.valueOf(typeString.toUpperCase()));
         }
 
-        SimpleDateFormat format=new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         try {
             room.setResFrom(format.parse(req.getParameter(StringConstants.RESERVED_FROM)));
             room.setResTo(format.parse(req.getParameter(StringConstants.RESERVED_TO)));
         }catch (ParseException e){
-            //TODO error page
+            logger.warn(e);
         }
-        room.setAllocation(AllocationType.valueOf(req.getParameter(StringConstants.ALLOCATION).toUpperCase()));
+        room.setAllocation(Room.AllocationType.valueOf(req.getParameter(StringConstants.ALLOCATION).toUpperCase()));
         room.setChildren(Integer.parseInt(req.getParameter(StringConstants.CHILDREN)));
     }
 }
