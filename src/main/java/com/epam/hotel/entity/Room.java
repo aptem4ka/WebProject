@@ -62,7 +62,7 @@ public class Room implements Serializable {
     }
 
     public double getPrice() {
-        int factor=(int)price/5;
+        int factor=(int)price/10;
 
         return price+(factor*children);
     }

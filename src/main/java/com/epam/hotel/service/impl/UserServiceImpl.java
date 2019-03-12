@@ -2,6 +2,7 @@ package com.epam.hotel.service.impl;
 
 import com.epam.hotel.dao.DaoFactory;
 import com.epam.hotel.dao.UserDAO;
+import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.RegistrationForm;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
@@ -12,8 +13,11 @@ import com.epam.hotel.service.validation.ValidatorManager;
 import com.epam.hotel.service.validation.ValidatorName;
 import com.epam.hotel.service.validation.impl.EmailValidator;
 import com.epam.hotel.service.validation.impl.PasswordValidator;
+import com.epam.hotel.web.util.pagination.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Provider;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -102,6 +106,39 @@ public class UserServiceImpl implements UserService {
 
         try {
             return userDAO.userDiscount(userID);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Order> activeOrderList(Pagination pagination, int userID) throws ServiceException {
+        if (pagination == null){
+            throw new ServiceException("Null paginator error");
+        }
+        if (userID<=0){
+            throw new ServiceException("incorrect userID");
+        }
+
+        try {
+            return userDAO.activeOrderList(pagination, userID);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+
+    }
+
+    @Override
+    public List<Order> orderHistoryList(Pagination pagination, int userID) throws ServiceException {
+        if (pagination == null){
+            throw new ServiceException("Null paginator error");
+        }
+        if (userID<=0){
+            throw new ServiceException("incorrect userID");
+        }
+
+        try {
+            return userDAO.orderHistoryList(pagination, userID);
         }catch (DAOException e){
             throw new ServiceException(e);
         }

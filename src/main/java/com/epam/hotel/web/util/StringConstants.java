@@ -31,6 +31,7 @@ public class StringConstants {
     public final static String LOCALE = "locale";
     public final static String ALLOCATIONS = "allocations";
     public final static String ORDER = "order";
+    public final static String ACTIVE_ORDER_LIST = "activeOrderList";
     public final static String ORDER_LIST = "orderList";
     public final static String ROOM_LIST = "roomList";
     public final static String DAYS = "days";

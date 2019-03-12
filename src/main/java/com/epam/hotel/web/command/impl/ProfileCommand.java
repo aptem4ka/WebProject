@@ -3,12 +3,15 @@ package com.epam.hotel.web.command.impl;
 import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
+import com.epam.hotel.service.AdminService;
 import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
+import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
+import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,17 +24,74 @@ import java.util.Date;
 import java.util.List;
 
 public class ProfileCommand implements Command {
-    private OrderService orderService= ServiceFactory.getInstance().getOrderService();
+    private OrderService orderService = ServiceFactory.getInstance().getOrderService();
+    private UserService userService = ServiceFactory.getInstance().getUserService();
     private final static Logger logger = LogManager.getLogger(ProfileCommand.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String prevURL = new URLFromRequest().createURL(req);
-        List<Order> orderList = null;
-
         HttpSession session = req.getSession();
         session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
+
+
+        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute("activePaginator");
+        Pagination ordersHistoryPaginator = (Pagination)req.getSession().getAttribute("historyPaginator");
+
+        if (activeOrdersPaginator == null && ordersHistoryPaginator == null){
+
+            activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
+            ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
+        }else {
+
+            String paginatorType = req.getParameter("paginatorType");
+
+            if (paginatorType!= null){
+                if (paginatorType.equals("active")){
+                    activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
+                }
+                if (paginatorType.equals("history")){
+                    ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
+                }
+            }
+        }
+
+        List<Order> activeOrderList = null;
+        List<Order> orderHistoryList = null;
+
+        try {
+            activeOrderList = userService.activeOrderList(activeOrdersPaginator, user.getUserID());
+            orderHistoryList = userService.orderHistoryList(ordersHistoryPaginator, user.getUserID());
+        }catch (ServiceException e){
+            logger.warn(e);
+        }
+/*
+        if (activeOrderList.size()<activeOrdersPaginator.getOffset()){
+            activeOrdersPaginator.setLastPage(true);
+        } else {
+            activeOrdersPaginator.setLastPage(false);
+        }
+        if (orderHistoryList.size()<ordersHistoryPaginator.getOffset()){
+            ordersHistoryPaginator.setLastPage(true);
+        } else {
+            ordersHistoryPaginator.setLastPage(false);
+        }
+        */
+
+
+        activeOrdersPaginator.lastPageControl(activeOrderList);
+        ordersHistoryPaginator.lastPageControl(orderHistoryList);
+
+      //  req.setAttribute(StringConstants.CURRENT_DATE, new Date());
+        req.setAttribute(StringConstants.ACTIVE_ORDER_LIST, activeOrderList);
+        req.setAttribute("historyOrderList", orderHistoryList);
+      //  req.setAttribute("needConfirmList", orderHistoryList);
+
+
+
+
+        /*
 
         try {
            orderList = orderService.userBookingStatistics(user.getUserID());
@@ -39,8 +99,9 @@ public class ProfileCommand implements Command {
             logger.warn(e);
         }
 
+*/
         req.setAttribute(StringConstants.CURRENT_DATE, new Date());
-        req.setAttribute(StringConstants.ORDER_LIST, orderList);
+ //       req.setAttribute(StringConstants.ORDER_LIST, orderList);
 
         req.getRequestDispatcher(URLConstants.PROFILE_PAGE).forward(req,resp);
 

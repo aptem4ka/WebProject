@@ -45,6 +45,7 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
     public Order registeredUserBooking(Order order) throws DAOException {
         Connection connection=getConnection();
         addOrder(order,connection);
+        releaseConnection(connection);
         return order;
     }
 
@@ -73,6 +74,7 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
             ps.setInt(2,order.getRoomID());
             ps.setDate(3, resFrom);
             ps.setDate(4,resTo);
+            ps.setDouble(5, order.getTotalPrice());
             ps.execute();
 
             ResultSet rs=ps.getGeneratedKeys();
@@ -96,6 +98,46 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
             ps.setString(4,user.getPhone());
 
             return ps.executeUpdate()==1;
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public double orderPrice(int userID, int orderID) throws DAOException {
+        Connection connection = getConnection();
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ACTUAL_ORDER_PRICE)){
+            ps.setInt(1, userID);
+            ps.setInt(2, orderID);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble("price");
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void editOrder(Order order) throws DAOException {
+        Connection connection = getConnection();
+
+        java.sql.Date resFrom=new java.sql.Date(order.getResFrom().getTime());
+        java.sql.Date resTo=new java.sql.Date(order.getResTo().getTime());
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.UPDATE_ORDER)){
+            ps.setInt(1, order.getRoomID());
+            ps.setDate(2, resFrom);
+            ps.setDate(3, resTo);
+            ps.setDouble(4, order.getTotalPrice());
+            ps.setInt(5, order.getOrderID());
+
+            if (ps.executeUpdate()!=1){
+                throw new DAOException("Order edit error");
+            }
+
         }catch (SQLException e){
             throw new DAOException(e);
         }

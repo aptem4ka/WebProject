@@ -27,8 +27,7 @@ public class UpdateOrderStatusCommand implements Command {
         }catch (ServiceException e){
             //TODO error page
         }
-        resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
-
-
+        resp.sendRedirect("ControllerServlet?command=control");
+       // req.getRequestDispatcher(URLConstants.CONTROL_PAGE).forward(req,resp);
     }
 }

@@ -24,4 +24,8 @@ public interface RoomService {
     String priceRange(Room.RoomType type) throws ServiceException;
 
     List<Room> roomsByRequest(Room room) throws ServiceException;
+
+    Room roomInfoByRoomID(int roomID) throws ServiceException;
+
+    List<Room> changeOrderSearchResult(Room room, int orderID) throws ServiceException;
 }

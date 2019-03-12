@@ -92,21 +92,21 @@
                 <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
                     <input type="hidden" name="command" value="search_result"/>
                     <input type="hidden" name="type" value="${type}">
-                    <div style="max-width: 500px; text-align: left">
-                        <div>
+
+                        <div style="width: 300px" align="center">
                             Дата заселения:
                             <input name="resFrom" class="form-control" type="date" required>
                             <hr/>
                         </div>
 
-                        <div>
+                        <div style="width: 300px" align="center">
                             Дата выселения:
                             <input name="resTo" class="form-control" type="date" required>
                             <hr/>
                         </div>
-
+                    <div style="max-width: 500px; text-align: left">
                         <div>
-                            Принцип размещения:<br/>
+                            <div style="text-align: center">Принцип размещения:</div>
                             <c:forEach items="${requestScope.allocations}" var="it">
                                 <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(it)}" var="allocationDesc"/>
                                 <input type="radio" id="${it}" name="allocation" value="${it}" checked> ${allocationDesc}<br/>

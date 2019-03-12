@@ -14,7 +14,10 @@
 
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
 
-        <div class="col-md-7" style="margin-top: 15px ">
+        <div class="col-md-7" style="margin-left:-15px">
+            <div class="card bg-light">
+                <article class="card-body">
+
             <h3>Информация о пользователе</h3>
             <div style="font-size: 12pt">
                 <c:set value="${sessionScope.currentUser.phone}" var="phone"/>
@@ -30,6 +33,7 @@
                 </ul>
                 <c:set value="CANCELLED" var="cancel"/>
                 <c:set value="APPLIED" var="apply"/>
+                <c:set value="COMPLETED" var="complete"/>
                 <h4>Активная бронь</h4>
 
                 <table class="table table-striped">
@@ -40,25 +44,55 @@
                         <th>Бронь с</th>
                         <th>Бронь по</th>
                         <th>Статус</th>
-                        <th>Комментарий</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.orderList}" var="it">
-                    <c:if test="${requestScope.currentDate.time lt it.resFrom.time}">
-                            <c:if test="${it.status ne cancel}">
+                    <c:forEach items="${requestScope.activeOrderList}" var="it">
+                        <fmt:formatDate value="${it.resFrom}" type="date" var="resFrom"/>
+                        <fmt:formatDate value="${it.resTo}" type="date" var="resTo"/>
+
                     <tr>
                         <td>${it.orderID}</td>
                         <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                         <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                         <td>${it.status}</td>
-                        <td>${it.comment}</td>
+                        <td>
+                            <form method="get" action="ControllerServlet">
+                                <input type="hidden" name="command" value="change_order"/>
+                                <input type="hidden" name="orderID" value="${it.orderID}"/>
+                                <input type="hidden" name="roomID" value="${it.roomID}"/>
+                                <input type="hidden" name="resFrom" value="${resFrom}"/>
+                                <input type="hidden" name="resTo" value="${resTo}"/>
+
+                                <input type="hidden" name="userID" value="${sessionScope.currentUser.userID}"/>
+                                <button class="btn btn-info btn-sm" type="submit">
+                                Изменить
+                                </button>
+                            </form>
+                        </td>
                     </tr>
-                        </c:if>
-                    </c:if>
+
                     </c:forEach>
                     </tbody>
                 </table>
+
+                <form action="ControllerServlet" method="get">
+                    <input type="hidden" name="command" value="profile"/>
+                    <input type="hidden" name="paginatorType" value="active">
+                    <ul class="pagination justify-content-center">
+                        <c:if test="${sessionScope.activePaginator.startPos > '0'}">
+                            <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                        </c:if>
+                        <c:if test="${sessionScope.activePaginator.lastPage!=true}">
+                            <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                        </c:if>
+
+                    </ul>
+                </form>
+
+
+
                 <hr/>
                 <h4>История бронирования</h4>
 
@@ -74,24 +108,37 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.orderList}" var="it">
-                        <c:if test="${(requestScope.currentDate.time gt it.resFrom.time) || (it.status eq cancel)}">
+                    <c:forEach items="${requestScope.historyOrderList}" var="it">
                             <tr>
                                 <td>${it.orderID}</td>
                                 <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                 <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
-                                <td><c:if test="${it.status eq apply}">COMPLETED</c:if><c:if test="${it.status ne apply}">${it.status}</c:if></td>
+                                <td>${it.status}</td>
                                 <td>${it.comment}</td>
                             </tr>
-                        </c:if>
 
                     </c:forEach>
 
                     </tbody>
                 </table>
 
-            </div>
+                <form action="ControllerServlet" method="get">
+                    <input type="hidden" name="command" value="profile"/>
+                    <input type="hidden" name="paginatorType" value="history">
+                    <ul class="pagination justify-content-center">
+                        <c:if test="${sessionScope.historyPaginator.startPos > '0'}">
+                            <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                        </c:if>
+                        <c:if test="${sessionScope.historyPaginator.lastPage!=true}">
+                            <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                        </c:if>
 
+                    </ul>
+                </form>
+
+            </div>
+                </article>
+            </div>
         </div>
     </div>
 </div>

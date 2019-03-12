@@ -12,14 +12,11 @@
 
     <Loggers>
 
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="STDOUT"/>
         </Root>
 
-        <Logger level="error" name="com.epam.hotel.dao.util.ConnectionPool" additivity="false">
-            <AppenderRef ref="FILE"/>
-            <AppenderRef ref="STDOUT"/>
-        </Logger>
+
 
 
     </Loggers>

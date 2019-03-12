@@ -18,13 +18,17 @@
         <jsp:include page="/WEB-INF/jsp/page_component/Menubar.jsp"/>
 
 
-        <div class="col-md-7">
+        <div class="col-md-7" style="margin-left:-15px">
+
+            <div class="card bg-light">
+                <article class="card-body">
+
             <h3 style="text-align: center">Поздравляем!</h3>
             <br/>
             <p style="text-align: center">Ваша бронь принята на обработку.<br/>
                 Данные заказа можно посмотреть в личном кабинете.
                 <c:if test="${sessionScope.currentUser==null}">
-                Незарегистрированные пользователи могут проверить статус заказа <a href="#">здесь</a>.</p>
+                Незарегистрированные пользователи могут узнать статус заказа у администратора отеля.</p>
                 </c:if>
             <div>
                 <ul>
@@ -35,7 +39,8 @@
 
             </div>
 
-
+                </article>
+            </div>
         </div>
     </div>
 </div>

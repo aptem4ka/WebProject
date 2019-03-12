@@ -36,6 +36,18 @@ public class OrderServiceImpl implements OrderService {
                 || order.getResFrom().after(order.getResTo())){
             throw new ServiceException("Incorrect date error");
         }
+        if (order.getTotalPrice()<=0){
+            throw new ServiceException("incorrect price");
+        }
+        if(order.getRoomID()<=0){
+            throw new ServiceException("incorrect roomID");
+        }
+        if(order.getOrderID()<=0){
+            throw new ServiceException("incorrect orderID");
+        }
+        if (order.getUserID()<0){
+            throw new ServiceException("incorrect userID");
+        }
         try {
             return orderDAO.registeredUserBooking(order);
         }catch (DAOException e){
@@ -45,19 +57,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order unregisteredUserBooking(Order order, User user) throws ServiceException {
+
         if(!validatorManager.getValidator(ValidatorName.NAME).isValid(user.getName())
                 || !validatorManager.getValidator(ValidatorName.NAME).isValid(user.getSurname())){
+            user.setValid(false);
             throw new ServiceException("Incorrect name or surname");
         }
 
         if (!validatorManager.getValidator(ValidatorName.PHONE).isValid(user.getPhone())){
+            user.setValid(false);
             throw new ServiceException("Incorrect phone format");
         }
 
         if (!validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResFrom())
                 || !validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResTo())
                 || order.getResFrom().after(order.getResTo())){
-
             throw new ServiceException("Incorrect date error");
         }
 
@@ -68,5 +82,44 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public double orderPrice(int userID, int orderID) throws ServiceException {
+        if (userID<=0 || orderID<=0){
+            throw new ServiceException("Incorrect order or user ID");
+        }
 
+        try {
+            return orderDAO.orderPrice(userID, orderID);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void editOrder(Order order) throws ServiceException {
+
+        if (!validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResFrom())
+                || !validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResTo())
+                || order.getResFrom().after(order.getResTo())){
+            throw new ServiceException("Incorrect date error");
+        }
+        if (order.getTotalPrice()<=0){
+            throw new ServiceException("incorrect price");
+        }
+        if(order.getRoomID()<=0){
+            throw new ServiceException("incorrect roomID");
+        }
+        if(order.getOrderID()<=0){
+            throw new ServiceException("incorrect orderID");
+        }
+        if (order.getUserID()<0){
+            throw new ServiceException("incorrect userID");
+        }
+
+        try {
+            orderDAO.editOrder(order);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
 }

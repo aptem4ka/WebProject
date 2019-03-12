@@ -15,6 +15,7 @@ public class CommandManager {
         commands.put(CommandName.ROOM_LIST,new RoomListCommand());
         commands.put(CommandName.LOGOUT,new LogoutCommand());
         commands.put(CommandName.SEARCH_RESULT, new SearchResultCommand());
+        commands.put(CommandName.SEARCH_RESULT_PAGE, new SearchResultPageCommand());
         commands.put(CommandName.INDEX_PAGE, new IndexPageCommand());
         commands.put(CommandName.REGISTER_PAGE, new RegisterPageCommand());
         commands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
@@ -25,8 +26,11 @@ public class CommandManager {
         commands.put(CommandName.ORDER_DETAILS, new OrderDetailsCommand());
         commands.put(CommandName.CONTROL, new ControlCommand());
         commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatusCommand());
-        commands.put(CommandName.GUEST_BOOKING_STATUS, new GuestBookingStatusCommand());
         commands.put(CommandName.SEARCH_USER_BY_ORDER, new SearchUserByOrderCommand());
+        commands.put(CommandName.CHANGE_ORDER, new ChangeOrderCommand());
+        commands.put(CommandName.CHANGE_ORDER_RESULT, new ChangeOrderResultCommand());
+        commands.put(CommandName.CHANGE_ORDER_RESULT_PAGE, new ChangeOrderResultPageCommand());
+        commands.put(CommandName.EDIT_BOOK, new EditBookCommand());
     }
 
     public static CommandManager getInstance() {

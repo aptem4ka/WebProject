@@ -17,7 +17,7 @@
     <fmt:message bundle="${loc}" key="locale.room.result.period" var="period_of_stay"/>
     <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation_type"/>
     <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
-    <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(requestScope.allocation)}" var="allocation"/>
+    <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(sessionScope.allocation)}" var="allocation"/>
     <fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
     <fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
     <fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
@@ -40,41 +40,43 @@
             <div class="card bg-light">
                 <article class="card-body">
 
-                <c:if test="${empty requestScope.roomList}">
+                <c:if test="${empty sessionScope.roomList}">
                     <h3>${sorry}</h3>
                     ${search_fail}
                 </c:if>
-                <c:if test="${not empty requestScope.roomList}">
+                <c:if test="${not empty sessionScope.roomList}">
 
                 <div >
                     <div>
-                        <fmt:formatDate value="${requestScope.resFrom}" type="date"  var="resFrom" />
-                        <fmt:formatDate value="${requestScope.resTo}" type="date" var="resTo"/>
+                        <fmt:formatDate value="${sessionScope.resFrom}" type="date"  var="resFrom" />
+                        <fmt:formatDate value="${sessionScope.resTo}" type="date" var="resTo"/>
                         <form action="ControllerServlet" method="post">
                             <c:if test="${sessionScope.currentUser == null}">
-                                <hr/>
-                                ${authorize}<br/>
-                                ${registered}
 
-                                <div class="form-group input-group">
+                                <hr/>
+                                ${authorize} ${registered}
+                            <div align="center">
+                                <div class="form-group input-group" style="width: 300px">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                     </div>
                                     <input name="name" class="form-control" placeholder="Name (ex. Tim)" type="text" required>
                                 </div> <!-- form-group// -->
-                                <div class="form-group input-group">
+                                <div class="form-group input-group" style="width: 300px">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                     </div>
                                     <input name="surname" class="form-control" placeholder="Surname (ex. Cook)" type="text" required>
                                 </div>
                                 <!-- form-group// -->
-                                <div class="form-group input-group">
+                                <div class="form-group input-group" style="width: 300px">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                                     </div>
                                     <input name="phone" class="form-control" placeholder="Phone (ex. +375291234567)" type="text" required>
                                 </div>
+                            </div>
+                                <c:if test="${param.incorrectData eq true}"><span style="color: red">Пожалуйста, введите корректные данные в соответствии с шаблоном</span></c:if>
 
                                 <hr/>
                             </c:if>
@@ -83,12 +85,12 @@
                         <h5>${period_of_stay} ${resFrom} - ${resTo}<br/>
 
                             ${allocation_type}  ${allocation}<br/>
-                            ${baby_cots} ${requestScope.children}<br/>
+                            ${baby_cots} ${sessionScope.children}<br/>
 
                         </h5>
 
                         <hr/>
-                        <c:forEach items="${requestScope.roomList}" var="it">
+                        <c:forEach items="${sessionScope.roomList}" var="it">
                             <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it.type)}" var="type"/>
                             <fmt:message bundle="${loc}" key="locale.room.view.${fn:toLowerCase(it.windowView)}" var="windowView"/>
 
@@ -99,9 +101,11 @@
                                 ${view} ${windowView}<br/>
                                 ${day_price} ${it.price}<br/>
                                 <c:set value="${it.price}" var="price"/>
-                                <c:set value="${requestScope.days}" var="days"/>
+                                <c:set value="${sessionScope.days}" var="days"/>
                                 <h5>${period_price} ${price*days}</h5>
-
+                                <c:if test="${sessionScope.currentUser.discount>0}">
+                                <h5>Цена со скидкой: ${(price*days)*(100-sessionScope.currentUser.discount)/100}</h5></c:if>
+                                <input type="hidden" name="total_price" value="${(price*days)*(100-sessionScope.currentUser.discount)/100}"/>
                                 <input type="hidden" name="roomID" value="${it.roomID}"/>
                                 <input type="hidden"  name="resFrom" value="${resFrom}"/>
                                 <input type="hidden" name="resTo" value="${resTo}"/>
@@ -114,9 +118,9 @@
                         </form>
                     </div>
 
-                    </c:if>
-                </div>
 
+                </div>
+                </c:if>
 
 
 

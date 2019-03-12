@@ -15,4 +15,8 @@ public interface OrderService {
 
     List<Order> userBookingStatistics(int userID) throws ServiceException;
 
+    double orderPrice(int userID, int orderID) throws ServiceException;
+
+    void editOrder(Order order) throws ServiceException;
+
 }

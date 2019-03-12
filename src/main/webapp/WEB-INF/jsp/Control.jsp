@@ -24,14 +24,14 @@
                                 <tr>
                                     <th>Заказ</th>
                                     <th>ID юзера</th>
-                                    <th>Заказ</th>
+                                    <th>Номер</th>
                                     <th>Бронь с</th>
                                     <th>Бронь по</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${requestScope.orderList}" var="it">
+                                <c:forEach items="${requestScope.activeOrderList}" var="it">
                                     <c:if test="${it.resFrom.time gt requestScope.currentDate.time}">
                                     <tr>
                                         <td>${it.orderID}</td>
@@ -66,6 +66,19 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
+                    <form action="ControllerServlet" method="get">
+                        <input type="hidden" name="command" value="control"/>
+                        <input type="hidden" name="paginatorType" value="active">
+                    <ul class="pagination justify-content-center">
+                        <c:if test="${sessionScope.activePaginator.startPos > '0'}">
+                            <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                        </c:if>
+                        <c:if test="${sessionScope.activePaginator.lastPage!=true}">
+                            <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                        </c:if>
+
+                    </ul>
+                    </form>
 
                     <hr/>
 
@@ -83,7 +96,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.orderList}" var="it">
+                        <c:forEach items="${requestScope.needConfirmList}" var="it">
 
                             <c:if test="${(it.resFrom.time eq requestScope.currentDate.time || it.resFrom.time lt requestScope.currentDate.time) }">
                                 <tr>
@@ -101,11 +114,7 @@
                                                 <li>
 
                                                     <button type="submit" class="btn btn-success btn-sm" name="update_type" value="completed">Arrived</button>
-
-                                                </li>
-
-                                                <li class="dropdown  dropright nav-item"><button data-toggle="dropdown" class="btn btn-danger btn-sm" >Cancel</button>
-
+                                                    <button data-toggle="dropdown" class="btn btn-danger btn-sm" >Cancel</button>
                                                     <div class="dropdown-menu" style="width: 300px">
 
                                                         <div class="form-group">
@@ -115,6 +124,11 @@
                                                         <button type="submit" class="btn btn-danger" name="update_type" value="cancelled">Cancel order</button>
 
                                                     </div>
+                                                </li>
+
+                                                <li class="dropdown  dropright nav-item">
+
+
 
                                                 </li>
 
@@ -126,6 +140,20 @@
                         </c:forEach>
                         </tbody>
                     </table>
+
+                    <form action="ControllerServlet" method="get">
+                        <input type="hidden" name="command" value="control"/>
+                        <input type="hidden" name="paginatorType" value="needConfirm">
+                        <ul class="pagination justify-content-center">
+                            <c:if test="${sessionScope.needConfirmPaginator.startPos > '0'}">
+                                <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                            </c:if>
+                            <c:if test="${sessionScope.needConfirmPaginator.lastPage!=true}">
+                                <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                            </c:if>
+
+                        </ul>
+                    </form>
 
                 </article>
         </div>

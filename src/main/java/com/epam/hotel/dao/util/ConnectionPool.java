@@ -57,6 +57,9 @@ public class ConnectionPool {
         }finally {
             lock.unlock();
         }
+        if (connectionsTaken.size()==5){
+            System.out.println("ALL CONNECTIONS ARE BUSY");
+        }
         return connection;
     }
 

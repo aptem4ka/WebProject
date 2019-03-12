@@ -19,7 +19,10 @@
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
                 <article class="card-body">
-
+                <c:if test="${requestScope.user==null}">
+                    <h4>По запрашиваемому номеру заказа ничего не найдено.</h4>
+                </c:if>
+                    <c:if test="${requestScope.user!=null}">
                     <h4>Информация о пользователе</h4>
 
                     <ul>
@@ -99,6 +102,7 @@
 
                         </tbody>
                     </table>
+                    </c:if>
                     </c:if>
 
 

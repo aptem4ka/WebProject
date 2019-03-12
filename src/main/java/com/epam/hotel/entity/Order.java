@@ -13,7 +13,16 @@ public class Order implements Serializable {
     private Date resFrom;
     private Date resTo;
     private Status status = Status.APPLIED;
+    private double totalPrice;
     private String comment;
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public int getOrderID() {
         return orderID;

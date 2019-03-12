@@ -24,4 +24,9 @@ public interface RoomDAO {
 
     List<Room> roomSearchResult(Room room) throws DAOException;
 
+    List<Room> changeOrderSearchResult(Room room, int orderID) throws DAOException;
+
+    Room roomInfoByRoomID(int roomID) throws DAOException;
+
+
 }

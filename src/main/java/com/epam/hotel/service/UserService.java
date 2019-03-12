@@ -1,10 +1,13 @@
 package com.epam.hotel.service;
 
+import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.RegistrationForm;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
+import com.epam.hotel.web.util.pagination.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface UserService {
 
@@ -18,5 +21,8 @@ public interface UserService {
 
     int userDiscount(int userID) throws ServiceException;
 
+    List<Order> activeOrderList(Pagination pagination, int userID) throws ServiceException;
+
+    List<Order> orderHistoryList(Pagination pagination, int userID) throws ServiceException;
 
 }

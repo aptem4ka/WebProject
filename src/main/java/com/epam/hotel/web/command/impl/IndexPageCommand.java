@@ -1,5 +1,6 @@
 package com.epam.hotel.web.command.impl;
 
+import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public class IndexPageCommand implements Command {
@@ -26,18 +28,20 @@ public class IndexPageCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String prevURL = new URLFromRequest().createURL(req);
         HttpSession session=req.getSession();
+        session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+
         Set<String> images=null;
-        if (session.getAttribute(StringConstants.CAROUSEL_IMAGES)==null){
+        List<Room.AllocationType> allocations = null;
+
             try {
                  images = roomService.allRoomImages();
+                 allocations = roomService.allocationsIgnoreType();
             }catch (ServiceException e){
                 logger.warn(e);
             }
-            req.setAttribute(StringConstants.CAROUSEL_IMAGES,images);
-        }
-       // List<AllocationType> allocations = roomService.allocationsForType(type);
+            req.setAttribute(StringConstants.CAROUSEL_IMAGES, images);
+            req.setAttribute(StringConstants.ALLOCATIONS, allocations);
 
-        session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
         req.getRequestDispatcher(URLConstants.INDEX_PAGE).forward(req,resp);
 

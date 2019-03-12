@@ -7,7 +7,6 @@ import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,18 +18,19 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class BookCommand implements Command {
-    private OrderService orderService= ServiceFactory.getInstance().getOrderService();
-    private final static Logger logger= LogManager.getLogger(BookCommand.class);
-
+public class EditBookCommand implements Command {
+    private final static Logger logger= LogManager.getLogger(EditBookCommand.class);
+    private OrderService orderService = ServiceFactory.getInstance().getOrderService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Order order=new Order();
+
         HttpSession session=req.getSession();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
+
+        Order order=new Order();
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
-        User guest = new User();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
         try {
             order.setResFrom(dateFormat.parse(req.getParameter(StringConstants.RESERVED_FROM)));
             order.setResTo(dateFormat.parse(req.getParameter(StringConstants.RESERVED_TO)));
@@ -39,25 +39,27 @@ public class BookCommand implements Command {
             logger.warn(e);
         }
 
+        double oldPrice = (double)session.getAttribute("old_price");
+        double difference = Double.parseDouble(req.getParameter("difference"));
+        double orderPrice = oldPrice+difference;
+
+        order.setOrderID((int)session.getAttribute("orderID"));
+        order.setUserID(user.getUserID());
+        order.setTotalPrice(orderPrice);
+        order.setRoomID(Integer.parseInt(req.getParameter("roomID")));
+
         try {
-            if (user!=null){
-                order.setUserID(user.getUserID());
-                order = orderService.registeredUserBooking(order);
-            }else {
-                guest.setName(req.getParameter(StringConstants.NAME));
-                guest.setSurname(req.getParameter(StringConstants.SURNAME));
-                guest.setPhone(req.getParameter(StringConstants.PHONE));
-                order = orderService.unregisteredUserBooking(order, guest);
-
-            }
-            session.setAttribute(StringConstants.ORDER, order);
-            resp.sendRedirect(URLConstants.ORDER_DETAILS_COMMAND);
-
+            orderService.editOrder(order);
         }catch (ServiceException e){
             logger.warn(e);
-            resp.sendRedirect((String)session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectData=true");
-
+            resp.sendRedirect((String)session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectDate=true");
         }
+
+        session.setAttribute("resFrom", order.getResFrom());
+        session.setAttribute("resTo", order.getResTo());
+        session.setAttribute("difference", difference);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/EditInfo.jsp").forward(req,resp);
 
 
     }
