@@ -64,7 +64,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
     @Override
     public List<Order> needConfirmationOrderList(Pagination pagination) throws DAOException {
-        System.out.println("entered in needconfirmationorderlist");
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
         Order order = null;
@@ -76,9 +75,8 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ps.setInt(2,pagination.getStartPos());
             ps.setInt(3, pagination.getOffset());
 
-            System.out.println("executing query with start pos="+pagination.getStartPos()+"and offset="+pagination.getOffset());
             resultSet = ps.executeQuery();
-            System.out.println("after execution query");
+
 
             while (resultSet.next()) {
                 order = new Order();
@@ -182,5 +180,44 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             releaseConnection(connection);
         }
 
+    }
+
+    @Override
+    public List<Order> searchOrderByFullName(String name, String surname) throws DAOException {
+        Connection connection = getConnection();
+        List<Order> orderList = new ArrayList<>();
+        Order order = null;
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.SEARCH_ORDER_BY_FULLNAME)){
+            ps.setString(1, "%"+name+"%");
+            ps.setString(2, "%"+surname+"%");
+            ps.setString(3, "%"+name+"%");
+            ps.setString(4, "%"+surname+"%");
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()){
+                order = new Order();
+                order.setUserID(resultSet.getInt("userID"));
+                order.setOrderID(resultSet.getInt("orderID"));
+                order.setResFrom(new Date(resultSet.getDate("resFrom").getTime()));
+                order.setResTo(new Date(resultSet.getDate("resTo").getTime()));
+                orderList.add(order);
+            }
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }
+
+        return orderList;
+    }
+
+    @Override
+    public Order searchOrderByName(String name) throws DAOException {
+        return null;
+    }
+
+    @Override
+    public Order searchOrderBySurname(String surname) throws DAOException {
+        return null;
     }
 }

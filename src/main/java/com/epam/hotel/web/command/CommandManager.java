@@ -31,6 +31,7 @@ public class CommandManager {
         commands.put(CommandName.CHANGE_ORDER_RESULT, new ChangeOrderResultCommand());
         commands.put(CommandName.CHANGE_ORDER_RESULT_PAGE, new ChangeOrderResultPageCommand());
         commands.put(CommandName.EDIT_BOOK, new EditBookCommand());
+        commands.put(CommandName.SEARCH_ORDER_BY_NAME, new SearchOrderByNameCommand());
     }
 
     public static CommandManager getInstance() {

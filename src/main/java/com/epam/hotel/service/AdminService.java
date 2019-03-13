@@ -17,4 +17,6 @@ public interface AdminService {
     void updateOrderStatus(Order order) throws ServiceException;
 
     User searchUserByOrder(int orderID) throws ServiceException;
+
+    List<Order> searchOrderByName(String name, String surname) throws ServiceException;
 }

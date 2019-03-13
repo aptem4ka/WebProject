@@ -7,12 +7,14 @@ import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.AdminService;
+import com.epam.hotel.service.validation.ValidatorManager;
+import com.epam.hotel.service.validation.ValidatorName;
 import com.epam.hotel.web.util.pagination.Pagination;
 
 import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
-
+    private ValidatorManager validatorManager=ValidatorManager.getInstance();
     private AdminDAO adminDAO = DaoFactory.getInstance().getAdminDAO();
 
     @Override
@@ -76,5 +78,21 @@ public class AdminServiceImpl implements AdminService {
         }catch (DAOException e){
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<Order> searchOrderByName(String name, String surname) throws ServiceException {
+        try {
+            if (validatorManager.getValidator(ValidatorName.NAME).isValid(name)
+                    && validatorManager.getValidator(ValidatorName.NAME).isValid(surname)){
+                return adminDAO.searchOrderByFullName(name, surname);
+            }
+
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+
+        return null;
+
     }
 }

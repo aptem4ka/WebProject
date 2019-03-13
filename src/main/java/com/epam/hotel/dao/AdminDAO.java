@@ -19,4 +19,10 @@ public interface AdminDAO {
 
     User searchUserByOrder(int orderID) throws DAOException;
 
+    List<Order> searchOrderByFullName(String name, String surname) throws DAOException;
+
+    Order searchOrderByName(String name) throws DAOException;
+
+    Order searchOrderBySurname(String surname) throws DAOException;
+
 }

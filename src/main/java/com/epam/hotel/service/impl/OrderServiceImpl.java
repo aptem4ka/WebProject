@@ -42,10 +42,7 @@ public class OrderServiceImpl implements OrderService {
         if(order.getRoomID()<=0){
             throw new ServiceException("incorrect roomID");
         }
-        if(order.getOrderID()<=0){
-            throw new ServiceException("incorrect orderID");
-        }
-        if (order.getUserID()<0){
+        if (order.getUserID()<=0){
             throw new ServiceException("incorrect userID");
         }
         try {

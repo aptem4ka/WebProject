@@ -34,10 +34,12 @@ public class BookCommand implements Command {
         try {
             order.setResFrom(dateFormat.parse(req.getParameter(StringConstants.RESERVED_FROM)));
             order.setResTo(dateFormat.parse(req.getParameter(StringConstants.RESERVED_TO)));
-
         }catch (ParseException e) {
             logger.warn(e);
         }
+
+            order.setTotalPrice(Double.parseDouble(req.getParameter("total_price")));
+            order.setRoomID(Integer.parseInt(req.getParameter("roomID")));
 
         try {
             if (user!=null){

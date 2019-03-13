@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Order implements Serializable {
+public class Order implements Serializable{
     private static final long serialVersionUID = -1228973035781116234L;
 
     private int orderID;
@@ -79,6 +79,8 @@ public class Order implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
