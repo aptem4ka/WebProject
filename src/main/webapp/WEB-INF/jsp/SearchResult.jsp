@@ -90,12 +90,13 @@
                         </h5>
 
                         <hr/>
+                            <input type="hidden" name="command" value="book"/>
                         <c:forEach items="${sessionScope.roomList}" var="it">
                             <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it.type)}" var="type"/>
                             <fmt:message bundle="${loc}" key="locale.room.view.${fn:toLowerCase(it.windowView)}" var="windowView"/>
 
 
-                            <input type="hidden" name="command" value="book"/>
+
                                 ${room_type} ${type}<br/>
                                 ${floor} ${it.floor}<br/>
                                 ${view} ${windowView}<br/>
@@ -105,12 +106,13 @@
                                 <h5>${period_price} ${price*days}</h5>
                                 <c:if test="${sessionScope.currentUser.discount>0}">
                                 <h5>Цена со скидкой: ${(price*days)*(100-sessionScope.currentUser.discount)/100}</h5></c:if>
-                                <input type="hidden" name="total_price" value="${(price*days)*(100-sessionScope.currentUser.discount)/100}"/>
-                                <input type="hidden" name="roomID" value="${it.roomID}"/>
+
+                                <input type="hidden" name="total_price${it.roomID}" value="${(price*days)*(100-sessionScope.currentUser.discount)/100}"/>
+                                <input type="hidden" name="roomID${it.roomID}" value="${it.roomID}"/>
                                 <input type="hidden"  name="resFrom" value="${resFrom}"/>
                                 <input type="hidden" name="resTo" value="${resTo}"/>
 
-                                <button type="submit" class="btn btn-info">${book}</button>
+                                <button type="submit" class="btn btn-info" name="formNumber" value="${it.roomID}">${book}</button>
 
 
                         <hr/>

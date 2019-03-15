@@ -25,9 +25,33 @@
 
         <form method="post" action="ControllerServlet">
             <input type="hidden" name="command" value="search_order_by_name"/>
-            Поиск пользователя по имени и фамилии<hr/>
+            Поиск заказа по имени и фамилии<hr/>
             <input type="text" class="form-control" name="name" placeholder="Имя" required/><br/>
             <input type="text" class="form-control" name="surname" placeholder="Фамилия" required/><br/>
+
+            <button style="margin-top: 5px" type="submit" class="btn btn-info btn-sm">Найти</button>
+
+        </form>
+
+        <hr style="border-top: 4px double #8c8b8b;"/>
+
+
+        <form method="post" action="ControllerServlet">
+            <input type="hidden" name="command" value="search_order_by_phone"/>
+            Поиск заказа по номеру телефона<hr/>
+            <input type="text" class="form-control" name="phone" placeholder="Телефон" value="+" required/><br/>
+
+            <button style="margin-top: 5px" type="submit" class="btn btn-info btn-sm">Найти</button>
+
+        </form>
+
+        <hr style="border-top: 4px double #8c8b8b;"/>
+
+
+        <form method="post" action="ControllerServlet">
+            <input type="hidden" name="command" value="search_user_by_id"/>
+            Поиск пользователя по ID<hr/>
+            <input type="number" class="form-control" name="userID" placeholder="ID" required/><br/>
 
             <button style="margin-top: 5px" type="submit" class="btn btn-info btn-sm">Найти</button>
 

@@ -39,6 +39,8 @@ public class EditBookCommand implements Command {
             logger.warn(e);
         }
 
+        System.out.println("resFrom is "+order.getResFrom());
+
         double oldPrice = (double)session.getAttribute("old_price");
         double difference = Double.parseDouble(req.getParameter("difference"));
         double orderPrice = oldPrice+difference;

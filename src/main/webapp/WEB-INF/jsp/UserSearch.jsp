@@ -20,7 +20,7 @@
             <div class="card bg-light">
                 <article class="card-body">
                 <c:if test="${requestScope.user==null}">
-                    <h4>По запрашиваемому номеру заказа ничего не найдено.</h4>
+                    <h4>По запрашиваемым данным ничего не найдено.</h4>
                 </c:if>
                     <c:if test="${requestScope.user!=null}">
                     <h4>Информация о пользователе</h4>
@@ -38,6 +38,7 @@
                     </ul>
 
                     <hr/>
+                    </c:if>
 
                     <c:if test="${requestScope.user.userID != 0}">
                     <c:set value="CANCELLED" var="cancel"/>
@@ -57,9 +58,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.orderList}" var="it">
-                            <c:if test="${requestScope.currentDate.time lt it.resFrom.time}">
-                                <c:if test="${it.status ne cancel}">
+                        <c:forEach items="${requestScope.activeOrderList}" var="it">
+
                                     <tr>
                                         <td>${it.orderID}</td>
                                         <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
@@ -67,11 +67,50 @@
                                         <td>${it.status}</td>
                                         <td>${it.comment}</td>
                                     </tr>
-                                </c:if>
-                            </c:if>
+
                         </c:forEach>
                         </tbody>
                     </table>
+
+                    <c:if test="${requestScope.searcherCommand eq 'search_user_by_id'}">
+                        <form action="ControllerServlet" method="get">
+                            <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
+                            <input type="hidden" name="paginatorType" value="active">
+                            <input type="hidden" name="userID" value="${requestScope.user.userID}">
+                            <input type="hidden" name="orderID" value="${requestScope.orderID}">
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${sessionScope.activePaginator.startPos > '0'}">
+                                    <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                                </c:if>
+                                <c:if test="${sessionScope.activePaginator.lastPage!=true}">
+                                    <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                                </c:if>
+
+                            </ul>
+                        </form>
+                    </c:if>
+
+                        <c:if test="${requestScope.searcherCommand eq 'search_user_by_order'}">
+
+                            <form action="ControllerServlet" method="get">
+                                <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
+                                <input type="hidden" name="paginatorType" value="active">
+                                <input type="hidden" name="userID" value="${requestScope.user.userID}">
+                                <input type="hidden" name="orderID" value="${requestScope.orderID}">
+                                <ul class="pagination justify-content-center">
+                                    <c:if test="${sessionScope.searchByOrderActivePaginator.startPos > '0'}">
+                                        <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.searchByOrderActivePaginator.lastPage!=true}">
+                                        <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                                    </c:if>
+
+                                </ul>
+                            </form>
+
+                        </c:if>
+
+
                     <hr/>
                     <h4>История бронирования</h4>
 
@@ -87,8 +126,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.orderList}" var="it">
-                            <c:if test="${(requestScope.currentDate.time gt it.resFrom.time) || (it.status eq cancel)|| (it.status eq complete)}">
+                        <c:forEach items="${requestScope.historyOrderList}" var="it">
+
                                 <tr>
                                     <td>${it.orderID}</td>
                                     <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
@@ -96,13 +135,49 @@
                                     <td><c:if test="${it.status eq apply}">COMPLETED</c:if><c:if test="${it.status ne apply}">${it.status}</c:if></td>
                                     <td>${it.comment}</td>
                                 </tr>
-                            </c:if>
 
                         </c:forEach>
 
                         </tbody>
                     </table>
+                    <c:if test="${requestScope.searcherCommand eq 'search_user_by_id'}">
+                        <form action="ControllerServlet" method="get">
+                            <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
+                            <input type="hidden" name="paginatorType" value="history">
+                            <input type="hidden" name="userID" value="${requestScope.user.userID}">
+                            <input type="hidden" name="orderID" value="${requestScope.orderID}">
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${sessionScope.historyPaginator.startPos > '0'}">
+                                    <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                                </c:if>
+                                <c:if test="${sessionScope.historyPaginator.lastPage!=true}">
+                                    <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                                </c:if>
+
+                            </ul>
+                        </form>
                     </c:if>
+
+                        <c:if test="${requestScope.searcherCommand eq 'search_user_by_order'}">
+                            <form action="ControllerServlet" method="get">
+                                <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
+                                <input type="hidden" name="paginatorType" value="history">
+                                <input type="hidden" name="userID" value="${requestScope.user.userID}">
+                                <input type="hidden" name="orderID" value="${requestScope.orderID}">
+                                <ul class="pagination justify-content-center">
+                                    <c:if test="${sessionScope.searchByOrderHistoryPaginator.startPos > '0'}">
+                                        <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.searchByOrderHistoryPaginator.lastPage!=true}">
+                                        <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                                    </c:if>
+
+                                </ul>
+                            </form>
+                        </c:if>
+
+
+
                     </c:if>
 
 

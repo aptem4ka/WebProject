@@ -70,13 +70,12 @@
                         <input type="hidden" name="command" value="control"/>
                         <input type="hidden" name="paginatorType" value="active">
                     <ul class="pagination justify-content-center">
-                        <c:if test="${sessionScope.activePaginator.startPos > '0'}">
+                        <c:if test="${sessionScope.activeOrdersPaginator.startPos > '0'}">
                             <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
                         </c:if>
                         <c:if test="${sessionScope.activePaginator.lastPage!=true}">
                             <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
                         </c:if>
-
                     </ul>
                     </form>
 
@@ -118,7 +117,7 @@
                                                     <div class="dropdown-menu" style="width: 300px">
 
                                                         <div class="form-group">
-                                                            <label for="comment">Comment</label>
+                                                            <label for="comment1">Comment</label>
                                                             <input type="text" name="comment" class="form-control" id="comment1" placeholder="Comment">
                                                         </div>
                                                         <button type="submit" class="btn btn-danger" name="update_type" value="cancelled">Cancel order</button>

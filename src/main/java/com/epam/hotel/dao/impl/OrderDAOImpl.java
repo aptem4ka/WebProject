@@ -127,6 +127,7 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
 
         java.sql.Date resFrom=new java.sql.Date(order.getResFrom().getTime());
         java.sql.Date resTo=new java.sql.Date(order.getResTo().getTime());
+
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.UPDATE_ORDER)){
             ps.setInt(1, order.getRoomID());
             ps.setDate(2, resFrom);

@@ -1,6 +1,7 @@
 package com.epam.hotel.dao;
 
 import com.epam.hotel.entity.Order;
+import com.epam.hotel.entity.Review;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.web.util.pagination.Pagination;
@@ -17,12 +18,15 @@ public interface AdminDAO {
 
     void updateOrderStatus(Order order) throws DAOException;
 
+    void updateReviewStatus(Review review) throws DAOException;
+
     User searchUserByOrder(int orderID) throws DAOException;
 
-    List<Order> searchOrderByFullName(String name, String surname) throws DAOException;
+    User searchUserByID(int userID) throws DAOException;
 
-    Order searchOrderByName(String name) throws DAOException;
+    List<Order> searchOrderByFullName(String name, String surname, Pagination paginator) throws DAOException;
 
-    Order searchOrderBySurname(String surname) throws DAOException;
+    List<Order> searchOrderByPhone(String phone, Pagination paginator) throws DAOException;
+
 
 }

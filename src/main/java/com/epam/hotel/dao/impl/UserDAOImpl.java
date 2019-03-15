@@ -110,8 +110,12 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
         }finally {
             releaseConnection(connection);
         }
-        logger.debug("user discount is "+discount);
-        return discount;
+        if (discount>10){
+            return 10;
+        }else {
+            return discount;
+        }
+
     }
 
     @Override

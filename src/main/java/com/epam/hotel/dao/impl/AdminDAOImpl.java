@@ -6,6 +6,7 @@ import com.epam.hotel.dao.ParentDao;
 import com.epam.hotel.dao.util.SQLConstants;
 import com.epam.hotel.dao.util.SqlQuery;
 import com.epam.hotel.entity.Order;
+import com.epam.hotel.entity.Review;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.web.util.pagination.Pagination;
@@ -183,15 +184,19 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
     }
 
     @Override
-    public List<Order> searchOrderByFullName(String name, String surname) throws DAOException {
+    public List<Order> searchOrderByFullName(String name, String surname, Pagination paginator) throws DAOException {
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
         Order order = null;
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.SEARCH_ORDER_BY_FULLNAME)){
             ps.setString(1, "%"+name+"%");
             ps.setString(2, "%"+surname+"%");
-            ps.setString(3, "%"+name+"%");
-            ps.setString(4, "%"+surname+"%");
+            ps.setInt(3, paginator.getStartPos());
+            ps.setInt(4, paginator.getOffset());
+            ps.setString(5, "%"+name+"%");
+            ps.setString(6, "%"+surname+"%");
+            ps.setInt(7, paginator.getStartPos());
+            ps.setInt(8, paginator.getOffset());
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -199,25 +204,105 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
                 order = new Order();
                 order.setUserID(resultSet.getInt("userID"));
                 order.setOrderID(resultSet.getInt("orderID"));
+                order.setRoomID(resultSet.getInt("roomID"));
                 order.setResFrom(new Date(resultSet.getDate("resFrom").getTime()));
                 order.setResTo(new Date(resultSet.getDate("resTo").getTime()));
+                order.setStatus(Order.Status.valueOf(resultSet.getString("status").toUpperCase()));
                 orderList.add(order);
             }
 
         }catch (SQLException e){
             throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
         }
 
         return orderList;
     }
 
     @Override
-    public Order searchOrderByName(String name) throws DAOException {
-        return null;
+    public List<Order> searchOrderByPhone(String phone, Pagination paginator) throws DAOException {
+        Connection connection = getConnection();
+        List<Order> orderList = new ArrayList<>();
+        Order order = null;
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.SEARCH_ORDER_BY_PHONE)){
+            ps.setString(1, phone);
+            ps.setInt(2, paginator.getStartPos());
+            ps.setInt(3, paginator.getOffset());
+            ps.setString(4, phone);
+            ps.setInt(5, paginator.getStartPos());
+            ps.setInt(6, paginator.getOffset());
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()){
+                order = new Order();
+                order.setUserID(resultSet.getInt("userID"));
+                order.setOrderID(resultSet.getInt("orderID"));
+                order.setRoomID(resultSet.getInt("roomID"));
+                order.setResFrom(new Date(resultSet.getDate("resFrom").getTime()));
+                order.setResTo(new Date(resultSet.getDate("resTo").getTime()));
+                order.setStatus(Order.Status.valueOf(resultSet.getString("status").toUpperCase()));
+                orderList.add(order);
+            }
+
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
+        return orderList;
     }
 
     @Override
-    public Order searchOrderBySurname(String surname) throws DAOException {
-        return null;
+    public User searchUserByID(int userID) throws DAOException {
+        Connection connection = getConnection();
+        User user = new User();
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.SEARCH_USER_BY_ID)){
+            ps.setInt(1, userID);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()){
+                user.setUserID(userID);
+                user.setName(resultSet.getString("name"));
+                user.setSurname(resultSet.getString("surname"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone"));
+                int discount = DaoFactory.getInstance().getUserDAO().userDiscount(user.getUserID());
+                user.setDiscount(discount);
+                return user;
+            }else {
+                return null;
+            }
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void updateReviewStatus(Review review) throws DAOException {
+        Connection connection = getConnection();
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.UPDATE_REVIEW_STATUS)){
+            ps.setString(1, review.getStatus().toString());
+            ps.setString(2, review.getAnswer());
+            ps.setInt(3, review.getReviewID());
+
+            if (ps.executeUpdate()!=1){
+                throw new DAOException("update review status error");
+            }
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
     }
 }

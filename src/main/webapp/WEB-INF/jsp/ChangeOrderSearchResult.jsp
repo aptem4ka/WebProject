@@ -50,7 +50,7 @@
                             <div>
                                 <fmt:formatDate value="${sessionScope.resFrom}" type="date"  var="resFrom" />
                                 <fmt:formatDate value="${sessionScope.resTo}" type="date" var="resTo"/>
-                                <form action="ControllerServlet" method="post">
+
 
                                     <h2>${booking_data}</h2>
                                     <h5>${period_of_stay} ${resFrom} - ${resTo}<br/>
@@ -62,6 +62,7 @@
 
                                     <hr/>
                                     <c:forEach items="${sessionScope.roomList}" var="it">
+                                <form action="ControllerServlet" method="post">
                                         <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it.type)}" var="type"/>
                                         <fmt:message bundle="${loc}" key="locale.room.view.${fn:toLowerCase(it.windowView)}" var="windowView"/>
 
@@ -84,8 +85,9 @@
 
 
                                         <hr/>
-                                    </c:forEach>
                                 </form>
+                                    </c:forEach>
+
                             </div>
 
 

@@ -51,6 +51,7 @@ public class Room implements Serializable {
 
     public void setResFrom(Date resFrom) {
         this.resFrom = resFrom;
+        this.resFrom.setHours(12);
     }
 
     public Date getResTo() {
@@ -59,6 +60,7 @@ public class Room implements Serializable {
 
     public void setResTo(Date resTo) {
         this.resTo = resTo;
+        this.resTo.setHours(12);
     }
 
     public double getPrice() {

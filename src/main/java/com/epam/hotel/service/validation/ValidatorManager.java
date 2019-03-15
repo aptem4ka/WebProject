@@ -15,6 +15,7 @@ public class ValidatorManager {
         validators.put(ValidatorName.NAME, new NameValidator());
         validators.put(ValidatorName.PHONE, new PhoneValidator());
         validators.put(ValidatorName.DATE, new DateValidator());
+        validators.put(ValidatorName.REVIEW, new ReviewValidator());
 
 
     }

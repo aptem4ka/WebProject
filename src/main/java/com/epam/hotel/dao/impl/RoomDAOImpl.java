@@ -170,6 +170,64 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     }
 
     @Override
+    public Room roomInfoByRoomID(int roomID) throws DAOException {
+        Connection connection = getConnection();
+        Room room = new Room();
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ROOM_INFO_BY_ROOMID)){
+            ps.setInt(1, roomID);
+
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                room.setType(Room.RoomType.valueOf(resultSet.getString("type").toUpperCase()));
+                room.setAllocation(Room.AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
+                room.setFloor(resultSet.getInt("floor"));
+                room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+
+                return room;
+            }else {
+                return null;
+            }
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Room> changeOrderSearchResult(Room room, int orderID) throws DAOException {
+        Connection connection = getConnection();
+        List<Room> roomList=new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.CHANGE_ORDER_IGNORE_TYPE)){
+            Date resFrom = new Date(room.getResFrom().getTime());
+            Date resTo = new Date(room.getResTo().getTime());
+
+            ps.setString(1, room.getAllocation().toString());
+            ps.setDate(2, resFrom);
+            ps.setDate(3, resFrom);
+            ps.setDate(4, resTo);
+            ps.setDate(5, resTo);
+            ps.setDate(6, resFrom);
+            ps.setDate(7, resTo);
+            ps.setInt(8, orderID);
+            ResultSet resultSet=ps.executeQuery();
+
+            while (resultSet.next()){
+                addRoomToList(resultSet, roomList, room);
+            }
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
+        return roomList;
+
+    }
+
+    @Override
     public List<Room> roomSearchResult(Room room) throws DAOException {
 
         Connection connection=getConnection();
@@ -206,25 +264,9 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
             preparedStatement.setDate(7, resFrom);
             preparedStatement.setDate(8, resTo);
             resultSet=preparedStatement.executeQuery();
-//TODO оптимизировать путем выноса дубликатов в отдельный метод инициализации комнаты
+
             while (resultSet.next()){
-
-                Room.RoomType type = Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase());
-                Room.AllocationType allocation = Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase());
-                Room.WindowView view = Room.WindowView.valueOf(resultSet.getString("view").toUpperCase());
-                int floor = resultSet.getInt("floor");
-
-                if (!(room.getFloor()==floor && room.getWindowView()==view && room.getAllocation()==allocation && type==room.getType())){
-                    room = new Room();
-                    room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
-                    room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
-                    room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
-                    room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
-                    room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
-                    room.setFloor(resultSet.getInt("floor"));
-                    roomList.add(room);
-                }
-
+                addRoomToList(resultSet, roomList, room);
             }
 
         }catch (SQLException e){
@@ -254,21 +296,7 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
 
             while (resultSet.next()){
 
-                Room.RoomType type = Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase());
-                Room.AllocationType allocation = Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase());
-                Room.WindowView view = Room.WindowView.valueOf(resultSet.getString("view").toUpperCase());
-                int floor = resultSet.getInt("floor");
-
-                if (!(room.getFloor()==floor && room.getWindowView()==view && room.getAllocation()==allocation && type==room.getType())){
-                    room = new Room();
-                    room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
-                    room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
-                    room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
-                    room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
-                    room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
-                    room.setFloor(resultSet.getInt("floor"));
-                    roomList.add(room);
-                }
+                addRoomToList(resultSet, roomList, room);
 
             }
 
@@ -279,78 +307,25 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return roomList;
     }
 
-    @Override
-    public Room roomInfoByRoomID(int roomID) throws DAOException {
-        Connection connection = getConnection();
-        Room room = new Room();
 
-        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ROOM_INFO_BY_ROOMID)){
-            ps.setInt(1, roomID);
 
-            ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()){
-                room.setType(Room.RoomType.valueOf(resultSet.getString("type").toUpperCase()));
-                room.setAllocation(Room.AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
-                room.setFloor(resultSet.getInt("floor"));
-                room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+    private void addRoomToList(ResultSet resultSet, List<Room> roomList, Room room) throws SQLException{
 
-                return room;
-            }else {
-                return null;
-            }
+        Room.RoomType type = Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase());
+        Room.AllocationType allocation = Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase());
+        Room.WindowView view = Room.WindowView.valueOf(resultSet.getString("view").toUpperCase());
+        int floor = resultSet.getInt("floor");
 
-        }catch (SQLException e){
-            throw new DAOException(e);
-        }finally {
-            releaseConnection(connection);
+        if (!(room.getFloor()==floor && room.getWindowView()==view && room.getAllocation()==allocation && type==room.getType())){
+            room = new Room();
+            room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
+            room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
+            room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
+            room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
+            room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+            room.setFloor(resultSet.getInt("floor"));
+            roomList.add(room);
         }
-    }
-
-    @Override
-    public List<Room> changeOrderSearchResult(Room room, int orderID) throws DAOException {
-        Connection connection = getConnection();
-        List<Room> roomList=new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.CHANGE_ORDER_IGNORE_TYPE)){
-        Date resFrom = new Date(room.getResFrom().getTime());
-        Date resTo = new Date(room.getResTo().getTime());
-
-            ps.setString(1, room.getAllocation().toString());
-            ps.setDate(2, resFrom);
-            ps.setDate(3, resFrom);
-            ps.setDate(4, resTo);
-            ps.setDate(5, resTo);
-            ps.setDate(6, resFrom);
-            ps.setDate(7, resTo);
-            ps.setInt(8, orderID);
-            ResultSet resultSet=ps.executeQuery();
-
-            while (resultSet.next()){
-
-                Room.RoomType type = Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase());
-                Room.AllocationType allocation = Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase());
-                Room.WindowView view = Room.WindowView.valueOf(resultSet.getString("view").toUpperCase());
-                int floor = resultSet.getInt("floor");
-
-                if (!(room.getFloor()==floor && room.getWindowView()==view && room.getAllocation()==allocation && type==room.getType())){
-                    room = new Room();
-                    room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
-                    room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
-                    room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
-                    room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
-                    room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
-                    room.setFloor(resultSet.getInt("floor"));
-                    roomList.add(room);
-                }
-
-            }
-
-        }catch (SQLException e){
-            throw new DAOException(e);
-        }finally {
-            releaseConnection(connection);
-        }
-
-        return roomList;
 
     }
 }

@@ -32,6 +32,13 @@ public class CommandManager {
         commands.put(CommandName.CHANGE_ORDER_RESULT_PAGE, new ChangeOrderResultPageCommand());
         commands.put(CommandName.EDIT_BOOK, new EditBookCommand());
         commands.put(CommandName.SEARCH_ORDER_BY_NAME, new SearchOrderByNameCommand());
+        commands.put(CommandName.SEARCH_ORDER_BY_PHONE, new SearchOrderByPhoneCommand());
+        commands.put(CommandName.REVIEWS_PAGE, new ReviewsPageCommand());
+        commands.put(CommandName.LEAVE_REVIEW, new LeaveReviewCommand());
+        commands.put(CommandName.SEARCH_USER_BY_ID, new SearchUserByIDCommand());
+        commands.put(CommandName.SUCCESS_REVIEW_PAGE, new SuccessReviewPageCommand());
+        commands.put(CommandName.REVIEW_MODERATION, new ReviewModerationCommand());
+        commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatusCommand());
     }
 
     public static CommandManager getInstance() {

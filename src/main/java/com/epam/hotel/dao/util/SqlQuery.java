@@ -45,7 +45,12 @@ public class SqlQuery {
     public static final String ACTUAL_ORDER_PRICE = "SELECT price FROM orders WHERE userID=? AND orderID=? AND status='APPLIED';";
     public static final String ROOM_INFO_BY_ROOMID = "SELECT * FROM rooms WHERE roomID=?;";
     public static final String UPDATE_ORDER = "UPDATE orders SET roomID=?, resFrom=?, resTo=?, price=? WHERE orderID=?;";
-    public static final String SEARCH_ORDER_BY_FULLNAME = "SELECT orders.orderID, orders.userID, orders.resFrom, orders.resTo, orders.status FROM orders INNER JOIN users ON users.userID=orders.userID WHERE users.name LIKE ? AND users.surname LIKE ? UNION ALL SELECT orders.orderID, orders.userID, orders.resFrom, orders.resTo, orders.status FROM orders INNER JOIN unregistered_users ON unregistered_users.orderID=orders.orderID WHERE unregistered_users.name LIKE ? AND unregistered_users.surname LIKE ?;";
-    public static final String SEARCH_ORDER_BY_GUEST_FULLNAME = "SELECT orders.orderID, orders.userID, orders.resFrom, orders.resTo FROM orders INNER JOIN unregistered_users ON unregistered_users.userID=orders.userID WHERE unregistered_users.name LIKE ? AND unregistered_users.surname LIKE ?;";
-
+    public static final String SEARCH_ORDER_BY_FULLNAME = "(SELECT orders.orderID, orders.userID, orders.roomID, orders.resFrom, orders.resTo, orders.status FROM orders INNER JOIN users ON users.userID=orders.userID WHERE users.name LIKE ? AND users.surname LIKE ? LIMIT ?,?) UNION ALL (SELECT orders.orderID, orders.userID, orders.roomID, orders.resFrom, orders.resTo, orders.status FROM orders INNER JOIN unregistered_users ON unregistered_users.orderID=orders.orderID WHERE unregistered_users.name LIKE ? AND unregistered_users.surname LIKE ? LIMIT ?,?);";
+    public static final String SEARCH_ORDER_BY_PHONE = "(SELECT orders.orderID, orders.userID, orders.roomID, orders.resFrom, orders.resTo, orders.status FROM orders INNER JOIN unregistered_users ON orders.orderID=unregistered_users.orderID WHERE unregistered_users.phone=? LIMIT ?,?) UNION ALL (SELECT orders.orderID, orders.userID, orders.roomID, orders.resFrom, orders.resTo, orders.status FROM orders INNER JOIN users ON orders.userID=users.userID WHERE users.phone=? LIMIT ?,?);";
+    public static final String GUEST_LEAVE_REVIEW = "INSERT into reviews (userID, name, phone, added, rating, comment) values (0, ?, ?, ?, ?, ?);";
+    public static final String USER_LEAVE_REVIEW = "INSERT into reviews (userID, name, phone, added, rating, comment) values (?, ?, ?, ?, ?, ?);";
+    public static final String SEARCH_USER_BY_ID = "SELECT name, surname, email, phone FROM users WHERE userID=?;";
+    public static final String REVIEWS_FOR_MODERATION = "SELECT * FROM reviews WHERE status='WAITING' LIMIT ?,?;";
+    public static final String UPDATE_REVIEW_STATUS = "UPDATE reviews SET status=?, answer=? WHERE reviewID=?;";
+    public static final String POSTED_REVIEWS = "SELECT * FROM reviews WHERE status='POSTED' LIMIT ?,?;";
 }

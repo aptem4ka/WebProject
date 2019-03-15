@@ -44,13 +44,6 @@ public class Pagination {
         this.offset = offset+1;
     }
 
-    public int getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
 
     public <T> void lastPageControl(List<T> list){
         if (list.size()<=(offset-1)){
@@ -62,25 +55,22 @@ public class Pagination {
 
     }
 
-
     public static Pagination setupPaginator(HttpServletRequest req, String paginatorName){
         Pagination pagination;
-        if (req.getParameter("page")==null || req.getSession().getAttribute(paginatorName)==null){
-            pagination = PaginationCreator.createPaginator();
+        String page = req.getParameter("page");
+        if (page==null || req.getSession().getAttribute(paginatorName)==null){
+            pagination = new Pagination();
             pagination.setStartPos(0);
             pagination.setOffset(5);
-            pagination.setCurrentPage(1);
             req.getSession().setAttribute(paginatorName,pagination);
         } else {
-            pagination = (Pagination)req.getSession().getAttribute(paginatorName);
-        }
+                pagination = (Pagination)req.getSession().getAttribute(paginatorName);
+                if (req.getParameter("page").equals("next")){
+                    pagination.nextPage();
+                }else if (req.getParameter("page").equals("prev")){
+                    pagination.prevPage();
+                }
 
-        if (req.getParameter("page")!=null){
-            if (req.getParameter("page").equals("next")){
-                pagination.nextPage();
-            }else if (req.getParameter("page").equals("prev")){
-                pagination.prevPage();
-            }
         }
         return pagination;
     }

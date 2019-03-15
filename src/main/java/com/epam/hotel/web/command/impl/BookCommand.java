@@ -27,6 +27,7 @@ public class BookCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Order order=new Order();
+        int formNumber = Integer.parseInt(req.getParameter("formNumber"));
         HttpSession session=req.getSession();
         SimpleDateFormat dateFormat = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
@@ -38,8 +39,9 @@ public class BookCommand implements Command {
             logger.warn(e);
         }
 
-            order.setTotalPrice(Double.parseDouble(req.getParameter("total_price")));
-            order.setRoomID(Integer.parseInt(req.getParameter("roomID")));
+            order.setTotalPrice(Double.parseDouble(req.getParameter("total_price"+formNumber)));
+            order.setRoomID(Integer.parseInt(req.getParameter("roomID"+formNumber)));
+
 
         try {
             if (user!=null){

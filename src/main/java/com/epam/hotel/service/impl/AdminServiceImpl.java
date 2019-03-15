@@ -3,6 +3,7 @@ package com.epam.hotel.service.impl;
 import com.epam.hotel.dao.AdminDAO;
 import com.epam.hotel.dao.DaoFactory;
 import com.epam.hotel.entity.Order;
+import com.epam.hotel.entity.Review;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.exception.ServiceException;
@@ -81,18 +82,68 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Order> searchOrderByName(String name, String surname) throws ServiceException {
+    public List<Order> searchOrderByName(String name, String surname, Pagination paginator) throws ServiceException {
+        if (paginator==null){
+            throw new ServiceException("paginator is null");
+        }
         try {
             if (validatorManager.getValidator(ValidatorName.NAME).isValid(name)
                     && validatorManager.getValidator(ValidatorName.NAME).isValid(surname)){
-                return adminDAO.searchOrderByFullName(name, surname);
+                return adminDAO.searchOrderByFullName(name, surname, paginator);
+            }else {
+                throw new ServiceException("incorrect name or surname");
+            }
+
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Order> searchOrderByPhone(String phone, Pagination paginator) throws ServiceException {
+        if (!validatorManager.getValidator(ValidatorName.PHONE).isValid(phone)){
+            throw new ServiceException("Incorrect phone number");
+        }
+
+
+        try {
+
+            if (paginator!=null){
+                return adminDAO.searchOrderByPhone(phone, paginator);
+            }else{
+                throw new ServiceException("Null paginator");
             }
 
         }catch (DAOException e){
             throw new ServiceException(e);
         }
 
-        return null;
+    }
+
+    @Override
+    public User searchUserByID(int userID) throws ServiceException {
+        if (userID<1){
+            throw new ServiceException("Incorrect userID");
+        }
+
+        try {
+            return adminDAO.searchUserByID(userID);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void updateReviewStatus(Review review) throws ServiceException {
+        if (!validatorManager.getValidator(ValidatorName.REVIEW).isValid(review)){
+            throw new ServiceException("Incorrect review");
+        }
+
+        try {
+            adminDAO.updateReviewStatus(review);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
 
     }
 }

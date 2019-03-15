@@ -27,11 +27,11 @@ public class ControlCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute("activePaginator");
+        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute("activeOrdersPaginator");
         Pagination needConfirmationOrdersPaginator = (Pagination)req.getSession().getAttribute("needConfirmPaginator");
 
         if (activeOrdersPaginator == null && needConfirmationOrdersPaginator == null){
-            activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
+            activeOrdersPaginator = Pagination.setupPaginator(req, "activeOrdersPaginator");
             needConfirmationOrdersPaginator = Pagination.setupPaginator(req, "needConfirmPaginator");
         } else {
 
@@ -39,7 +39,7 @@ public class ControlCommand implements Command {
 
         if (paginatorType!= null){
             if (paginatorType.equals("active")){
-                activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
+                activeOrdersPaginator = Pagination.setupPaginator(req, "activeOrdersPaginator");
             }
             if (paginatorType.equals("needConfirm")){
                 needConfirmationOrdersPaginator = Pagination.setupPaginator(req, "needConfirmPaginator");

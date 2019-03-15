@@ -35,18 +35,14 @@ public class ProfileCommand implements Command {
         session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
 
-
         Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute("activePaginator");
         Pagination ordersHistoryPaginator = (Pagination)req.getSession().getAttribute("historyPaginator");
 
         if (activeOrdersPaginator == null && ordersHistoryPaginator == null){
-
             activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
             ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
         }else {
-
             String paginatorType = req.getParameter("paginatorType");
-
             if (paginatorType!= null){
                 if (paginatorType.equals("active")){
                     activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
@@ -66,42 +62,14 @@ public class ProfileCommand implements Command {
         }catch (ServiceException e){
             logger.warn(e);
         }
-/*
-        if (activeOrderList.size()<activeOrdersPaginator.getOffset()){
-            activeOrdersPaginator.setLastPage(true);
-        } else {
-            activeOrdersPaginator.setLastPage(false);
-        }
-        if (orderHistoryList.size()<ordersHistoryPaginator.getOffset()){
-            ordersHistoryPaginator.setLastPage(true);
-        } else {
-            ordersHistoryPaginator.setLastPage(false);
-        }
-        */
-
 
         activeOrdersPaginator.lastPageControl(activeOrderList);
         ordersHistoryPaginator.lastPageControl(orderHistoryList);
 
-      //  req.setAttribute(StringConstants.CURRENT_DATE, new Date());
         req.setAttribute(StringConstants.ACTIVE_ORDER_LIST, activeOrderList);
         req.setAttribute("historyOrderList", orderHistoryList);
-      //  req.setAttribute("needConfirmList", orderHistoryList);
-
-
-
-
-        /*
-
-        try {
-           orderList = orderService.userBookingStatistics(user.getUserID());
-        }catch (ServiceException e){
-            logger.warn(e);
-        }
-
-*/
         req.setAttribute(StringConstants.CURRENT_DATE, new Date());
- //       req.setAttribute(StringConstants.ORDER_LIST, orderList);
+
 
         req.getRequestDispatcher(URLConstants.PROFILE_PAGE).forward(req,resp);
 

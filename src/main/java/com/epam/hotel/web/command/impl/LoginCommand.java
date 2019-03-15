@@ -31,12 +31,7 @@ public class LoginCommand implements Command {
 
         try {
             user=userService.loginUser(user);
-            int discount = userService.userDiscount(user.getUserID());
-            if (discount<=10){
-                user.setDiscount(discount);
-            }else {
-                user.setDiscount(10);
-            }
+            user.setDiscount(userService.userDiscount(user.getUserID()));
         }catch (ServiceException e){
             logger.warn(e);
         }
