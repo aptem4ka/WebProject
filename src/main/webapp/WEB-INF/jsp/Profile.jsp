@@ -1,7 +1,27 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="locale.user.info" var="user_info"/>
+<fmt:message bundle="${loc}" key="locale.user.user_email" var="user_email"/>
+<fmt:message bundle="${loc}" key="locale.user.user_name" var="user_name"/>
+<fmt:message bundle="${loc}" key="locale.user.user_surname" var="user_surname"/>
+<fmt:message bundle="${loc}" key="locale.user.user_phone" var="user_phone"/>
+<fmt:message bundle="${loc}" key="locale.user.no_phone" var="no_phone"/>
+<fmt:message bundle="${loc}" key="locale.user.user_discount" var="user_discount"/>
+<fmt:message bundle="${loc}" key="locale.order.order_number" var="order_number"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
+<fmt:message bundle="${loc}" key="locale.order.status" var="order_status"/>
+<fmt:message bundle="${loc}" key="locale.user.active_booking" var="active_booking"/>
+<fmt:message bundle="${loc}" key="locale.user.booking_history" var="booking_istory"/>
+<fmt:message bundle="${loc}" key="locale.order.change" var="change"/>
+<fmt:message bundle="${loc}" key="locale.order.comment" var="comment"/>
+
 <html>
 <head>
 
@@ -18,45 +38,46 @@
             <div class="card bg-light">
                 <article class="card-body">
 
-            <h3>Информация о пользователе</h3>
+            <h3>${user_info}</h3>
             <div style="font-size: 12pt">
                 <c:set value="${sessionScope.currentUser.phone}" var="phone"/>
                 <ul>
-                    <li>Электронная почта: ${sessionScope.currentUser.email}</li>
-                    <li>Имя: ${sessionScope.currentUser.name}</li>
-                    <li>Фамилия: ${sessionScope.currentUser.surname}</li>
-                    <li>Телефон: <c:if test="${empty phone}">Номер отсутствует</c:if>
+                    <li><b>${user_email}:</b> ${sessionScope.currentUser.email}</li>
+                    <li><b>${user_name}:</b> ${sessionScope.currentUser.name}</li>
+                    <li><b>${user_surname}:</b> ${sessionScope.currentUser.surname}</li>
+                    <li><b>${user_phone}:</b> <c:if test="${empty phone}">${no_phone}</c:if>
                                   <c:if test="${not empty phone}">${phone}</c:if>
                     </li>
-                    <li>Персональная скидка: ${sessionScope.currentUser.discount}%</li>
-                    <hr/>
+                    <li><b>${user_discount}</b> ${sessionScope.currentUser.discount}%</li>
+
                 </ul>
+                <hr/>
                 <c:set value="CANCELLED" var="cancel"/>
                 <c:set value="APPLIED" var="apply"/>
                 <c:set value="COMPLETED" var="complete"/>
-                <h4>Активная бронь</h4>
+                <h4>${active_booking}</h4>
 
                 <table class="table table-striped">
 
                     <thead>
                     <tr>
-                        <th>Номер заказа</th>
-                        <th>Бронь с</th>
-                        <th>Бронь по</th>
-                        <th>Статус</th>
+                        <th>${order_number}</th>
+                        <th>${reserved_from}</th>
+                        <th>${reserved_to}</th>
+                        <th>${order_status}</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${requestScope.activeOrderList}" var="it">
-                        <fmt:formatDate value="${it.resFrom}" type="date" var="resFrom"/>
-                        <fmt:formatDate value="${it.resTo}" type="date" var="resTo"/>
+                        <fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short" var="resFrom"/>
+                        <fmt:formatDate value="${it.resTo}" type="date" dateStyle="short" var="resTo"/>
 
                     <tr>
                         <td>${it.orderID}</td>
                         <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                         <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
-                        <td>${it.status}</td>
+                        <td><fmt:message bundle="${loc}" key="locale.order.status.${fn:toLowerCase(it.status)}"/></td>
                         <td>
                             <form method="get" action="ControllerServlet">
                                 <input type="hidden" name="command" value="change_order"/>
@@ -67,7 +88,7 @@
 
                                 <input type="hidden" name="userID" value="${sessionScope.currentUser.userID}"/>
                                 <button class="btn btn-info btn-sm" type="submit">
-                                Изменить
+                                ${change}
                                 </button>
                             </form>
                         </td>
@@ -94,17 +115,17 @@
 
 
                 <hr/>
-                <h4>История бронирования</h4>
+                <h4>${booking_istory}</h4>
 
                 <table class="table table-striped">
 
                     <thead>
                     <tr>
-                        <th>Номер заказа</th>
-                        <th>Бронь с</th>
-                        <th>Бронь по</th>
-                        <th>Статус</th>
-                        <th>Комментарий</th>
+                        <th>${order_number}</th>
+                        <th>${reserved_from}</th>
+                        <th>${reserved_to}</th>
+                        <th>${order_status}</th>
+                        <th>${comment}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -113,7 +134,7 @@
                                 <td>${it.orderID}</td>
                                 <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                 <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
-                                <td>${it.status}</td>
+                                <td><fmt:message bundle="${loc}" key="locale.order.status.${fn:toLowerCase(it.status)}"/></td>
                                 <td>${it.comment}</td>
                             </tr>
 

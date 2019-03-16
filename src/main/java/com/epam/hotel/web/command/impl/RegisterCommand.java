@@ -37,7 +37,7 @@ public class RegisterCommand implements Command {
 
            if (registerErrors.equals("")){
                userService.registerUser(form);
-               resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
+               resp.sendRedirect((URLConstants.GO_TO_INDEX));
            }else {
                resp.sendRedirect(URLConstants.RETRY_REGISTRATION_COMMAND + registerErrors);
            }

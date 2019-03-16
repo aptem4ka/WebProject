@@ -3,11 +3,27 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="locale.order.current_booking_parameters" var="current_booking_parameters"/>
+<fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
+<fmt:message bundle="${loc}" key="locale.order.order_number" var="order_number"/>
+<fmt:message bundle="${loc}" key="locale.room.result.allocation" var="room_allocation"/>
+<fmt:message bundle="${loc}" key="locale.room.result.floor" var="room_floor"/>
+<fmt:message bundle="${loc}" key="locale.room.result.view" var="room_view"/>
+<fmt:message bundle="${loc}" key="locale.room.result.period" var="period_of_stay"/>
+<fmt:message bundle="${loc}" key="locale.order.new_booking_parameters" var="new_booking_parameters"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
+<fmt:message bundle="${loc}" key="locale.order.incorrect_dates" var="incorrect_dates"/>
+<fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
+<fmt:message bundle="${loc}" key="locale.room.find_room" var="find_room"/>
+
 <html>
 <head>
 
-    <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="locale" var="loc"/>
+
 
 </head>
 <body>
@@ -22,42 +38,42 @@
             <div class="card bg-light">
                 <article class="card-body">
                     <h4>
-                        Текущие параметры бронирования
+                        ${current_booking_parameters}
                     </h4>
                     <fmt:formatDate value="${requestScope.resFrom}" type="date"  var="resFrom" />
                     <fmt:formatDate value="${requestScope.resTo}" type="date" var="resTo"/>
-                    Номер заказа: ${sessionScope.orderID}<br/>
-                    Тип номера: ${requestScope.room.type}<br/>
-                    Принцип размещения: ${requestScope.room.allocation}<br/>
-                    Этаж:${requestScope.room.floor}<br/>
-                    Вид из окна:${requestScope.room.windowView}<br/>
-                    Период пребывания: ${resFrom} - ${resTo}
-
+                    <b>${order_number}</b> ${sessionScope.orderID}<br/>
+                    <b>${room_type}</b> <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(requestScope.room.type)}"/> <br/>
+                    <b>${room_allocation}</b> <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(requestScope.room.allocation)}"/><br/>
+                    <b>${room_floor}</b> ${requestScope.room.floor}<br/>
+                    <b>${room_view}</b> <fmt:message bundle="${loc}" key="locale.room.view.${fn:toLowerCase(requestScope.room.windowView)}"/><br/>
+                    <b>${period_of_stay}</b> ${resFrom} - ${resTo}
+                    <hr/>
                     <div align="center">
-                        <h4>Новые параметры бронирования</h4>
+                        <h4>${new_booking_parameters}</h4>
 
                         <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
                             <input type="hidden" name="command" value="change_order_result"/>
 
                             <div style="width: 300px" align="center">
-                                Дата заселения:
+                                ${reserved_from}
                                 <input name="resFrom" class="form-control" type="date" required/>
                                 <hr/>
                             </div>
 
                             <div style="width: 300px" align="center">
-                                Дата выселения:
+                                ${reserved_to}
                                 <input name="resTo" class="form-control" type="date" required/>
                                 <hr/>
                             </div>
                             <c:if test="${param.incorrectDate == true}">
-                                Вы ввели некорректные даты
+                                ${incorrect_dates}
                             </c:if>
                             <div style="max-width: 500px; text-align: left">
                                 <div>
-                                    <div style="text-align: center">Принцип размещения:</div>
+                                    <div style="text-align: center">${room_allocation}</div>
                                     <c:forEach items="${requestScope.allocations}" var="it">
-                                        <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it)}" var="allocationDesc"/>
+                                        <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(it)}" var="allocationDesc"/>
                                         <input type="radio" id="${it}" name="allocation" value="${it}" checked/> ${allocationDesc}<br/>
                                     </c:forEach>
 
@@ -65,7 +81,7 @@
                                 </div>
 
                                 <div>
-                                    Дополнительные спальные места для детей
+                                    ${baby_cots}
                                     <select name="children">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
@@ -76,7 +92,7 @@
 
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-info">Найти номер</button>
+                                <button type="submit" class="btn btn-info">${find_room}</button>
                             </div>
 
 

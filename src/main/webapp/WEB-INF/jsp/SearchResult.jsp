@@ -17,7 +17,7 @@
     <fmt:message bundle="${loc}" key="locale.room.result.period" var="period_of_stay"/>
     <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation_type"/>
     <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
-    <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(sessionScope.allocation)}" var="allocation"/>
+    <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(sessionScope.allocation)}" var="allocation"/>
     <fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
     <fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
     <fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
@@ -48,8 +48,8 @@
 
                 <div >
                     <div>
-                        <fmt:formatDate value="${sessionScope.resFrom}" type="date"  var="resFrom" />
-                        <fmt:formatDate value="${sessionScope.resTo}" type="date" var="resTo"/>
+                        <fmt:formatDate value="${sessionScope.resFrom}" type="date" dateStyle="short" var="resFrom" />
+                        <fmt:formatDate value="${sessionScope.resTo}" type="date" dateStyle="short" var="resTo"/>
                         <form action="ControllerServlet" method="post">
                             <c:if test="${sessionScope.currentUser == null}">
 

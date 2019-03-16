@@ -2,9 +2,24 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
+
+
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="locale.order.congrats" var="congrats"/>
+<fmt:message bundle="${loc}" key="locale.order.order_changed" var="order_changed"/>
+<fmt:message bundle="${loc}" key="locale.order.order_number" var="order_number"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+<fmt:message bundle="${loc}" key="locale.order.price_difference" var="price_difference"/>
+<fmt:message bundle="${loc}" key="locale.order.price_return" var="price_return"/>
+
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 </head>
 
 <body>
@@ -23,18 +38,17 @@
             <div class="card bg-light">
                 <article class="card-body">
 
-                    <h3 style="text-align: center">Поздравляем!</h3>
+                    <h3 style="text-align: center">${congrats}</h3>
                     <br/>
-                    <p style="text-align: center">Ваша бронь успешно изменена.<br/>
-                        Данные заказа можно посмотреть в личном кабинете.
+                    <p style="text-align: center">${order_changed}
                     <div>
                         <ul>
-                            <li>Номер заказа: ${sessionScope.orderID}</li>
-                            <li>Прибытие в отель: <fmt:formatDate value="${sessionScope.resFrom}" type="date"/></li>
-                            <li>Отбытие из отеля: <fmt:formatDate value="${sessionScope.resTo}" type="date"/></li>
-                            <li>Разница в цене: ${sessionScope.difference}</li>
+                            <li>${order_number} ${sessionScope.orderID}</li>
+                            <li>${reserved_from} <fmt:formatDate value="${sessionScope.resFrom}" type="date"/></li>
+                            <li>${reserved_to} <fmt:formatDate value="${sessionScope.resTo}" type="date"/></li>
+                            <li>${price_difference} <fmt:formatNumber maxFractionDigits="2"  value="${sessionScope.difference}"/></li>
                         </ul>
-                    <c:if test="${sessionScope.difference<0}">Отрицательная разница в цене будет возвращена по прибытию в отель.</c:if>
+                    <c:if test="${sessionScope.difference<0}">${price_return}</c:if>
 
                     </div>
 

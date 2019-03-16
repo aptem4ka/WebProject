@@ -17,10 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChangeOrderCommand implements Command {
     private final static Logger logger= LogManager.getLogger(ChangeOrderCommand.class);
@@ -29,7 +31,6 @@ public class ChangeOrderCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug("Entering ChangeOrderCommand");
         String prevURL = new URLFromRequest().createURL(req);
         HttpSession session=req.getSession();
         session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
@@ -38,15 +39,28 @@ public class ChangeOrderCommand implements Command {
         int orderID = Integer.parseInt(req.getParameter("orderID"));
         int roomID = Integer.parseInt(req.getParameter("roomID"));
 
-        SimpleDateFormat format=new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
+        SimpleDateFormat formatRu = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT_RU);
+        SimpleDateFormat formatEN = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT_EN);
         Date resFrom = null;
         Date resTo = null;
 
         try {
-            resFrom = format.parse(req.getParameter("resFrom"));
-            resTo = format.parse(req.getParameter("resTo"));
+                resFrom = formatRu.parse(req.getParameter("resFrom"));
+                resTo = formatRu.parse(req.getParameter("resTo"));
+
         }catch (ParseException e){
             logger.warn(e);
+        }
+        if (resFrom == null || resTo == null){
+            logger.info("trying to parse EN date");
+            try {
+
+                resFrom = formatEN.parse(req.getParameter("resFrom"));
+                resTo = formatEN.parse(req.getParameter("resTo"));
+
+            }catch (ParseException e){
+                logger.warn(e);
+            }
         }
 
         List<Room.AllocationType> allocations = null;

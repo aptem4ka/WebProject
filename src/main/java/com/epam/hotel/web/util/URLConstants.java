@@ -15,5 +15,6 @@ public class URLConstants {
     public final static String CONTROL_PAGE = "/WEB-INF/jsp/Control.jsp";
     public final static String PROFILE_PAGE = "/WEB-INF/jsp/Profile.jsp";
     public final static String SEARCH_RESULT_PAGE = "/WEB-INF/jsp/SearchResult.jsp";
+    public final static String CHANGE_ORDER_CONGRATS_PAGE_COMMAND = "ControllerServlet?command=change_order_congrats_page";
 
 }

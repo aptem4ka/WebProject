@@ -32,14 +32,14 @@
                     <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
                         <input type="hidden" name="command" value="login"/>
 
-                        <div class="form-group input-group">
+                        <div class="form-group input-group" style="width: 300px">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
                             <input name="email" class="form-control" placeholder="Enter your e-mail" type="text">
                         </div> <!-- form-group// -->
 
-                        <div class="form-group input-group">
+                        <div class="form-group input-group" style="width: 300px">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                             </div>

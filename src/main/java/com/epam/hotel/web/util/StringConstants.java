@@ -38,7 +38,10 @@ public class StringConstants {
     public final static String UPDATE_TYPE = "update_type";
     public final static String CURRENT_DATE = "currentDate";
 
-    public final static String REQUEST_DATE_FORMAT = "d MMM yyyy";
+    //public final static String REQUEST_DATE_FORMAT_RU = "d MMM yyyy";
+    public final static String REQUEST_DATE_FORMAT_RU = "dd.MM.yyyy";
+    public final static String REQUEST_DATE_FORMAT_EN = "M/dd/yyyy";
+
 
 
 

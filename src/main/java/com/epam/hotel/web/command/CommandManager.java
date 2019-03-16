@@ -39,6 +39,7 @@ public class CommandManager {
         commands.put(CommandName.SUCCESS_REVIEW_PAGE, new SuccessReviewPageCommand());
         commands.put(CommandName.REVIEW_MODERATION, new ReviewModerationCommand());
         commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatusCommand());
+        commands.put(CommandName.CHANGE_ORDER_CONGRATS_PAGE, new ChangeOrderCongratsPageCommand());
     }
 
     public static CommandManager getInstance() {

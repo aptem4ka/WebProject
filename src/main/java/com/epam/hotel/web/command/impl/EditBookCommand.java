@@ -7,6 +7,7 @@ import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EditBookCommand implements Command {
     private final static Logger logger= LogManager.getLogger(EditBookCommand.class);
@@ -30,14 +32,9 @@ public class EditBookCommand implements Command {
         Order order=new Order();
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT);
-        try {
-            order.setResFrom(dateFormat.parse(req.getParameter(StringConstants.RESERVED_FROM)));
-            order.setResTo(dateFormat.parse(req.getParameter(StringConstants.RESERVED_TO)));
+        order.setResFrom((Date)session.getAttribute(StringConstants.RESERVED_FROM));
+        order.setResTo((Date)session.getAttribute(StringConstants.RESERVED_TO));
 
-        }catch (ParseException e) {
-            logger.warn(e);
-        }
 
         System.out.println("resFrom is "+order.getResFrom());
 
@@ -61,7 +58,7 @@ public class EditBookCommand implements Command {
         session.setAttribute("resTo", order.getResTo());
         session.setAttribute("difference", difference);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/EditInfo.jsp").forward(req,resp);
+        resp.sendRedirect(URLConstants.CHANGE_ORDER_CONGRATS_PAGE_COMMAND);
 
 
     }

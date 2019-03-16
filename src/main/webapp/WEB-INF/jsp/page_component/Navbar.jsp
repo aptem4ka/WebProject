@@ -19,6 +19,8 @@
     <fmt:message bundle="${loc}" key="locale.navbar.signin" var="signin"/>
     <fmt:message bundle="${loc}" key="locale.navbar.register" var="register"/>
     <fmt:message bundle="${loc}" key="locale.navbar.signout" var="signout"/>
+    <fmt:message bundle="${loc}" key="locale.navbar.control" var="control"/>
+    <fmt:message bundle="${loc}" key="locale.navbar.profile" var="profile"/>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
@@ -65,12 +67,12 @@
                 <c:set value="ADMIN" var="admin"/>
                 <c:if test="${sessionScope.currentUser.role eq user}">
                     <li class="nav-item" style="margin: 5px">
-                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=profile" class="btn btn-outline-success">Личный кабинет</a>
+                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=profile" class="btn btn-outline-success">${profile}</a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.currentUser.role eq admin}">
                     <li class="nav-item" style="margin: 5px">
-                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=control" class="btn btn-outline-success">Управление</a>
+                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=control" class="btn btn-outline-success">${control}</a>
                     </li>
                 </c:if>
 
