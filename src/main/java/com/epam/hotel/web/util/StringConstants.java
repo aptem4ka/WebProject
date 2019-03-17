@@ -17,7 +17,10 @@ public class StringConstants {
     public final static String ORDER_ID = "orderID";
     public final static String COMMENT = "comment";
     public final static String OLD_PRICE = "old_price";
-
+    public final static String USER = "user";
+    public final static String SEARCHER_COMMAND = "searcherCommand";
+    public final static String SEARCH_USER_BY_ID = "search_user_by_id";
+    public final static String SEARCH_USER_BY_ORDER = "search_user_by_order";
 
     public final static String PREV_PAGE_URL = "prevURL";
     public final static String ROOM_PREVIEWS = "roomPreviews";
@@ -41,6 +44,27 @@ public class StringConstants {
     public final static String CURRENT_DATE = "currentDate";
     public final static String CHANGE_FAILED = "changeFailed";
     public final static String DIFFERENCE = "difference";
+    public final static String RATING = "rating";
+    public final static String REVIEW_LIST = "reviewList";
+    public final static String REVIEW_ID = "reviewID";
+    public final static String ANSWER = "answer";
+
+    public final static String ACTIVE_PAGINATOR = "activePaginator";
+    public final static String HISTORY_PAGINATOR = "historyPaginator";
+    public final static String REVIEWS_PAGINATOR = "reviewsPaginator";
+    public final static String ORDERS_PAGINATOR = "ordersPaginator";
+    public final static String SEARCH_BY_ORDER_ACTIVE_PAGINATOR = "searchByOrderActivePaginator";
+    public final static String SEARCH_BY_ORDER_HISTORY_PAGINATOR = "searchByOrderHistoryPaginator";
+    public final static String ACTIVE = "active";
+    public final static String HISTORY = "history";
+    public final static String NEED_CONFIRM = "needConfirm";
+    public final static String NEED_CONFIRM_LIST = "needConfirmList";
+    public final static String PAGINATOR_TYPE = "paginatorType";
+    public final static String HISTORY_ORDER_LIST = "historyOrderList";
+    public final static String POSTED_REVIEWS_PAGINATOR = "postedReviewsPaginator";
+    public final static String ACTIVE_ORDER_PAGINATOR = "activeOrdersPaginator";
+    public final static String NEED_CONFIRM_ORDER_PAGINATOR = "needConfirmPaginator";
+
 
     //public final static String REQUEST_DATE_FORMAT_RU = "d MMM yyyy";
     public final static String REQUEST_DATE_FORMAT_RU = "dd.MM.yyyy";

@@ -6,6 +6,7 @@ import com.epam.hotel.service.AdminService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,10 +25,10 @@ public class SearchOrderByNameCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Pagination ordersPaginator = Pagination.setupPaginator(req, "ordersPaginator");
+        Pagination ordersPaginator = Pagination.setupPaginator(req, StringConstants.ORDERS_PAGINATOR);
 
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
+        String name = req.getParameter(StringConstants.NAME);
+        String surname = req.getParameter(StringConstants.SURNAME);
 
         List<Order> orderList = new ArrayList<>();
 
@@ -39,13 +40,11 @@ public class SearchOrderByNameCommand implements Command {
 
         ordersPaginator.lastPageControl(orderList);
 
-        req.setAttribute("orderList", orderList);
+        req.setAttribute(StringConstants.ORDER_LIST, orderList);
         req.setAttribute(StringConstants.CURRENT_DATE, new Date());
-        req.setAttribute("name", name);
-        req.setAttribute("surname", surname);
-        req.getRequestDispatcher("/WEB-INF/jsp/OrderSearch.jsp").forward(req, resp);
-
-
+        req.setAttribute(StringConstants.NAME, name);
+        req.setAttribute(StringConstants.SURNAME, surname);
+        req.getRequestDispatcher(URLConstants.ORDER_SEARCH_PAGE).forward(req, resp);
 
     }
 }

@@ -16,6 +16,12 @@ public class URLConstants {
     public final static String CHANGE_ORDER_FORM = "/WEB-INF/jsp/ChangeOrderForm.jsp";
     public final static String CHANGE_ORDER_RESULT_PAGE = "/WEB-INF/jsp/ChangeOrderSearchResult.jsp";
     public final static String EDIT_INFO_PAGE = "/WEB-INF/jsp/EditInfo.jsp";
+    public final static String REVIEWS_PAGE = "/WEB-INF/jsp/Reviews.jsp";
+    public final static String SUCCESS_REVIEW_PAGE = "/WEB-INF/jsp/ReviewSuccessPage.jsp";
+    public final static String REVIEW_MODERATION_PAGE = "/WEB-INF/jsp/ReviewModeration.jsp";
+    public final static String ORDER_SEARCH_PAGE = "/WEB-INF/jsp/OrderSearch.jsp";
+    public final static String USER_SEARCH_PAGE = "/WEB-INF/jsp/UserSearch.jsp";
+    public final static String ABOUT_PAGE = "/WEB-INF/jsp/About.jsp";
 
     public final static String RETRY_REGISTRATION_COMMAND = "main?command=register_page&";
     public final static String LOGIN_PAGE_COMMAND = "main?command=login_page";
@@ -23,5 +29,7 @@ public class URLConstants {
     public final static String CHANGE_ORDER_CONGRATS_PAGE_COMMAND = "user?command=change_order_congrats_page";
     public final static String CHANGE_ORDER_RESULT_PAGE_COMMAND = "user?command=change_order_result_page";
     public final static String CONTROL_COMMAND = "admin?command=control";
+    public final static String SUCCESS_REVIEW_PAGE_COMMAND = "main?command=success_review_page";
+    public final static String SEARCH_RESULT_PAGE_COMMAND = "main?command=search_result_page";
 
 }

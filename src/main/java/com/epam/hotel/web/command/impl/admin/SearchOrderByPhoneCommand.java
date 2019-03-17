@@ -28,7 +28,7 @@ public class SearchOrderByPhoneCommand implements Command {
 
         String phone = req.getParameter(StringConstants.PHONE);
 
-        Pagination pagination = Pagination.setupPaginator(req, "ordersPaginator");
+        Pagination pagination = Pagination.setupPaginator(req, StringConstants.ORDERS_PAGINATOR);
 
         List<Order> orderList = new ArrayList<>();
 

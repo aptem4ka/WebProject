@@ -44,7 +44,7 @@ public class RoomInfoCommand implements Command {
             req.setAttribute(StringConstants.ROOM_TYPE, type);
             req.setAttribute(StringConstants.IMAGES, images);
         }catch (ServiceException e){
-            //TODO error page
+            logger.warn(e);
         }
 
         req.getRequestDispatcher(URLConstants.ROOM_INFO_PAGE).forward(req,resp);

@@ -5,8 +5,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale" var="loc"/>
-<fmt:message bundle="${loc}" key="locale.error.temp_unavailable" var="temp_unavailable"/>
-
+<fmt:message bundle="${loc}" key="locale.about" var="about"/>
 
 <html>
 <head>
@@ -24,9 +23,13 @@
 
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
-                <article class="card-body mx-auto" style="width: 400px;">
-                <h2>${temp_unavailable}</h2>
-
+                <article class="card-body">
+                    <div>
+                    <img  width="100%" src="${pageContext.request.contextPath}/images/logo.jpg">
+                    </div>
+                    <hr/>
+                    <div style="font-size: 16pt">${about}</div>
+                   <hr/>
                 </article>
             </div>
         </div>

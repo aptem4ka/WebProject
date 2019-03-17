@@ -27,26 +27,25 @@ public class ControlCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute("activeOrdersPaginator");
-        Pagination needConfirmationOrdersPaginator = (Pagination)req.getSession().getAttribute("needConfirmPaginator");
+        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute(StringConstants.ACTIVE_ORDER_PAGINATOR);
+        Pagination needConfirmationOrdersPaginator = (Pagination)req.getSession().getAttribute(StringConstants.NEED_CONFIRM_ORDER_PAGINATOR);
 
         if (activeOrdersPaginator == null && needConfirmationOrdersPaginator == null){
-            activeOrdersPaginator = Pagination.setupPaginator(req, "activeOrdersPaginator");
-            needConfirmationOrdersPaginator = Pagination.setupPaginator(req, "needConfirmPaginator");
+            activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_ORDER_PAGINATOR);
+            needConfirmationOrdersPaginator = Pagination.setupPaginator(req, StringConstants.NEED_CONFIRM_ORDER_PAGINATOR);
         } else {
 
-        String paginatorType = req.getParameter("paginatorType");
+            String paginatorType = req.getParameter(StringConstants.PAGINATOR_TYPE);
 
-        if (paginatorType!= null){
-            if (paginatorType.equals("active")){
-                activeOrdersPaginator = Pagination.setupPaginator(req, "activeOrdersPaginator");
-            }
-            if (paginatorType.equals("needConfirm")){
-                needConfirmationOrdersPaginator = Pagination.setupPaginator(req, "needConfirmPaginator");
+            if (paginatorType!= null){
+                if (paginatorType.equals(StringConstants.ACTIVE)){
+                    activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_ORDER_PAGINATOR);
+                }
+                if (paginatorType.equals(StringConstants.NEED_CONFIRM)){
+                    needConfirmationOrdersPaginator = Pagination.setupPaginator(req, StringConstants.NEED_CONFIRM_ORDER_PAGINATOR);
+                }
             }
         }
-        }
-
         String prevURL = new URLFromRequest().createURL(req);
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
@@ -64,11 +63,9 @@ public class ControlCommand implements Command {
 
         req.setAttribute(StringConstants.CURRENT_DATE, new Date());
         req.setAttribute(StringConstants.ACTIVE_ORDER_LIST, activeOrderList);
-        req.setAttribute("needConfirmList", needConfirmationOrders);
+        req.setAttribute(StringConstants.NEED_CONFIRM_LIST, needConfirmationOrders);
 
-            req.getRequestDispatcher(URLConstants.CONTROL_PAGE).forward(req,resp );
-
-
+        req.getRequestDispatcher(URLConstants.CONTROL_PAGE).forward(req,resp );
     }
 
 }

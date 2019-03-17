@@ -10,11 +10,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class OrderDetailsCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(OrderDetailsCommand.class);
+public class OrderDetailsPageCommand implements Command {
+    private final static Logger logger = LogManager.getLogger(OrderDetailsPageCommand.class);
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String prevURL = new URLFromRequest().createURL(req);

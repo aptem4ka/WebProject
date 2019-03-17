@@ -6,6 +6,7 @@ import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,8 +54,7 @@ public class SearchResultCommand implements Command {
             session.setAttribute(StringConstants.CHILDREN, room.getChildren());
             session.setAttribute(StringConstants.ALLOCATION, room.getAllocation());
 
-            logger.info("dispatching to the page");
-            resp.sendRedirect("ControllerServlet?command=search_result_page");
+            resp.sendRedirect(URLConstants.SEARCH_RESULT_PAGE_COMMAND);
 
     }
 

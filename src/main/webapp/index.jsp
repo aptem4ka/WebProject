@@ -4,7 +4,7 @@
 
 <html>
 <body>
-<c:redirect url="/ControllerServlet?command=index_page"/>
+<c:redirect url="/main?command=index_page"/>
 
 </body>
 </html>

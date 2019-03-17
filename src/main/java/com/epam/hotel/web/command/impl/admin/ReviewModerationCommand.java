@@ -6,6 +6,7 @@ import com.epam.hotel.service.ReviewService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +31,7 @@ public class ReviewModerationCommand implements Command {
 
         List<Review> reviewList = new ArrayList<>();
 
-        Pagination pagination = Pagination.setupPaginator(req, "reviewsPaginator");
+        Pagination pagination = Pagination.setupPaginator(req, StringConstants.REVIEWS_PAGINATOR);
 
         try {
             reviewList = reviewService.takeReviewsForModeration(pagination);
@@ -40,11 +41,8 @@ public class ReviewModerationCommand implements Command {
 
         pagination.lastPageControl(reviewList);
 
-        req.setAttribute("reviewList", reviewList);
-        req.getRequestDispatcher("/WEB-INF/jsp/ReviewModeration.jsp").forward(req, resp);
-
-
-
+        req.setAttribute(StringConstants.REVIEW_LIST, reviewList);
+        req.getRequestDispatcher(URLConstants.REVIEW_MODERATION_PAGE).forward(req, resp);
 
     }
 }

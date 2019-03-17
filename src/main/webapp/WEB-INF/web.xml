@@ -14,6 +14,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+
   <servlet>
     <servlet-name>Controller</servlet-name>
     <servlet-class>com.epam.hotel.web.ControllerServlet</servlet-class>
@@ -74,7 +75,7 @@
 
 
   <error-page>
-    <exception-type>java.io.IOException</exception-type>
+    <exception-type>java.lang.Exception</exception-type>
     <location>/WEB-INF/jsp/Error.jsp</location>
   </error-page>
 

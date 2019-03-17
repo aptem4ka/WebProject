@@ -26,7 +26,8 @@
        class="list-group-item list-group-item-action list-group-item-light">${rooms}</a>
     <a href="${pageContext.request.contextPath}/main?command=reviews_page"
        class="list-group-item list-group-item-action list-group-item-light">${reviews}</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-item-light">${about}</a>
+    <a href="${pageContext.request.contextPath}/main?command=about_page"
+       class="list-group-item list-group-item-action list-group-item-light">${about}</a>
     <c:if test="${sessionScope.currentUser.role eq 'ADMIN'}">
         <a href="${pageContext.request.contextPath}/admin?command=review_moderation" class="list-group-item list-group-item-action list-group-item-light" style="color: coral">Управление отзывами <span class="badge badge-primary badge-pill">12</span></a>
     </c:if>

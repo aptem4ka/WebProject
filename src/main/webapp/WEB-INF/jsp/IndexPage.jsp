@@ -10,6 +10,14 @@
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
     <fmt:setBundle basename="locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation"/>
+    <fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+    <fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
+    <fmt:message bundle="${loc}" key="locale.room.find_room" var="find_room"/>
+    <fmt:message bundle="${loc}" key="locale.room.quick_search" var="quick_search"/>
+
+
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -28,15 +36,22 @@
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
                 <article class="card-body">
-            <h1 style="font-style: italic; font-weight: bold; text-align: center"><span style="color: darkturquoise">&lt;</span>epam<span style="color: darkturquoise">&gt;</span> Hotel</h1><hr/>
-                Страница в процессе разработки<hr/>
+            <!--<h1 style="font-style: italic; font-weight: bold; text-align: center"><span style="color: darkturquoise">&lt;</span>epam<span style="color: darkturquoise">&gt;</span> Hotel</h1><hr/>-->
+
+                    <div>
+                        <img width="100%" src="${pageContext.request.contextPath}/images/main_logo.jpg">
+                    </div>
+
+                   <hr/>
+                    Отель EPAM, построенный в конце ХХ века, в течение двух десятков лет принимает туристов и гостей города. С того времени в его стенах произошли кардинальные изменения: о комфорте туристов позаботились современные дизайнеры, которые модернизировали интерьеры номеров. Отель EPAM готов предложить номера, которые удовлетворят все ваши требования.
+<hr/>
 
 
 
 
-            <p>
+                    <p>
                 <button class="btn btn-link dropdown-toggle" type="button" data-toggle="collapse" data-target="#buttoncollapse" >
-                    Быстрый поиск номера
+                    ${quick_search}
                 </button>
             </p>
             <div class="collapse" id="buttoncollapse">
@@ -44,25 +59,25 @@
                     <input type="hidden" name="command" value="search_result"/>
 
                         <div  align="center">
-                            Дата заселения:
+                            ${reserved_from}
                             <input name="resFrom" class="form-control" type="date" style="width: 300px" required/>
                         </div>
 
                         <div align="center">
-                            Дата выселения:
+                            ${reserved_to}
                             <input name="resTo" class="form-control" type="date" style="width: 300px" required/>
                         </div>
                     <hr/>
 
-                    <div align="center">Принцип размещения:</div>
+                    <div align="center">${allocation}</div>
                             <c:forEach items="${requestScope.allocations}" var="it">
-                                <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it)}" var="allocationDesc"/>
+                                <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(it)}" var="allocationDesc"/>
                                 <input type="radio" id="${it}" name="allocation" value="${it}" checked> ${allocationDesc}<br/>
                             </c:forEach>
                     <hr/>
 
                         <div class="form-group input-group" align="center">
-                            Дополнительные спальные места для детей
+                            ${baby_cots}
                             <select name="children">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -70,7 +85,7 @@
                             </select>
                         </div>
                         <div align="center">
-                            <button type="submit" class="btn btn-info">Найти номер</button>
+                            <button type="submit" class="btn btn-info">${find_room}</button>
                         </div>
 
                 </form>

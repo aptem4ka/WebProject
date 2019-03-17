@@ -35,27 +35,25 @@ public class ProfileCommand implements Command {
         session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
 
-        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute("activePaginator");
-        Pagination ordersHistoryPaginator = (Pagination)req.getSession().getAttribute("historyPaginator");
+        Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute(StringConstants.ACTIVE_PAGINATOR);
+        Pagination ordersHistoryPaginator = (Pagination)req.getSession().getAttribute(StringConstants.HISTORY_PAGINATOR);
 
         if (activeOrdersPaginator == null && ordersHistoryPaginator == null){
-            activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
-            ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
+            activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_PAGINATOR);
+            ordersHistoryPaginator = Pagination.setupPaginator(req, StringConstants.HISTORY_PAGINATOR);
         }else {
-            String paginatorType = req.getParameter("paginatorType");
+            String paginatorType = req.getParameter(StringConstants.PAGINATOR_TYPE);
             if (paginatorType!= null){
-                if (paginatorType.equals("active")){
-                    activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
+                if (paginatorType.equals(StringConstants.ACTIVE)){
+                    activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_PAGINATOR);
                 }
                 if (paginatorType.equals("history")){
-                    ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
+                    ordersHistoryPaginator = Pagination.setupPaginator(req, StringConstants.HISTORY_PAGINATOR);
                 }
             }
         }
-
         List<Order> activeOrderList = null;
         List<Order> orderHistoryList = null;
-
         try {
             activeOrderList = userService.activeOrderList(activeOrdersPaginator, user.getUserID());
             orderHistoryList = userService.orderHistoryList(ordersHistoryPaginator, user.getUserID());
@@ -67,7 +65,7 @@ public class ProfileCommand implements Command {
         ordersHistoryPaginator.lastPageControl(orderHistoryList);
 
         req.setAttribute(StringConstants.ACTIVE_ORDER_LIST, activeOrderList);
-        req.setAttribute("historyOrderList", orderHistoryList);
+        req.setAttribute(StringConstants.HISTORY_ORDER_LIST, orderHistoryList);
         req.setAttribute(StringConstants.CURRENT_DATE, new Date());
 
 

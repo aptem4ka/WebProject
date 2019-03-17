@@ -133,3 +133,6 @@
         <jsp:include page="/WEB-INF/jsp/page_component/AdminBar.jsp"/>
     </div>
 </div>
+<jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>
+</body>
+</html>

@@ -50,7 +50,6 @@
                         </c:forEach>
                 </ul>
 
-                <br/>
                 <h3>${prices} ${requestScope.priceRange}USD</h3>
             </div>
             <hr/>

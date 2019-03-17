@@ -6,6 +6,7 @@ import com.epam.hotel.service.ReviewService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,10 +23,10 @@ public class LeaveReviewCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        int rating = Integer.parseInt(req.getParameter("rating"));
+        int rating = Integer.parseInt(req.getParameter(StringConstants.RATING));
         boolean reviewAdded = true;
-        String comment = req.getParameter("comment");
-        User currentUser = (User)req.getSession().getAttribute("currentUser");
+        String comment = req.getParameter(StringConstants.COMMENT);
+        User currentUser = (User)req.getSession().getAttribute(StringConstants.CURRENT_USER);
         try {
 
         if (currentUser == null){
@@ -43,9 +44,9 @@ public class LeaveReviewCommand implements Command {
         }
 
         if (reviewAdded){
-            resp.sendRedirect("ControllerServlet?command=success_review_page");
+            resp.sendRedirect(URLConstants.SUCCESS_REVIEW_PAGE_COMMAND);
         }else {
-            resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectDate=true");
+            resp.sendRedirect(req.getSession().getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectDate=true");
         }
     }
 }

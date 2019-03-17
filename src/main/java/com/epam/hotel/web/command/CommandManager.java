@@ -24,7 +24,7 @@ public class CommandManager {
         commands.put(CommandName.ROOM_INFO, new RoomInfoCommand());
         commands.put(CommandName.PROFILE, new ProfileCommand());
         commands.put(CommandName.BOOK, new BookCommand());
-        commands.put(CommandName.ORDER_DETAILS, new OrderDetailsCommand());
+        commands.put(CommandName.ORDER_DETAILS, new OrderDetailsPageCommand());
         commands.put(CommandName.CONTROL, new ControlCommand());
         commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatusCommand());
         commands.put(CommandName.SEARCH_USER_BY_ORDER, new SearchUserByOrderCommand());
@@ -41,6 +41,7 @@ public class CommandManager {
         commands.put(CommandName.REVIEW_MODERATION, new ReviewModerationCommand());
         commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatusCommand());
         commands.put(CommandName.CHANGE_ORDER_CONGRATS_PAGE, new ChangeOrderCongratsPageCommand());
+        commands.put(CommandName.ABOUT_PAGE, new AboutPageCommand());
     }
 
     public static CommandManager getInstance() {

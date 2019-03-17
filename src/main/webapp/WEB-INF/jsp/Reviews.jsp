@@ -39,12 +39,12 @@
                         <c:forEach items="${requestScope.reviewList}" var="it">
                             <h5>${it.name}<br/></h5>
                             <fmt:formatDate value="${it.added}"/><br/>
-                            <c:if test="${it.rating==1}"><img src="${pageContext.request.contextPath}/images/icons/star.jpg"><br/></c:if>
-                            <c:if test="${it.rating==2}"><c:forEach begin="1" end="2" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.jpg"></c:forEach> <br/></c:if>
-                            <c:if test="${it.rating==3}"><c:forEach begin="1" end="3" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.jpg"></c:forEach> <br/></c:if>
-                            <c:if test="${it.rating==4}"><c:forEach begin="1" end="4" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.jpg"></c:forEach> <br/></c:if>
-                            <c:if test="${it.rating==5}"><c:forEach begin="1" end="5" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.jpg"></c:forEach> <br/></c:if>
-                            <hr/>
+                            <c:if test="${it.rating==1}"><img src="${pageContext.request.contextPath}/images/icons/star.png"><br/></c:if>
+                            <c:if test="${it.rating==2}"><c:forEach begin="1" end="2" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.png"></c:forEach> <br/></c:if>
+                            <c:if test="${it.rating==3}"><c:forEach begin="1" end="3" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.png"></c:forEach> <br/></c:if>
+                            <c:if test="${it.rating==4}"><c:forEach begin="1" end="4" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.png"></c:forEach> <br/></c:if>
+                            <c:if test="${it.rating==5}"><c:forEach begin="1" end="5" step="1"><img src="${pageContext.request.contextPath}/images/icons/star.png"></c:forEach> <br/></c:if>
+
                             ${it.comment}
                             <c:if test="${not empty it.answer}"><br/><b>${answer}</b> ${it.answer}</c:if>
                             <hr/>
@@ -161,15 +161,11 @@
                         </div>
                     </c:if>
 
-
-
-
-
                 </article>
             </div>
         </div>
     </div>
 </div>
-
+<jsp:include page="/WEB-INF/jsp/page_component/Footer.jsp"/>
 </body>
 </html>

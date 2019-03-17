@@ -33,14 +33,14 @@ public class IndexPageCommand implements Command {
         Set<String> images=null;
         List<Room.AllocationType> allocations = null;
 
-            try {
-                 images = roomService.allRoomImages();
-                 allocations = roomService.allocationsIgnoreType();
-            }catch (ServiceException e){
-                logger.warn(e);
-            }
-            req.setAttribute(StringConstants.CAROUSEL_IMAGES, images);
-            req.setAttribute(StringConstants.ALLOCATIONS, allocations);
+        try {
+            images = roomService.allRoomImages();
+            allocations = roomService.allocationsIgnoreType();
+        }catch (ServiceException e){
+            logger.warn(e);
+        }
+        req.setAttribute(StringConstants.CAROUSEL_IMAGES, images);
+        req.setAttribute(StringConstants.ALLOCATIONS, allocations);
 
 
         req.getRequestDispatcher(URLConstants.INDEX_PAGE).forward(req,resp);

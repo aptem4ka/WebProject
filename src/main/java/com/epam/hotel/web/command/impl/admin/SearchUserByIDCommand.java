@@ -9,6 +9,7 @@ import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,10 +30,9 @@ public class SearchUserByIDCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         User user = null;
 
-            int userID = Integer.parseInt(req.getParameter("userID"));
+            int userID = Integer.parseInt(req.getParameter(StringConstants.USER_ID));
             try {
                 user = adminService.searchUserByID(userID);
             }catch (ServiceException e){
@@ -41,20 +41,20 @@ public class SearchUserByIDCommand implements Command {
 
         if (user!=null) {
 
-            Pagination activeOrdersPaginator = (Pagination) req.getSession().getAttribute("activePaginator");
-            Pagination ordersHistoryPaginator = (Pagination) req.getSession().getAttribute("historyPaginator");
+            Pagination activeOrdersPaginator = (Pagination) req.getSession().getAttribute(StringConstants.ACTIVE_PAGINATOR);
+            Pagination ordersHistoryPaginator = (Pagination) req.getSession().getAttribute(StringConstants.HISTORY_PAGINATOR);
 
             if (activeOrdersPaginator == null && ordersHistoryPaginator == null) {
-                activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
-                ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
+                activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_PAGINATOR);
+                ordersHistoryPaginator = Pagination.setupPaginator(req, StringConstants.HISTORY_PAGINATOR);
             } else {
-                String paginatorType = req.getParameter("paginatorType");
+                String paginatorType = req.getParameter(StringConstants.PAGINATOR_TYPE);
                 if (paginatorType != null) {
-                    if (paginatorType.equals("active")) {
-                        activeOrdersPaginator = Pagination.setupPaginator(req, "activePaginator");
+                    if (paginatorType.equals(StringConstants.ACTIVE)) {
+                        activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_PAGINATOR);
                     }
-                    if (paginatorType.equals("history")) {
-                        ordersHistoryPaginator = Pagination.setupPaginator(req, "historyPaginator");
+                    if (paginatorType.equals(StringConstants.HISTORY)) {
+                        ordersHistoryPaginator = Pagination.setupPaginator(req, StringConstants.HISTORY_PAGINATOR);
                     }
                 }
             }
@@ -69,20 +69,20 @@ public class SearchUserByIDCommand implements Command {
                 logger.warn(e);
             }
 
-
             activeOrdersPaginator.lastPageControl(activeOrderList);
             ordersHistoryPaginator.lastPageControl(orderHistoryList);
-            req.setAttribute("user", user);
-            req.setAttribute("searcherCommand", "search_user_by_id");
+
+            req.setAttribute(StringConstants.USER, user);
+            req.setAttribute(StringConstants.SEARCHER_COMMAND,StringConstants.SEARCH_USER_BY_ID);
             req.setAttribute(StringConstants.ACTIVE_ORDER_LIST, activeOrderList);
-            req.setAttribute("historyOrderList", orderHistoryList);
+            req.setAttribute(StringConstants.HISTORY_ORDER_LIST, orderHistoryList);
             req.setAttribute(StringConstants.CURRENT_DATE, new Date());
 
-            req.getRequestDispatcher("/WEB-INF/jsp/UserSearch.jsp").forward(req, resp);
+            req.getRequestDispatcher(URLConstants.USER_SEARCH_PAGE).forward(req, resp);
 
         }else {
-            req.setAttribute("user", user);
-            req.getRequestDispatcher("/WEB-INF/jsp/UserSearch.jsp").forward(req, resp);
+            req.setAttribute(StringConstants.USER, user);
+            req.getRequestDispatcher(URLConstants.USER_SEARCH_PAGE).forward(req, resp);
         }
 
 

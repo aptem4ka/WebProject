@@ -21,14 +21,13 @@ public class UpdateReviewStatusCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Review review = new Review();
-        String updateType = req.getParameter("update_type");
+        String updateType = req.getParameter(StringConstants.UPDATE_TYPE);
         if (updateType!=null){
             review.setStatus(Review.Status.valueOf(updateType.toUpperCase()));
         }
 
-        review.setReviewID(Integer.parseInt(req.getParameter("reviewID")));
-        review.setAnswer(req.getParameter("answer"));
-        System.out.println("answer is "+ review.getAnswer());
+        review.setReviewID(Integer.parseInt(req.getParameter(StringConstants.REVIEW_ID)));
+        review.setAnswer(req.getParameter(StringConstants.ANSWER));
 
         try {
             adminService.updateReviewStatus(review);
@@ -37,10 +36,6 @@ public class UpdateReviewStatusCommand implements Command {
         }
 
         resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
-
-
-
-
 
     }
 }
