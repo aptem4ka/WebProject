@@ -8,6 +8,8 @@
 
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
     <fmt:setBundle basename="locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="locale.feedback.thanks" var="thanks"/>
+    <fmt:message bundle="${loc}" key="locale.feedback.after_moderation" var="after_moderation"/>
 
 
 </head>
@@ -22,8 +24,8 @@
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
                 <article class="card-body">
-                    <h3>Спасибо!</h3><br/>
-                    <h5>Ваш отзыв будет опубликован после модерации.</h5>
+                    <h3>${thanks}</h3><br/>
+                    <h5>${after_moderation}</h5>
 
                 </article>
             </div>

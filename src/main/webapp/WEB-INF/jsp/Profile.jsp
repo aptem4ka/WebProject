@@ -75,8 +75,8 @@
 
                     <tr>
                         <td>${it.orderID}</td>
-                        <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
-                        <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
+                        <td>${resFrom}</td>
+                        <td>${resTo}</td>
                         <td><fmt:message bundle="${loc}" key="locale.order.status.${fn:toLowerCase(it.status)}"/></td>
                         <td>
                             <form method="get" action="ControllerServlet">

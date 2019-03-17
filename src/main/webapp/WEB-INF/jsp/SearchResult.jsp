@@ -5,27 +5,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="locale.room.result.sorry" var="sorry"/>
+<fmt:message bundle="${loc}" key="locale.room.result.fail" var="search_fail"/>
+<fmt:message bundle="${loc}" key="locale.room.result.authorize" var="authorize"/>
+<fmt:message bundle="${loc}" key="locale.room.result.registered" var="registered"/>
+<fmt:message bundle="${loc}" key="locale.room.result.data" var="booking_data"/>
+<fmt:message bundle="${loc}" key="locale.room.result.period" var="period_of_stay"/>
+<fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation_type"/>
+<fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
+<fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(sessionScope.allocation)}" var="allocation"/>
+<fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
+<fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
+<fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
+<fmt:message bundle="${loc}" key="locale.room.result.book" var="book"/>
+<fmt:message bundle="${loc}" key="locale.room.result.view" var="view"/>
+<fmt:message bundle="${loc}" key="locale.room.result.floor" var="floor"/>
+<fmt:message bundle="${loc}" key="locale.user.user_name_placeholder" var="user_name"/>
+<fmt:message bundle="${loc}" key="locale.user.user_surname_placeholder" var="user_surname"/>
+<fmt:message bundle="${loc}" key="locale.user.user_phone" var="user_phone"/>
+
+
+
 <head>
-
-    <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="locale" var="loc"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.sorry" var="sorry"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.fail" var="search_fail"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.authorize" var="authorize"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.registered" var="registered"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.data" var="booking_data"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.period" var="period_of_stay"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation_type"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
-    <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(sessionScope.allocation)}" var="allocation"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.book" var="book"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.view" var="view"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.floor" var="floor"/>
-
-
 
 </head>
 <body>
@@ -60,20 +64,20 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                     </div>
-                                    <input name="name" class="form-control" placeholder="Name (ex. Tim)" type="text" required>
+                                    <input name="name" class="form-control" placeholder="${user_name}" type="text" required>
                                 </div> <!-- form-group// -->
                                 <div class="form-group input-group" style="width: 300px">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                     </div>
-                                    <input name="surname" class="form-control" placeholder="Surname (ex. Cook)" type="text" required>
+                                    <input name="surname" class="form-control" placeholder="${user_surname}" type="text" required>
                                 </div>
                                 <!-- form-group// -->
                                 <div class="form-group input-group" style="width: 300px">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                                     </div>
-                                    <input name="phone" class="form-control" placeholder="Phone (ex. +375291234567)" type="text" required>
+                                    <input name="phone" class="form-control" placeholder="${user_phone} (+375291234567)" type="text" required>
                                 </div>
                             </div>
                                 <c:if test="${param.incorrectData eq true}"><span style="color: red">Пожалуйста, введите корректные данные в соответствии с шаблоном</span></c:if>

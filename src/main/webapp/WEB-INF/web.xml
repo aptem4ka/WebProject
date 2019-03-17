@@ -24,6 +24,55 @@
     <url-pattern>/ControllerServlet</url-pattern>
   </servlet-mapping>
 
+  <!-- Admin URL -->
+  <servlet>
+    <servlet-name>Admin</servlet-name>
+    <servlet-class>com.epam.hotel.web.ControllerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Admin</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+
+  <!-- User URL-->
+
+  <servlet>
+    <servlet-name>User</servlet-name>
+    <servlet-class>com.epam.hotel.web.ControllerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>User</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+
+
+
+  <!-- General -->
+
+
+  <servlet>
+    <servlet-name>Main</servlet-name>
+    <servlet-class>com.epam.hotel.web.ControllerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Main</servlet-name>
+    <url-pattern>/main</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RoomList</servlet-name>
+    <servlet-class>com.epam.hotel.web.ControllerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>RoomList</servlet-name>
+    <url-pattern>/main/rooms</url-pattern>
+  </servlet-mapping>
+
+
   <error-page>
     <exception-type>java.io.IOException</exception-type>
     <location>/WEB-INF/jsp/Error.jsp</location>

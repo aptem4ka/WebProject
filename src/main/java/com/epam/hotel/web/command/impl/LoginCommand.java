@@ -41,11 +41,8 @@ public class LoginCommand implements Command {
             HttpSession session=req.getSession();
             session.setAttribute(StringConstants.CURRENT_USER,user);
 
-            if (session.getAttribute(StringConstants.PREV_PAGE_URL)!=null){
-                resp.sendRedirect((String)req.getSession().getAttribute(StringConstants.PREV_PAGE_URL));
-            }else {
-                resp.sendRedirect(URLConstants.GO_TO_INDEX);
-            }
+            resp.sendRedirect(URLConstants.GO_TO_INDEX);
+
 
         }else {
             resp.sendRedirect(URLConstants.LOGIN_PAGE_COMMAND);

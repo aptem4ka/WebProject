@@ -1,6 +1,7 @@
 package com.epam.hotel.web.command;
 
 import com.epam.hotel.web.command.impl.*;
+import com.epam.hotel.web.command.impl.admin.*;
 
 import java.util.HashMap;
 import java.util.Map;

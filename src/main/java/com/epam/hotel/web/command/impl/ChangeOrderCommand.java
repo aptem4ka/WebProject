@@ -35,9 +35,9 @@ public class ChangeOrderCommand implements Command {
         HttpSession session=req.getSession();
         session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
-        int userID = Integer.parseInt(req.getParameter("userID"));
-        int orderID = Integer.parseInt(req.getParameter("orderID"));
-        int roomID = Integer.parseInt(req.getParameter("roomID"));
+        int userID = Integer.parseInt(req.getParameter(StringConstants.USER_ID));
+        int orderID = Integer.parseInt(req.getParameter(StringConstants.ORDER_ID));
+        int roomID = Integer.parseInt(req.getParameter(StringConstants.ROOM_ID));
 
         SimpleDateFormat formatRu = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT_RU);
         SimpleDateFormat formatEN = new SimpleDateFormat(StringConstants.REQUEST_DATE_FORMAT_EN);
@@ -45,8 +45,8 @@ public class ChangeOrderCommand implements Command {
         Date resTo = null;
 
         try {
-                resFrom = formatRu.parse(req.getParameter("resFrom"));
-                resTo = formatRu.parse(req.getParameter("resTo"));
+                resFrom = formatRu.parse(req.getParameter(StringConstants.RESERVED_FROM));
+                resTo = formatRu.parse(req.getParameter(StringConstants.RESERVED_TO));
 
         }catch (ParseException e){
             logger.warn(e);
@@ -55,8 +55,8 @@ public class ChangeOrderCommand implements Command {
             logger.info("trying to parse EN date");
             try {
 
-                resFrom = formatEN.parse(req.getParameter("resFrom"));
-                resTo = formatEN.parse(req.getParameter("resTo"));
+                resFrom = formatEN.parse(req.getParameter(StringConstants.RESERVED_FROM));
+                resTo = formatEN.parse(req.getParameter(StringConstants.RESERVED_TO));
 
             }catch (ParseException e){
                 logger.warn(e);
@@ -77,15 +77,15 @@ public class ChangeOrderCommand implements Command {
         }
 
         if (orderPrice!=0 && room!=null){
-            session.setAttribute("orderID", orderID);
-            session.setAttribute("old_price", orderPrice);
-            req.setAttribute("allocations", allocations);
-            req.setAttribute("room", room);
-            req.setAttribute("resFrom", resFrom);
-            req.setAttribute("resTo", resTo);
-            req.getRequestDispatcher("/WEB-INF/jsp/ChangeOrderForm.jsp").forward(req,resp);
+            session.setAttribute(StringConstants.ORDER_ID, orderID);
+            session.setAttribute(StringConstants.OLD_PRICE, orderPrice);
+            req.setAttribute(StringConstants.ALLOCATIONS, allocations);
+            req.setAttribute(StringConstants.ROOM, room);
+            req.setAttribute(StringConstants.RESERVED_FROM, resFrom);
+            req.setAttribute(StringConstants.RESERVED_TO, resTo);
+            req.getRequestDispatcher(URLConstants.CHANGE_ORDER_FORM).forward(req,resp);
         } else {
-            req.setAttribute("changeFailed",true);
+            req.setAttribute(StringConstants.CHANGE_FAILED,true);
             req.getRequestDispatcher(URLConstants.PROFILE_PAGE).forward(req,resp);
         }
 

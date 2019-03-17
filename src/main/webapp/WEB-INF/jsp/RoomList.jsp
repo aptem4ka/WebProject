@@ -4,12 +4,13 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="locale.room.room_info" var="room_info"/>
+
 <html>
 <head>
-
-    <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="locale" var="loc"/>
-
 
 </head>
 <body>
@@ -42,7 +43,7 @@
                         </div><br/>
                         <div style="font-size: 10pt">
                             <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_info&type=${fn:toLowerCase(type)}"
-                               class="btn btn-info" role="button">Информация о номере</a>
+                               class="btn btn-info" role="button">${room_info}</a>
                         </div>
                     </div>
 

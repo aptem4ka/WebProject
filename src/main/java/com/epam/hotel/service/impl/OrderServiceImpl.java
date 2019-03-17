@@ -31,20 +31,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order registeredUserBooking(Order order) throws ServiceException {
-        if (!validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResFrom())
-                || !validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResTo())
-                || order.getResFrom().after(order.getResTo())){
-            throw new ServiceException("Incorrect date error");
-        }
-        if (order.getTotalPrice()<=0){
-            throw new ServiceException("incorrect price");
-        }
-        if(order.getRoomID()<=0){
-            throw new ServiceException("incorrect roomID");
-        }
-        if (order.getUserID()<=0){
-            throw new ServiceException("incorrect userID");
-        }
+       if (!validatorManager.getValidator(ValidatorName.ORDER).isValid(order)){
+           throw new ServiceException("Incorrect order");
+       }
+
         try {
             return orderDAO.registeredUserBooking(order);
         }catch (DAOException e){
@@ -95,22 +85,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void editOrder(Order order) throws ServiceException {
 
-        if (!validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResFrom())
-                || !validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResTo())
-                || order.getResFrom().after(order.getResTo())){
-            throw new ServiceException("Incorrect date error");
-        }
-        if (order.getTotalPrice()<=0){
-            throw new ServiceException("incorrect price");
-        }
-        if(order.getRoomID()<=0){
-            throw new ServiceException("incorrect roomID");
-        }
-        if(order.getOrderID()<=0){
-            throw new ServiceException("incorrect orderID");
-        }
-        if (order.getUserID()<0){
-            throw new ServiceException("incorrect userID");
+        if (!validatorManager.getValidator(ValidatorName.ORDER).isValid(order)){
+            throw new ServiceException("Incorrect order");
         }
 
         try {

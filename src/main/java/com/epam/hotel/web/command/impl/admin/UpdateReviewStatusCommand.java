@@ -1,8 +1,5 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.admin;
 
-import com.epam.hotel.dao.AdminDAO;
-import com.epam.hotel.dao.DaoFactory;
-import com.epam.hotel.dao.ReviewDAO;
 import com.epam.hotel.entity.Review;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.AdminService;

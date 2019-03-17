@@ -1,4 +1,4 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.admin;
 
 import com.epam.hotel.entity.Order;
 import com.epam.hotel.exception.ServiceException;

@@ -20,15 +20,15 @@
 
 <div class="list-group col-md-3" style="margin-right:-15px; margin-left:-15px">
 
-    <a href="${pageContext.request.contextPath}/ControllerServlet?command=index_page"
+    <a href="${pageContext.request.contextPath}/main?command=index_page"
        class="list-group-item list-group-item-action list-group-item-light">${main}</a>
-    <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_list"
+    <a href="${pageContext.request.contextPath}/main?command=room_list"
        class="list-group-item list-group-item-action list-group-item-light">${rooms}</a>
-    <a href="${pageContext.request.contextPath}/ControllerServlet?command=reviews_page"
+    <a href="${pageContext.request.contextPath}/main?command=reviews_page"
        class="list-group-item list-group-item-action list-group-item-light">${reviews}</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-light">${about}</a>
     <c:if test="${sessionScope.currentUser.role eq 'ADMIN'}">
-        <a href="${pageContext.request.contextPath}/ControllerServlet?command=review_moderation" class="list-group-item list-group-item-action list-group-item-light" style="color: coral">Управление отзывами <span class="badge badge-primary badge-pill">12</span></a>
+        <a href="${pageContext.request.contextPath}/admin?command=review_moderation" class="list-group-item list-group-item-action list-group-item-light" style="color: coral">Управление отзывами <span class="badge badge-primary badge-pill">12</span></a>
     </c:if>
 
 </div>

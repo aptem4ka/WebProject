@@ -15,6 +15,13 @@
     <fmt:message bundle="${loc}" key="locale.room.description.${fn:toLowerCase(type)}" var="roomDesc"/>
     <fmt:message bundle="${loc}" key="locale.room.facilities" var="facilities"/>
     <fmt:message bundle="${loc}" key="locale.room.prices" var="prices"/>
+    <fmt:message bundle="${loc}" key="locale.room.photos" var="photos"/>
+    <fmt:message bundle="${loc}" key="locale.room.booking" var="booking"/>
+    <fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+    <fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation"/>
+    <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
+    <fmt:message bundle="${loc}" key="locale.room.find_room" var="find_room"/>
 
 
 
@@ -51,7 +58,7 @@
 
             <p style="text-align: center">
                 <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#carousel" aria-expanded="false" aria-controls="Collapse">
-                    Посмотреть фотографии
+                    ${photos}
                 </button>
             </p>
 
@@ -87,26 +94,26 @@
             <hr/>
 
             <div align="center">
-                <h3>Бронирование</h3>
+                <h3>${booking}</h3>
 
                 <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
                     <input type="hidden" name="command" value="search_result"/>
                     <input type="hidden" name="type" value="${type}">
 
                         <div style="width: 300px" align="center">
-                            Дата заселения:
+                            ${reserved_from}
                             <input name="resFrom" class="form-control" type="date" required>
                             <hr/>
                         </div>
 
                         <div style="width: 300px" align="center">
-                            Дата выселения:
+                            ${reserved_to}
                             <input name="resTo" class="form-control" type="date" required>
                             <hr/>
                         </div>
                     <div style="max-width: 500px; text-align: left">
                         <div>
-                            <div style="text-align: center">Принцип размещения:</div>
+                            <div style="text-align: center">${allocation}</div>
                             <c:forEach items="${requestScope.allocations}" var="it">
                                 <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(it)}" var="allocationDesc"/>
                                 <input type="radio" id="${it}" name="allocation" value="${it}" checked> ${allocationDesc}<br/>
@@ -116,7 +123,7 @@
                         </div>
 
                         <div>
-                            Дополнительные спальные места для детей
+                            ${baby_cots}
                             <select name="children">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -127,7 +134,7 @@
 
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-info">Найти номер</button>
+                        <button type="submit" class="btn btn-info">${find_room}</button>
                     </div>
 
 

@@ -1,4 +1,4 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.admin;
 
 import com.epam.hotel.entity.Order;
 import com.epam.hotel.exception.ServiceException;
@@ -27,7 +27,7 @@ public class UpdateOrderStatusCommand implements Command {
         }catch (ServiceException e){
             //TODO error page
         }
-        resp.sendRedirect("ControllerServlet?command=control");
+        resp.sendRedirect(URLConstants.CONTROL_COMMAND);
        // req.getRequestDispatcher(URLConstants.CONTROL_PAGE).forward(req,resp);
     }
 }

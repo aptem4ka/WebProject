@@ -13,7 +13,7 @@
     <div class="card bg-light">
         <article class="card-body">
     <div style="font-size: 10pt">
-        <form action="ControllerServlet" method="post">
+        <form action="admin" method="get">
             <input type="hidden" name="command" value="search_user_by_order"/>
         Поиск пользователя по номеру заказа<hr/>
             <input type="number" name="orderID" class="form-control"  placeholder="№ заказа" required>
@@ -23,7 +23,7 @@
         <hr style="border-top: 4px double #8c8b8b;"/>
 
 
-        <form method="post" action="ControllerServlet">
+        <form method="get" action="admin">
             <input type="hidden" name="command" value="search_order_by_name"/>
             Поиск заказа по имени и фамилии<hr/>
             <input type="text" class="form-control" name="name" placeholder="Имя" required/><br/>
@@ -36,7 +36,7 @@
         <hr style="border-top: 4px double #8c8b8b;"/>
 
 
-        <form method="post" action="ControllerServlet">
+        <form method="get" action="admin">
             <input type="hidden" name="command" value="search_order_by_phone"/>
             Поиск заказа по номеру телефона<hr/>
             <input type="text" class="form-control" name="phone" placeholder="Телефон" value="+" required/><br/>
@@ -48,7 +48,7 @@
         <hr style="border-top: 4px double #8c8b8b;"/>
 
 
-        <form method="post" action="ControllerServlet">
+        <form method="get" action="admin">
             <input type="hidden" name="command" value="search_user_by_id"/>
             Поиск пользователя по ID<hr/>
             <input type="number" class="form-control" name="userID" placeholder="ID" required/><br/>
@@ -58,12 +58,6 @@
         </form>
 
     </div>
-
-
-
-
-
-
 
         </article>
     </div>

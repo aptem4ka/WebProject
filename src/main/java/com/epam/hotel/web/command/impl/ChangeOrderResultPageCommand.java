@@ -15,6 +15,6 @@ public class ChangeOrderResultPageCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String prevURL = new URLFromRequest().createURL(req);
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
-        req.getRequestDispatcher("/WEB-INF/jsp/ChangeOrderSearchResult.jsp").forward(req, resp);
+        req.getRequestDispatcher(URLConstants.CHANGE_ORDER_RESULT_PAGE).forward(req, resp);
     }
 }

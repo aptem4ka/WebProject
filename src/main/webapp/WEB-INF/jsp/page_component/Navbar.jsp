@@ -30,7 +30,7 @@
         <div class="container-fluid">
 
             <div class="navbar-header mr-auto" style="margin-left: 10%">
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/ControllerServlet?command=index_page"><h3 style="font-weight: bold"><span style="color: darkturquoise">&lt;</span>epam<span style="color: darkturquoise">&gt;</span> Hotel</h3></a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/main?command=index_page"><h3 style="font-weight: bold"><span style="color: darkturquoise">&lt;</span>epam<span style="color: darkturquoise">&gt;</span> Hotel</h3></a>
             </div>
             <ul class="navbar-nav ml-auto" >
             <c:if test="${sessionScope.currentUser==null}">
@@ -40,7 +40,7 @@
                         </button>
 
                         <div class="dropdown-menu" style="width: 300px">
-                            <form class="dropdown-item p-4" action="${pageContext.request.contextPath}/ControllerServlet" method="get">
+                            <form class="dropdown-item p-4" action="${pageContext.request.contextPath}/main" method="get">
                                 <input type="hidden" name="command" value="login" />
                                 <div class="form-group">
                                     <label for="exampleDropdownFormEmail2">Email address</label>
@@ -55,7 +55,7 @@
                         </div>
                     </li>
                     <li class="nav-item" style="margin: 5px">
-                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=register_page" class="btn btn-info" role="button">${register}</a>
+                        <a href="${pageContext.request.contextPath}/main?command=register_page" class="btn btn-info" role="button">${register}</a>
 
                     </li>
 
@@ -67,18 +67,18 @@
                 <c:set value="ADMIN" var="admin"/>
                 <c:if test="${sessionScope.currentUser.role eq user}">
                     <li class="nav-item" style="margin: 5px">
-                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=profile" class="btn btn-outline-success">${profile}</a>
+                        <a href="${pageContext.request.contextPath}/user?command=profile" class="btn btn-outline-success">${profile}</a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.currentUser.role eq admin}">
                     <li class="nav-item" style="margin: 5px">
-                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=control" class="btn btn-outline-success">${control}</a>
+                        <a href="${pageContext.request.contextPath}/admin?command=control" class="btn btn-outline-success">${control}</a>
                     </li>
                 </c:if>
 
                     <li class="nav-item py-0" style="margin: 5px">
 
-                        <a href="${pageContext.request.contextPath}/ControllerServlet?command=logout" class="btn btn-secondary" role="button">${signout}</a>
+                        <a href="${pageContext.request.contextPath}/user?command=logout" class="btn btn-secondary" role="button">${signout}</a>
 
                     </li>
 

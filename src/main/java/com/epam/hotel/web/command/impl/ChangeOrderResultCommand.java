@@ -62,7 +62,7 @@ public class ChangeOrderResultCommand implements Command {
         session.setAttribute(StringConstants.RESERVED_TO, room.getResTo());
         session.setAttribute(StringConstants.CHILDREN, room.getChildren());
         session.setAttribute(StringConstants.ALLOCATION, room.getAllocation());
-        resp.sendRedirect("ControllerServlet?command=change_order_result_page");
+        resp.sendRedirect(URLConstants.CHANGE_ORDER_RESULT_PAGE_COMMAND);
 
     }
 

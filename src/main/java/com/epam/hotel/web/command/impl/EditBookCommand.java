@@ -35,28 +35,25 @@ public class EditBookCommand implements Command {
         order.setResFrom((Date)session.getAttribute(StringConstants.RESERVED_FROM));
         order.setResTo((Date)session.getAttribute(StringConstants.RESERVED_TO));
 
-
-        System.out.println("resFrom is "+order.getResFrom());
-
-        double oldPrice = (double)session.getAttribute("old_price");
-        double difference = Double.parseDouble(req.getParameter("difference"));
+        double oldPrice = (double)session.getAttribute(StringConstants.OLD_PRICE);
+        double difference = Double.parseDouble(req.getParameter(StringConstants.DIFFERENCE));
         double orderPrice = oldPrice+difference;
 
-        order.setOrderID((int)session.getAttribute("orderID"));
+        order.setOrderID((int)session.getAttribute(StringConstants.ORDER_ID));
         order.setUserID(user.getUserID());
         order.setTotalPrice(orderPrice);
-        order.setRoomID(Integer.parseInt(req.getParameter("roomID")));
+        order.setRoomID(Integer.parseInt(req.getParameter(StringConstants.ROOM_ID)));
 
         try {
             orderService.editOrder(order);
         }catch (ServiceException e){
             logger.warn(e);
-            resp.sendRedirect((String)session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectDate=true");
+            resp.sendRedirect(session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectDate=true");
         }
 
-        session.setAttribute("resFrom", order.getResFrom());
-        session.setAttribute("resTo", order.getResTo());
-        session.setAttribute("difference", difference);
+        session.setAttribute(StringConstants.RESERVED_FROM, order.getResFrom());
+        session.setAttribute(StringConstants.RESERVED_TO, order.getResTo());
+        session.setAttribute(StringConstants.DIFFERENCE, difference);
 
         resp.sendRedirect(URLConstants.CHANGE_ORDER_CONGRATS_PAGE_COMMAND);
 

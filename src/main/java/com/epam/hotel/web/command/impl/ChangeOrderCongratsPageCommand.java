@@ -2,6 +2,7 @@ package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,6 @@ public class ChangeOrderCongratsPageCommand implements Command {
         String prevURL = new URLFromRequest().createURL(req);
         req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/EditInfo.jsp").forward(req,resp);
+        req.getRequestDispatcher(URLConstants.EDIT_INFO_PAGE).forward(req,resp);
     }
 }
