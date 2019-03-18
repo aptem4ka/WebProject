@@ -1,4 +1,4 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.user;
 
 import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.ServiceException;
@@ -17,15 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class ChangeOrderCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(ChangeOrderCommand.class);
+public class EditOrderForm implements Command {
+    private final static Logger logger= LogManager.getLogger(EditOrderForm.class);
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
     private RoomService roomService = ServiceFactory.getInstance().getRoomService();
 

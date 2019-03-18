@@ -1,4 +1,4 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.user;
 
 import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.User;
@@ -16,12 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class EditBookCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(EditBookCommand.class);
+public class EditOrderExecution implements Command {
+    private final static Logger logger= LogManager.getLogger(EditOrderExecution.class);
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
 
     @Override

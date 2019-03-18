@@ -16,6 +16,8 @@ public interface AdminDAO {
 
     int ordersQtyByStatus(Order.Status status) throws DAOException;
 
+    int needConfirmationOrders() throws DAOException;
+
     void updateOrderStatus(Order order) throws DAOException;
 
     void updateReviewStatus(Review review) throws DAOException;

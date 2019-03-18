@@ -14,6 +14,34 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>com.epam.hotel.web.filter.impl.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/admin</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>ReviewsModeration</filter-name>
+    <filter-class>com.epam.hotel.web.filter.impl.ReviewsModerationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ReviewsModeration</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>OrdersWaitingConfirmationFilter</filter-name>
+    <filter-class>com.epam.hotel.web.filter.impl.NeedConfirmationOrdersFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>OrdersWaitingConfirmationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
 
   <servlet>
     <servlet-name>Controller</servlet-name>

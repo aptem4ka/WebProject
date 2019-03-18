@@ -2,6 +2,7 @@ package com.epam.hotel.dao.impl;
 
 import com.epam.hotel.dao.OrderDAO;
 import com.epam.hotel.dao.ParentDao;
+import com.epam.hotel.dao.util.SQLConstants;
 import com.epam.hotel.dao.util.SqlQuery;
 import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.User;
@@ -26,11 +27,11 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
 
             while (resultSet.next()) {
                 order=new Order();
-                order.setOrderID(resultSet.getInt("orderID"));
-                order.setResFrom(new java.util.Date(resultSet.getDate("resFrom").getTime()));
-                order.setResTo(new java.util.Date(resultSet.getDate("resTo").getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString("status").toUpperCase()));
-                order.setComment(resultSet.getString("comment"));
+                order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
+                order.setResFrom(new java.util.Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
+                order.setResTo(new java.util.Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
+                order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
+                order.setComment(resultSet.getString(SQLConstants.COMMENT));
                 orderList.add(order);
             }
         }catch (SQLException e){
@@ -77,7 +78,7 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
             ps.setDouble(5, order.getTotalPrice());
             ps.execute();
 
-            ResultSet rs=ps.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()){
                 order.setOrderID(rs.getInt(1));
                 return true;
@@ -112,7 +113,7 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
             ps.setInt(2, orderID);
             ResultSet resultSet = ps.executeQuery();
             resultSet.next();
-            return resultSet.getDouble("price");
+            return resultSet.getDouble(SQLConstants.ROOM_PRICE);
 
         }catch (SQLException e){
             throw new DAOException(e);

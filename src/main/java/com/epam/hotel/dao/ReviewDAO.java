@@ -13,6 +13,8 @@ public interface ReviewDAO {
 
     void userLeaveReview(int rating, String comment, User user) throws DAOException;
 
+    int waitingForModerationReviews() throws DAOException;
+
     List<Review> takeReviewsForModeration(Pagination pagination) throws DAOException;
 
     List<Review> takePostedReviews(Pagination pagination) throws DAOException;

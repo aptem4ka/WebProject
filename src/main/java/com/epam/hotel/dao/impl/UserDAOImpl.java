@@ -103,7 +103,7 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
             ps.setInt(1, userID);
             resultSet=ps.executeQuery();
             resultSet.next();
-            discount = resultSet.getInt("count");
+            discount = resultSet.getInt(SQLConstants.COUNT);
 
         }catch (SQLException e){
             throw new DAOException(e);
@@ -128,26 +128,12 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.USER_ACTIVE_ORDERS)) {
             ps.setInt(1, userID);
-           // ps.setDate(2,new java.sql.Date(new Date().getTime()));
             ps.setInt(2, pagination.getStartPos());
             ps.setInt(3, pagination.getOffset());
 
-            System.out.println("executing query with start pos="+pagination.getStartPos()+"and offset="+pagination.getOffset());
             resultSet = ps.executeQuery();
-            System.out.println("after execution query");
 
-            while (resultSet.next()) {
-                order = new Order();
-
-                order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
-                order.setRoomID(resultSet.getInt("roomID"));
-                order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
-                order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
-                order.setComment(resultSet.getString("comment"));
-
-                orderList.add(order);
-            }
+            addOrderToList(resultSet, orderList);
         } catch (SQLException e) {
             logger.warn(e);
             throw new DAOException(e);
@@ -159,7 +145,6 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     @Override
     public List<Order> orderHistoryList(Pagination pagination, int userID) throws DAOException {
-
 
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
@@ -173,18 +158,8 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
             resultSet = ps.executeQuery();
 
-            while (resultSet.next()) {
-                order = new Order();
+            addOrderToList(resultSet, orderList);
 
-                order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
-                order.setRoomID(resultSet.getInt("roomID"));
-                order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
-                order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
-                order.setComment(resultSet.getString("comment"));
-
-                orderList.add(order);
-            }
         } catch (SQLException e) {
             logger.warn(e);
             throw new DAOException(e);
@@ -193,5 +168,21 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
         }
         return orderList;
 
+    }
+
+    private void addOrderToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
+
+        while (resultSet.next()) {
+            Order order = new Order();
+
+            order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
+            order.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
+            order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
+            order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
+            order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
+            order.setComment(resultSet.getString(SQLConstants.COMMENT));
+
+            orderList.add(order);
+        }
     }
 }

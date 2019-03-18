@@ -14,14 +14,23 @@ public class SQLConstants {
     public final static String ROOM_TYPE = "type";
     public final static String ROOM_ID = "roomID";
     public final static String ROOM_PRICE = "price";
+    public final static String FLOOR = "floor";
+    public final static String VIEW = "view";
     public final static String ROOM_ALLOCATION = "allocation";
     public final static String RESERVED_FROM = "resFrom";
     public final static String RESERVED_TO = "resTo";
     public final static String STATUS = "status";
+    public final static String COMMENT = "comment";
 
     public final static String ORDER_ID = "orderID";
 
     public final static String MIN = "min";
-    public static final String MAX = "max";
+    public final static String MAX = "max";
+    public final static String COUNT = "count";
+
+    public final static String REVIEW_ID = "reviewID";
+    public final static String ADDED = "added";
+    public final static String RATING = "rating";
+    public final static String ANSWER = "answer";
 
 }

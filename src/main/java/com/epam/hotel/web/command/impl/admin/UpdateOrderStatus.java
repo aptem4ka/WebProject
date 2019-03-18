@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UpdateOrderStatusCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(UpdateOrderStatusCommand.class);
+public class UpdateOrderStatus implements Command {
+    private final static Logger logger = LogManager.getLogger(UpdateOrderStatus.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
 

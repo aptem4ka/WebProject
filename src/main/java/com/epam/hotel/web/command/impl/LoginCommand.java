@@ -40,12 +40,10 @@ public class LoginCommand implements Command {
             logger.info("adding user to the session");
             HttpSession session=req.getSession();
             session.setAttribute(StringConstants.CURRENT_USER,user);
-
             resp.sendRedirect(URLConstants.GO_TO_INDEX);
 
-
         }else {
-            resp.sendRedirect(URLConstants.LOGIN_PAGE_COMMAND);
+            resp.sendRedirect(URLConstants.LOGIN_PAGE_COMMAND+"&incorrectData=true");
         }
 
 

@@ -24,8 +24,7 @@ public class OrderValidator implements Validator {
                 || order.getResFrom().after(order.getResTo())){
             return false;
         }
-        if (order.getTotalPrice()<=0 || order.getRoomID()<=0
-                || order.getOrderID()<=0 || order.getUserID()<0){
+        if (order.getTotalPrice()<=0 || order.getRoomID()<=0 || order.getUserID()<0){
             return false;
         }
 

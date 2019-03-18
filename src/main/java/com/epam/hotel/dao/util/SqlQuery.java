@@ -53,4 +53,6 @@ public class SqlQuery {
     public static final String REVIEWS_FOR_MODERATION = "SELECT * FROM reviews WHERE status='WAITING' LIMIT ?,?;";
     public static final String UPDATE_REVIEW_STATUS = "UPDATE reviews SET status=?, answer=? WHERE reviewID=?;";
     public static final String POSTED_REVIEWS = "SELECT * FROM reviews WHERE status='POSTED' LIMIT ?,?;";
+    public static final String UNMODERATED_REVIEWS = "SELECT COUNT(*) as count FROM reviews WHERE status='WAITING';";
+    public static final String WAITING_FOR_CONFIRM_ORDERS ="SELECT COUNT(*) as count FROM orders WHERE status = 'APPLIED' and resFrom<?;";
 }

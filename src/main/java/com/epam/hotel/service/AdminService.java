@@ -28,4 +28,6 @@ public interface AdminService {
 
     List<Order> searchOrderByPhone(String phone, Pagination paginator) throws ServiceException;
 
+    int needConfirmationOrders() throws ServiceException;
+
 }

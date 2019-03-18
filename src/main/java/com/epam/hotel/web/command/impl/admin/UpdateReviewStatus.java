@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UpdateReviewStatusCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(UpdateReviewStatusCommand.class);
+public class UpdateReviewStatus implements Command {
+    private final static Logger logger= LogManager.getLogger(UpdateReviewStatus.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
     @Override

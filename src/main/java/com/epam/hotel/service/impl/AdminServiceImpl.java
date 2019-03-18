@@ -146,4 +146,13 @@ public class AdminServiceImpl implements AdminService {
         }
 
     }
+
+    @Override
+    public int needConfirmationOrders() throws ServiceException {
+        try {
+            return adminDAO.needConfirmationOrders();
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewModerationCommand implements Command {
+public class ReviewsModeration implements Command {
     private ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-    private final static Logger logger= LogManager.getLogger(ReviewModerationCommand.class);
+    private final static Logger logger= LogManager.getLogger(ReviewsModeration.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

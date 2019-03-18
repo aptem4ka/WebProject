@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SearchOrderByPhoneCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(SearchOrderByPhoneCommand.class);
+public class SearchOrderByPhone implements Command {
+    private final static Logger logger= LogManager.getLogger(SearchOrderByPhone.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
 

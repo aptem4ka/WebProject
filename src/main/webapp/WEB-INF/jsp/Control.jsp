@@ -73,7 +73,7 @@
                         <c:if test="${sessionScope.activeOrdersPaginator.startPos > '0'}">
                             <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
                         </c:if>
-                        <c:if test="${sessionScope.activePaginator.lastPage!=true}">
+                        <c:if test="${sessionScope.activeOrdersPaginator.lastPage!=true}">
                             <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
                         </c:if>
                     </ul>

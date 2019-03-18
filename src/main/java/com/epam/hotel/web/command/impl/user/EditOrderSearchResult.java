@@ -1,4 +1,4 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.user;
 
 import com.epam.hotel.dao.DaoFactory;
 import com.epam.hotel.entity.Room;
@@ -7,6 +7,7 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
+import com.epam.hotel.web.command.impl.SearchResultCommand;
 import com.epam.hotel.web.util.StringConstants;
 import com.epam.hotel.web.util.URLConstants;
 import com.epam.hotel.web.util.URLFromRequest;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ChangeOrderResultCommand implements Command {
+public class EditOrderSearchResult implements Command {
     private final static Logger logger = LogManager.getLogger(SearchResultCommand.class);
     private RoomService roomService = ServiceFactory.getInstance().getRoomService();
 

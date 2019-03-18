@@ -14,6 +14,8 @@ public interface ReviewService {
 
     List<Review> takeReviewsForModeration(Pagination pagination) throws ServiceException;
 
+    int waitingForModerationReviews() throws ServiceException;
+
     List<Review> takePostedReviews(Pagination pagination) throws ServiceException;
 
 

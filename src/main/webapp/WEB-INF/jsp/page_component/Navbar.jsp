@@ -72,7 +72,7 @@
                 </c:if>
                 <c:if test="${sessionScope.currentUser.role eq admin}">
                     <li class="nav-item" style="margin: 5px">
-                        <a href="${pageContext.request.contextPath}/admin?command=control" class="btn btn-outline-success">${control}</a>
+                        <a href="${pageContext.request.contextPath}/admin?command=control" class="btn btn-outline-success">${control} <span class="badge badge-primary badge-pill">${sessionScope.ordersWaiting}</span></a>
                     </li>
                 </c:if>
 

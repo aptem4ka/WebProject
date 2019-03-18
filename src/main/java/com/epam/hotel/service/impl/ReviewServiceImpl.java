@@ -89,4 +89,13 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public int waitingForModerationReviews() throws ServiceException {
+        try {
+            return reviewDAO.waitingForModerationReviews();
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
 }

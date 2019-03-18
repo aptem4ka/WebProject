@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SearchOrderByNameCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(SearchOrderByNameCommand.class);
+public class SearchOrderByName implements Command {
+    private final static Logger logger= LogManager.getLogger(SearchOrderByName.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

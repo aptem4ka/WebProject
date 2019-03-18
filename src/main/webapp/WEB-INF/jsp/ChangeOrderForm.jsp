@@ -52,7 +52,7 @@
                     <div align="center">
                         <h4>${new_booking_parameters}</h4>
 
-                        <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
+                        <form action="${pageContext.request.contextPath}/user" method="get">
                             <input type="hidden" name="command" value="change_order_result"/>
 
                             <div style="width: 300px" align="center">

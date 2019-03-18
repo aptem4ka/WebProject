@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class SearchUserByIDCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(SearchUserByIDCommand.class);
+public class SearchUserByID implements Command {
+    private final static Logger logger= LogManager.getLogger(SearchUserByID.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
     private UserService userService = ServiceFactory.getInstance().getUserService();

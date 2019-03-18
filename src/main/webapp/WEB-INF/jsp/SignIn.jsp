@@ -45,7 +45,9 @@
                             <input name="password" class="form-control" placeholder="${enter_password}" type="password">
                         </div> <!-- form-group// -->
 
+                            <c:if test="${param.incorrectData eq true}">
                             <div style="color: red">${error}</div>
+                            </c:if>
                     </div>
 
                         <p class="text-center"> <button type="submit" class="btn btn-info">${signin}</button> </p>

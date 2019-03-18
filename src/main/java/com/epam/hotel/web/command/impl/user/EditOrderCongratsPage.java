@@ -1,4 +1,4 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.user;
 
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.StringConstants;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ChangeOrderCongratsPageCommand implements Command {
+public class EditOrderCongratsPage implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

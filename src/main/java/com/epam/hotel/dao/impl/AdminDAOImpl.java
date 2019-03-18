@@ -35,24 +35,10 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ps.setDate(1, new java.sql.Date(new Date().getTime()));
             ps.setInt(2,pagination.getStartPos());
             ps.setInt(3, pagination.getOffset());
-
-            System.out.println("executing query with start pos="+pagination.getStartPos()+"and offset="+pagination.getOffset());
             resultSet = ps.executeQuery();
-            System.out.println("after execution query");
 
-            while (resultSet.next()) {
-                order = new Order();
+            addOrderToList(resultSet, orderList);
 
-                order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
-                order.setUserID(resultSet.getInt(SQLConstants.USER_ID));
-                order.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
-                order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
-                order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
-                //searchUserByOrder(order.getOrderID());
-
-                orderList.add(order);
-            }
         } catch (SQLException e) {
             logger.warn(e);
             throw new DAOException(e);
@@ -75,23 +61,10 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             System.out.println(pagination.getStartPos());
             ps.setInt(2,pagination.getStartPos());
             ps.setInt(3, pagination.getOffset());
-
             resultSet = ps.executeQuery();
 
+            addOrderToList(resultSet, orderList);
 
-            while (resultSet.next()) {
-                order = new Order();
-
-                order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
-                order.setUserID(resultSet.getInt(SQLConstants.USER_ID));
-                order.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
-                order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
-                order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
-                //searchUserByOrder(order.getOrderID());
-
-                orderList.add(order);
-            }
         } catch (SQLException e) {
             logger.warn(e);
             throw new DAOException(e);
@@ -134,19 +107,19 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ResultSet resultSet = ps.executeQuery();
 
         if (resultSet.next()){
-            if (resultSet.getInt("userID")==0){
+            if (resultSet.getInt(SQLConstants.USER_ID)==0){
                 ps1.setInt(1, orderID);
                 resultSet = ps1.executeQuery();
                 resultSet.next();
-                user.setName(resultSet.getString("name"));
-                user.setSurname(resultSet.getString("surname"));
-                user.setPhone(resultSet.getString("phone"));
+                user.setName(resultSet.getString(SQLConstants.NAME));
+                user.setSurname(resultSet.getString(SQLConstants.SURNAME));
+                user.setPhone(resultSet.getString(SQLConstants.PHONE));
             }else {
-                user.setUserID(resultSet.getInt("userID"));
-                user.setName(resultSet.getString("name"));
-                user.setSurname(resultSet.getString("surname"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhone(resultSet.getString("phone"));
+                user.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+                user.setName(resultSet.getString(SQLConstants.NAME));
+                user.setSurname(resultSet.getString(SQLConstants.SURNAME));
+                user.setEmail(resultSet.getString(SQLConstants.EMAIL));
+                user.setPhone(resultSet.getString(SQLConstants.PHONE));
                 int discount = DaoFactory.getInstance().getUserDAO().userDiscount(user.getUserID());
                 user.setDiscount(discount);
             }
@@ -172,7 +145,7 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
             resultSet.next();
 
-            return resultSet.getInt("count");
+            return resultSet.getInt(SQLConstants.COUNT);
 
         }catch (SQLException e){
             logger.warn(e);
@@ -200,16 +173,7 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            while (resultSet.next()){
-                order = new Order();
-                order.setUserID(resultSet.getInt("userID"));
-                order.setOrderID(resultSet.getInt("orderID"));
-                order.setRoomID(resultSet.getInt("roomID"));
-                order.setResFrom(new Date(resultSet.getDate("resFrom").getTime()));
-                order.setResTo(new Date(resultSet.getDate("resTo").getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString("status").toUpperCase()));
-                orderList.add(order);
-            }
+            addOrderToList(resultSet, orderList);
 
         }catch (SQLException e){
             throw new DAOException(e);
@@ -233,20 +197,9 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ps.setString(4, phone);
             ps.setInt(5, paginator.getStartPos());
             ps.setInt(6, paginator.getOffset());
-
             ResultSet resultSet = ps.executeQuery();
 
-            while (resultSet.next()){
-                order = new Order();
-                order.setUserID(resultSet.getInt("userID"));
-                order.setOrderID(resultSet.getInt("orderID"));
-                order.setRoomID(resultSet.getInt("roomID"));
-                order.setResFrom(new Date(resultSet.getDate("resFrom").getTime()));
-                order.setResTo(new Date(resultSet.getDate("resTo").getTime()));
-                order.setStatus(Order.Status.valueOf(resultSet.getString("status").toUpperCase()));
-                orderList.add(order);
-            }
-
+            addOrderToList(resultSet, orderList);
 
         }catch (SQLException e){
             throw new DAOException(e);
@@ -268,10 +221,10 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
             if (resultSet.next()){
                 user.setUserID(userID);
-                user.setName(resultSet.getString("name"));
-                user.setSurname(resultSet.getString("surname"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhone(resultSet.getString("phone"));
+                user.setName(resultSet.getString(SQLConstants.NAME));
+                user.setSurname(resultSet.getString(SQLConstants.SURNAME));
+                user.setEmail(resultSet.getString(SQLConstants.EMAIL));
+                user.setPhone(resultSet.getString(SQLConstants.PHONE));
                 int discount = DaoFactory.getInstance().getUserDAO().userDiscount(user.getUserID());
                 user.setDiscount(discount);
                 return user;
@@ -304,5 +257,40 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         }finally {
             releaseConnection(connection);
         }
+    }
+
+    private void addOrderToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
+
+        while (resultSet.next()){
+            Order order = new Order();
+            order.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+            order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
+            order.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
+            order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
+            order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
+            order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
+            orderList.add(order);
+        }
+
+    }
+
+    @Override
+    public int needConfirmationOrders() throws DAOException {
+        Connection connection = getConnection();
+        int count;
+
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.WAITING_FOR_CONFIRM_ORDERS)){
+            ps.setDate(1, new java.sql.Date(new Date().getTime()));
+            ResultSet resultSet = ps.executeQuery();
+
+            resultSet.next();
+
+            count = resultSet.getInt(1);
+        }catch (SQLException e){
+            throw new DAOException(e);
+        } finally {
+            releaseConnection(connection);
+        }
+        return count;
     }
 }

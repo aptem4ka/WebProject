@@ -2,6 +2,7 @@ package com.epam.hotel.web.command;
 
 import com.epam.hotel.web.command.impl.*;
 import com.epam.hotel.web.command.impl.admin.*;
+import com.epam.hotel.web.command.impl.user.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,25 +23,25 @@ public class CommandManager {
         commands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
         commands.put(CommandName.LOGIN_PAGE, new LoginPageCommand());
         commands.put(CommandName.ROOM_INFO, new RoomInfoCommand());
-        commands.put(CommandName.PROFILE, new ProfileCommand());
+        commands.put(CommandName.PROFILE, new Profile());
         commands.put(CommandName.BOOK, new BookCommand());
         commands.put(CommandName.ORDER_DETAILS, new OrderDetailsPageCommand());
-        commands.put(CommandName.CONTROL, new ControlCommand());
-        commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatusCommand());
-        commands.put(CommandName.SEARCH_USER_BY_ORDER, new SearchUserByOrderCommand());
-        commands.put(CommandName.CHANGE_ORDER, new ChangeOrderCommand());
-        commands.put(CommandName.CHANGE_ORDER_RESULT, new ChangeOrderResultCommand());
-        commands.put(CommandName.CHANGE_ORDER_RESULT_PAGE, new ChangeOrderResultPageCommand());
-        commands.put(CommandName.EDIT_BOOK, new EditBookCommand());
-        commands.put(CommandName.SEARCH_ORDER_BY_NAME, new SearchOrderByNameCommand());
-        commands.put(CommandName.SEARCH_ORDER_BY_PHONE, new SearchOrderByPhoneCommand());
+        commands.put(CommandName.CONTROL, new ControlPage());
+        commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatus());
+        commands.put(CommandName.SEARCH_USER_BY_ORDER, new SearchUserByOrder());
+        commands.put(CommandName.CHANGE_ORDER, new EditOrderForm());
+        commands.put(CommandName.CHANGE_ORDER_RESULT, new EditOrderSearchResult());
+        commands.put(CommandName.CHANGE_ORDER_RESULT_PAGE, new EditOrderSearchResultPage());
+        commands.put(CommandName.EDIT_BOOK, new EditOrderExecution());
+        commands.put(CommandName.SEARCH_ORDER_BY_NAME, new SearchOrderByName());
+        commands.put(CommandName.SEARCH_ORDER_BY_PHONE, new SearchOrderByPhone());
         commands.put(CommandName.REVIEWS_PAGE, new ReviewsPageCommand());
         commands.put(CommandName.LEAVE_REVIEW, new LeaveReviewCommand());
-        commands.put(CommandName.SEARCH_USER_BY_ID, new SearchUserByIDCommand());
+        commands.put(CommandName.SEARCH_USER_BY_ID, new SearchUserByID());
         commands.put(CommandName.SUCCESS_REVIEW_PAGE, new SuccessReviewPageCommand());
-        commands.put(CommandName.REVIEW_MODERATION, new ReviewModerationCommand());
-        commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatusCommand());
-        commands.put(CommandName.CHANGE_ORDER_CONGRATS_PAGE, new ChangeOrderCongratsPageCommand());
+        commands.put(CommandName.REVIEW_MODERATION, new ReviewsModeration());
+        commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatus());
+        commands.put(CommandName.CHANGE_ORDER_CONGRATS_PAGE, new EditOrderCongratsPage());
         commands.put(CommandName.ABOUT_PAGE, new AboutPageCommand());
     }
 

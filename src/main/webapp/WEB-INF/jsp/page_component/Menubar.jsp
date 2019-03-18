@@ -29,7 +29,7 @@
     <a href="${pageContext.request.contextPath}/main?command=about_page"
        class="list-group-item list-group-item-action list-group-item-light">${about}</a>
     <c:if test="${sessionScope.currentUser.role eq 'ADMIN'}">
-        <a href="${pageContext.request.contextPath}/admin?command=review_moderation" class="list-group-item list-group-item-action list-group-item-light" style="color: coral">Управление отзывами <span class="badge badge-primary badge-pill">12</span></a>
+        <a href="${pageContext.request.contextPath}/admin?command=review_moderation" class="list-group-item list-group-item-action list-group-item-light" style="color: coral">Управление отзывами <span class="badge badge-primary badge-pill">${sessionScope.reviewsWaiting}</span></a>
     </c:if>
 
 </div>

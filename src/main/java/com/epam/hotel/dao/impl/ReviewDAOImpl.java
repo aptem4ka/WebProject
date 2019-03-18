@@ -2,6 +2,7 @@ package com.epam.hotel.dao.impl;
 
 import com.epam.hotel.dao.ParentDao;
 import com.epam.hotel.dao.ReviewDAO;
+import com.epam.hotel.dao.util.SQLConstants;
 import com.epam.hotel.dao.util.SqlQuery;
 import com.epam.hotel.entity.Review;
 import com.epam.hotel.entity.User;
@@ -83,13 +84,13 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
             while (resultSet.next()){
                 review = new Review();
 
-                review.setReviewID(resultSet.getInt("reviewID"));
-                review.setUserID(resultSet.getInt("userID"));
-                review.setName(resultSet.getString("name"));
-                review.setAdded(resultSet.getDate("added"));
-                review.setComment(resultSet.getString("comment"));
-                review.setPhone(resultSet.getString("phone"));
-                review.setRating(resultSet.getInt("rating"));
+                review.setReviewID(resultSet.getInt(SQLConstants.REVIEW_ID));
+                review.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+                review.setName(resultSet.getString(SQLConstants.NAME));
+                review.setAdded(resultSet.getDate(SQLConstants.ADDED));
+                review.setComment(resultSet.getString(SQLConstants.COMMENT));
+                review.setPhone(resultSet.getString(SQLConstants.PHONE));
+                review.setRating(resultSet.getInt(SQLConstants.RATING));
 
                 reviewList.add(review);
             }
@@ -116,14 +117,14 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
             while (resultSet.next()){
                 review = new Review();
 
-                review.setReviewID(resultSet.getInt("reviewID"));
-                review.setUserID(resultSet.getInt("userID"));
-                review.setName(resultSet.getString("name"));
-                review.setAdded(resultSet.getDate("added"));
-                review.setComment(resultSet.getString("comment"));
-                review.setPhone(resultSet.getString("phone"));
-                review.setRating(resultSet.getInt("rating"));
-                review.setAnswer(resultSet.getString("answer"));
+                review.setReviewID(resultSet.getInt(SQLConstants.REVIEW_ID));
+                review.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+                review.setName(resultSet.getString(SQLConstants.NAME));
+                review.setAdded(resultSet.getDate(SQLConstants.ADDED));
+                review.setComment(resultSet.getString(SQLConstants.COMMENT));
+                review.setPhone(resultSet.getString(SQLConstants.PHONE));
+                review.setRating(resultSet.getInt(SQLConstants.RATING));
+                review.setAnswer(resultSet.getString(SQLConstants.ANSWER));
 
                 reviewList.add(review);
             }
@@ -135,5 +136,22 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
         }
         return reviewList;
 
+    }
+
+    @Override
+    public int waitingForModerationReviews() throws DAOException {
+        Connection connection = getConnection();
+        int count = 0;
+        try (PreparedStatement ps = connection.prepareStatement(SqlQuery.UNMODERATED_REVIEWS)){
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            count = resultSet.getInt(1);
+
+        }catch (SQLException e){
+            throw new DAOException(e);
+        }finally {
+            releaseConnection(connection);
+        }
+        return count;
     }
 }

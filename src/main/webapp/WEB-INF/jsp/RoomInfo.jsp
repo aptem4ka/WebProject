@@ -27,6 +27,7 @@
 
 </head>
 <body>
+
 <jsp:include page="/WEB-INF/jsp/page_component/Navbar.jsp"/>
 
 <div class="container">
@@ -36,6 +37,7 @@
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
                 <article class="card-body">
+
             <h2>${roomType}</h2>
             <hr/>
             <div>${roomDesc}</div>
@@ -107,7 +109,7 @@
 
                         <div style="width: 300px" align="center">
                             ${reserved_to}
-                            <input name="resTo" class="form-control" type="date" required>
+                            <input name="resTo" class="form-control" type="date"  required>
                             <hr/>
                         </div>
                     <div style="max-width: 500px; text-align: left">

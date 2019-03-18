@@ -4,7 +4,6 @@ import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.AdminService;
-import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
@@ -21,8 +20,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class SearchUserByOrderCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(SearchUserByOrderCommand.class);
+public class SearchUserByOrder implements Command {
+    private final static Logger logger = LogManager.getLogger(SearchUserByOrder.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
     private UserService userService = ServiceFactory.getInstance().getUserService();
 

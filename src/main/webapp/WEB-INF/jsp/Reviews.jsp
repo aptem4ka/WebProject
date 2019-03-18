@@ -50,7 +50,7 @@
                             <hr/>
                         </c:forEach>
 
-                        <form action="ControllerServlet" method="get">
+                        <form action="main" method="get">
                             <input type="hidden" name="command" value="reviews_page"/>
                             <ul class="pagination justify-content-center">
                                 <c:if test="${sessionScope.postedReviewsPaginator.startPos > '0'}">

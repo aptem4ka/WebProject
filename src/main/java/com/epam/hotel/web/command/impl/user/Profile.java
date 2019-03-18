@@ -1,9 +1,8 @@
-package com.epam.hotel.web.command.impl;
+package com.epam.hotel.web.command.impl.user;
 
 import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
-import com.epam.hotel.service.AdminService;
 import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.service.UserService;
@@ -23,10 +22,10 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class ProfileCommand implements Command {
+public class Profile implements Command {
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
     private UserService userService = ServiceFactory.getInstance().getUserService();
-    private final static Logger logger = LogManager.getLogger(ProfileCommand.class);
+    private final static Logger logger = LogManager.getLogger(Profile.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,7 +46,7 @@ public class ProfileCommand implements Command {
                 if (paginatorType.equals(StringConstants.ACTIVE)){
                     activeOrdersPaginator = Pagination.setupPaginator(req, StringConstants.ACTIVE_PAGINATOR);
                 }
-                if (paginatorType.equals("history")){
+                if (paginatorType.equals(StringConstants.HISTORY)){
                     ordersHistoryPaginator = Pagination.setupPaginator(req, StringConstants.HISTORY_PAGINATOR);
                 }
             }

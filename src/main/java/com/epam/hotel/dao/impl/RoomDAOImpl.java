@@ -49,7 +49,7 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()){
-                allocationList.add(Room.AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
+                allocationList.add(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
             }
 
         }catch (SQLException e){
@@ -179,10 +179,10 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
 
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()){
-                room.setType(Room.RoomType.valueOf(resultSet.getString("type").toUpperCase()));
-                room.setAllocation(Room.AllocationType.valueOf(resultSet.getString("allocation").toUpperCase()));
-                room.setFloor(resultSet.getInt("floor"));
-                room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
+                room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
+                room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
+                room.setFloor(resultSet.getInt(SQLConstants.FLOOR));
+                room.setWindowView(Room.WindowView.valueOf(resultSet.getString(SQLConstants.VIEW).toUpperCase()));
 
                 return room;
             }else {
@@ -313,8 +313,8 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
 
         Room.RoomType type = Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase());
         Room.AllocationType allocation = Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase());
-        Room.WindowView view = Room.WindowView.valueOf(resultSet.getString("view").toUpperCase());
-        int floor = resultSet.getInt("floor");
+        Room.WindowView view = Room.WindowView.valueOf(resultSet.getString(SQLConstants.VIEW).toUpperCase());
+        int floor = resultSet.getInt(SQLConstants.FLOOR);
 
         if (!(room.getFloor()==floor && room.getWindowView()==view && room.getAllocation()==allocation && type==room.getType())){
             room = new Room();
@@ -322,8 +322,8 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
             room.setPrice(resultSet.getDouble(SQLConstants.ROOM_PRICE));
             room.setType(Room.RoomType.valueOf(resultSet.getString(SQLConstants.ROOM_TYPE).toUpperCase()));
             room.setAllocation(Room.AllocationType.valueOf(resultSet.getString(SQLConstants.ROOM_ALLOCATION).toUpperCase()));
-            room.setWindowView(Room.WindowView.valueOf(resultSet.getString("view").toUpperCase()));
-            room.setFloor(resultSet.getInt("floor"));
+            room.setWindowView(Room.WindowView.valueOf(resultSet.getString(SQLConstants.VIEW).toUpperCase()));
+            room.setFloor(resultSet.getInt(SQLConstants.FLOOR));
             roomList.add(room);
         }
 
