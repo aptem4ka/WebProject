@@ -5,7 +5,7 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.AdminService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.constants.StringConstants;
 import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

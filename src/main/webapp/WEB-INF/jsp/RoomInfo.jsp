@@ -97,7 +97,7 @@
             <div align="center">
                 <h3>${booking}</h3>
 
-                <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
+                <form action="${pageContext.request.contextPath}/main" method="get">
                     <input type="hidden" name="command" value="search_result"/>
                     <input type="hidden" name="type" value="${type}">
 

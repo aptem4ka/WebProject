@@ -79,7 +79,7 @@
                         <td>${resTo}</td>
                         <td><fmt:message bundle="${loc}" key="locale.order.status.${fn:toLowerCase(it.status)}"/></td>
                         <td>
-                            <form method="get" action="ControllerServlet">
+                            <form method="get" action="user">
                                 <input type="hidden" name="command" value="change_order"/>
                                 <input type="hidden" name="orderID" value="${it.orderID}"/>
                                 <input type="hidden" name="roomID" value="${it.roomID}"/>
@@ -98,7 +98,7 @@
                     </tbody>
                 </table>
 
-                <form action="ControllerServlet" method="get">
+                <form action="user" method="get">
                     <input type="hidden" name="command" value="profile"/>
                     <input type="hidden" name="paginatorType" value="active">
                     <ul class="pagination justify-content-center">
@@ -143,7 +143,7 @@
                     </tbody>
                 </table>
 
-                <form action="ControllerServlet" method="get">
+                <form action="user" method="get">
                     <input type="hidden" name="command" value="profile"/>
                     <input type="hidden" name="paginatorType" value="history">
                     <ul class="pagination justify-content-center">

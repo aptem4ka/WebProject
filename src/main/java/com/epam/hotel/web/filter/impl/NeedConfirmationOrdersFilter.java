@@ -4,7 +4,7 @@ import com.epam.hotel.entity.User;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.filter.Filter;
-import com.epam.hotel.web.util.StringConstants;
+import com.epam.hotel.web.util.constants.StringConstants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

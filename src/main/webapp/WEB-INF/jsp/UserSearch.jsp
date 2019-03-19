@@ -73,7 +73,7 @@
                     </table>
 
                     <c:if test="${requestScope.searcherCommand eq 'search_user_by_id'}">
-                        <form action="ControllerServlet" method="get">
+                        <form action="admin" method="get">
                             <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
                             <input type="hidden" name="paginatorType" value="active">
                             <input type="hidden" name="userID" value="${requestScope.user.userID}">
@@ -92,7 +92,7 @@
 
                         <c:if test="${requestScope.searcherCommand eq 'search_user_by_order'}">
 
-                            <form action="ControllerServlet" method="get">
+                            <form action="admin" method="get">
                                 <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
                                 <input type="hidden" name="paginatorType" value="active">
                                 <input type="hidden" name="userID" value="${requestScope.user.userID}">
@@ -141,7 +141,7 @@
                         </tbody>
                     </table>
                     <c:if test="${requestScope.searcherCommand eq 'search_user_by_id'}">
-                        <form action="ControllerServlet" method="get">
+                        <form action="main" method="get">
                             <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
                             <input type="hidden" name="paginatorType" value="history">
                             <input type="hidden" name="userID" value="${requestScope.user.userID}">
@@ -159,7 +159,7 @@
                     </c:if>
 
                         <c:if test="${requestScope.searcherCommand eq 'search_user_by_order'}">
-                            <form action="ControllerServlet" method="get">
+                            <form action="main" method="get">
                                 <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
                                 <input type="hidden" name="paginatorType" value="history">
                                 <input type="hidden" name="userID" value="${requestScope.user.userID}">

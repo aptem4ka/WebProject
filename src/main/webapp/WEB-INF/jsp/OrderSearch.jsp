@@ -46,7 +46,7 @@
                                     <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                     <td>
                             <c:if test="${(it.resFrom.time eq requestScope.currentDate.time || it.resFrom.time lt requestScope.currentDate.time) && it.status eq 'APPLIED' }">
-                                        <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
+                                        <form action="${pageContext.request.contextPath}/admin" method="get">
                                             <input type="hidden" name="command" value="update_order_status"/>
                                             <input type="hidden" name="orderID" value="${it.orderID}"/>
                                             <ul class="list-unstyled">
@@ -81,7 +81,7 @@
                                         </c:if>
 
                                         <c:if test="${it.resFrom.time gt requestScope.currentDate.time}">
-                                            <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
+                                            <form action="${pageContext.request.contextPath}/admin" method="get">
                                                 <input type="hidden" name="command" value="update_order_status"/>
                                                 <input type="hidden" name="orderID" value="${it.orderID}"/>
                                                 <ul class="list-unstyled">
@@ -111,7 +111,7 @@
                         </tbody>
                     </table>
 
-                    <form action="ControllerServlet" method="get">
+                    <form action="admin" method="get">
                         <input type="hidden" name="command" value="search_order_by_name"/>
                         <input type="hidden" name="name" value="${requestScope.name}"/>
                         <input type="hidden" name="surname" value="${requestScope.surname}"/>

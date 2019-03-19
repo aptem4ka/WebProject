@@ -2,8 +2,8 @@ package com.epam.hotel.web.filter.impl;
 
 import com.epam.hotel.entity.User;
 import com.epam.hotel.web.filter.Filter;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
+import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

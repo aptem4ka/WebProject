@@ -42,7 +42,7 @@
                             ${roomDesc}
                         </div><br/>
                         <div style="font-size: 10pt">
-                            <a href="${pageContext.request.contextPath}/ControllerServlet?command=room_info&type=${fn:toLowerCase(type)}"
+                            <a href="${pageContext.request.contextPath}/main?command=room_info&type=${fn:toLowerCase(type)}"
                                class="btn btn-info" role="button">${room_info}</a>
                         </div>
                     </div>

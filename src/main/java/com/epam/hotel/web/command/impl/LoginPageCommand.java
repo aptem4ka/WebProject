@@ -1,9 +1,8 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
-import com.epam.hotel.web.util.URLFromRequest;
+import com.epam.hotel.web.util.SavePreviousCommand;
+import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,9 +16,7 @@ public class LoginPageCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug("entered loginpage command");
-        String prevURL = new URLFromRequest().createURL(req);
-        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+        SavePreviousCommand.saveCommand(req);
         req.getRequestDispatcher(URLConstants.LOGIN_PAGE).forward(req,resp);
     }
 }

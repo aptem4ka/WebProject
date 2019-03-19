@@ -1,11 +1,13 @@
 package com.epam.hotel.web.util;
 
+import com.epam.hotel.web.util.constants.StringConstants;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
-public class URLFromRequest {
+public class SavePreviousCommand {
 
-    public String createURL(HttpServletRequest req){
+    public static void saveCommand(HttpServletRequest req){
         String paramName;
         StringBuffer url;
         Enumeration<String> params=req.getParameterNames();
@@ -17,7 +19,6 @@ public class URLFromRequest {
                 url.append(paramName + "=" + req.getParameter(paramName) + "&");
             }
         }
-
-        return url.toString();
+        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, url.toString());
     }
 }

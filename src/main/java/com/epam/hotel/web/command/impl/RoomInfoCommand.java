@@ -6,9 +6,9 @@ import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.ResourceBundleKeys;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
-import com.epam.hotel.web.util.URLFromRequest;
+import com.epam.hotel.web.util.SavePreviousCommand;
+import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +24,7 @@ public class RoomInfoCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String prevURL = new URLFromRequest().createURL(req);
-        req.getSession().setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
+        SavePreviousCommand.saveCommand(req);
 
         try {
             Room.RoomType type = Room.RoomType.valueOf(req.getParameter(StringConstants.ROOM_TYPE).toUpperCase());

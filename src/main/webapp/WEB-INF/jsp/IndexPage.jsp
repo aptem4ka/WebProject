@@ -3,21 +3,19 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
+
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+<fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
+<fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
+<fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
+<fmt:message bundle="${loc}" key="locale.room.find_room" var="find_room"/>
+<fmt:message bundle="${loc}" key="locale.room.quick_search" var="quick_search"/>
+
 <html>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 <head>
-
-
-    <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-    <fmt:setBundle basename="locale" var="loc"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.allocation" var="allocation"/>
-    <fmt:message bundle="${loc}" key="locale.order.reserved_from" var="reserved_from"/>
-    <fmt:message bundle="${loc}" key="locale.order.reserved_to" var="reserved_to"/>
-    <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
-    <fmt:message bundle="${loc}" key="locale.room.find_room" var="find_room"/>
-    <fmt:message bundle="${loc}" key="locale.room.quick_search" var="quick_search"/>
-
-
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,15 +45,13 @@
 <hr/>
 
 
-
-
                     <p>
                 <button class="btn btn-link dropdown-toggle" type="button" data-toggle="collapse" data-target="#buttoncollapse" >
                     ${quick_search}
                 </button>
             </p>
             <div class="collapse" id="buttoncollapse">
-                <form action="${pageContext.request.contextPath}/ControllerServlet" method="get">
+                <form action="${pageContext.request.contextPath}/main" method="get">
                     <input type="hidden" name="command" value="search_result"/>
 
                         <div  align="center">

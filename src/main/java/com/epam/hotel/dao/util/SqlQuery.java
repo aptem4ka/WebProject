@@ -1,7 +1,5 @@
 package com.epam.hotel.dao.util;
 
-import com.epam.hotel.web.util.StringConstants;
-
 public class SqlQuery {
     public final static String ROOM_TYPES_QUERY = "SELECT DISTINCT type FROM rooms;";
     public final static String ALL_ROOM_IMAGES_QUERY = "SELECT link FROM images WHERE preview=0;";

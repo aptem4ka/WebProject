@@ -78,7 +78,7 @@
 
                     <li class="nav-item py-0" style="margin: 5px">
 
-                        <a href="${pageContext.request.contextPath}/user?command=logout" class="btn btn-secondary" role="button">${signout}</a>
+                        <a href="${pageContext.request.contextPath}/main?command=logout" class="btn btn-secondary" role="button">${signout}</a>
 
                     </li>
 

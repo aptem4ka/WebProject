@@ -37,7 +37,7 @@
     <div class="card bg-light">
         <article class="card-body mx-auto" style="width: 400px;">
             <h4 class="card-title mt-3 text-center">${create_account}</h4>
-            <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
+            <form action="${pageContext.request.contextPath}/main" method="post">
                 <input type="hidden" name="command" value="register"/>
 
                 <div class="form-group input-group">

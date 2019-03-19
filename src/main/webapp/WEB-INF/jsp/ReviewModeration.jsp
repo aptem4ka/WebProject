@@ -25,7 +25,7 @@
 
                     <div>
                         <c:forEach items="${requestScope.reviewList}" var="it">
-                            <form action="ControllerServlet" method="post">
+                            <form action="admin" method="post">
                                 <input type="hidden" name="command" value="update_review_status">
                                 <input type="hidden" name="reviewID" value="${it.reviewID}">
                         Отзыв №${it.reviewID} | Пользователь: <c:if test="${it.userID==0}">Гость</c:if>
@@ -61,7 +61,7 @@
                             <hr style="border-top: 4px double #8c8b8b;"/>
                         </c:forEach>
 
-                        <form action="ControllerServlet" method="get">
+                        <form action="admin" method="get">
                             <input type="hidden" name="command" value="review_moderation"/>
                             <ul class="pagination justify-content-center">
                                 <c:if test="${sessionScope.reviewsPaginator.startPos > '0'}">

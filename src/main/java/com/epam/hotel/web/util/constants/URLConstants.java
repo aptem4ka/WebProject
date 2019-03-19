@@ -1,4 +1,4 @@
-package com.epam.hotel.web.util;
+package com.epam.hotel.web.util.constants;
 
 public class URLConstants {
 

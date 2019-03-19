@@ -40,7 +40,7 @@
                                         <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                         <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
+                                            <form action="${pageContext.request.contextPath}/admin" method="post">
                                                 <input type="hidden" name="command" value="update_order_status"/>
                                                 <input type="hidden" name="orderID" value="${it.orderID}"/>
                                                 <ul class="list-unstyled">
@@ -66,7 +66,7 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
-                    <form action="ControllerServlet" method="get">
+                    <form action="admin" method="get">
                         <input type="hidden" name="command" value="control"/>
                         <input type="hidden" name="paginatorType" value="active">
                     <ul class="pagination justify-content-center">
@@ -105,7 +105,7 @@
                                     <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                     <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                     <td>
-                                        <form action="${pageContext.request.contextPath}/ControllerServlet" method="post">
+                                        <form action="${pageContext.request.contextPath}/admin" method="post">
                                             <input type="hidden" name="command" value="update_order_status"/>
                                             <input type="hidden" name="orderID" value="${it.orderID}"/>
                                             <ul class="list-unstyled">
@@ -140,7 +140,7 @@
                         </tbody>
                     </table>
 
-                    <form action="ControllerServlet" method="get">
+                    <form action="admin" method="get">
                         <input type="hidden" name="command" value="control"/>
                         <input type="hidden" name="paginatorType" value="needConfirm">
                         <ul class="pagination justify-content-center">

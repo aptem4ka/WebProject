@@ -54,7 +54,7 @@
                     <div>
                         <fmt:formatDate value="${sessionScope.resFrom}" type="date" dateStyle="short" var="resFrom" />
                         <fmt:formatDate value="${sessionScope.resTo}" type="date" dateStyle="short" var="resTo"/>
-                        <form action="ControllerServlet" method="post">
+                        <form action="main" method="post">
                             <c:if test="${sessionScope.currentUser == null}">
 
                                 <hr/>

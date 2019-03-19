@@ -67,7 +67,7 @@
                     <c:if test="${sessionScope.currentUser == null}">
                         <div>
 
-                            <form action="ControllerServlet" method="post">
+                            <form action="main" method="post">
                                 <input type="hidden" name="command" value="leave_review">
                                 <input type="hidden" name="type" value="guest">
 
@@ -119,7 +119,7 @@
                     <c:if test="${sessionScope.currentUser != null}">
                         <div>
 
-                            <form action="ControllerServlet" method="post">
+                            <form action="main" method="post">
                                 <input type="hidden" name="command" value="leave_review">
                                 <input type="hidden" name="type" value="user">
 

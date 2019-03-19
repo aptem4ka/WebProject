@@ -6,8 +6,8 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
+import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BookCommand implements Command {
@@ -57,7 +55,7 @@ public class BookCommand implements Command {
 
         }catch (ServiceException e){
             logger.warn(e);
-            resp.sendRedirect((String)session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectData=true");
+            resp.sendRedirect(session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectData=true");
 
         }
 

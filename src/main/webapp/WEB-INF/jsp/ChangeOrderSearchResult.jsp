@@ -67,7 +67,7 @@
 
                                     <hr/>
                                     <c:forEach items="${sessionScope.roomList}" var="it">
-                                <form action="ControllerServlet" method="post">
+                                <form action="user" method="post">
                                         <fmt:message bundle="${loc}" key="locale.room.${fn:toLowerCase(it.type)}" var="type"/>
                                         <fmt:message bundle="${loc}" key="locale.room.view.${fn:toLowerCase(it.windowView)}" var="windowView"/>
 

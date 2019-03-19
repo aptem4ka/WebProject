@@ -1,12 +1,11 @@
 package com.epam.hotel.web.command.impl;
 
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
+import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.print.DocFlavor;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

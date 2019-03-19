@@ -7,9 +7,9 @@ import com.epam.hotel.service.OrderService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.service.UserService;
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
-import com.epam.hotel.web.util.URLFromRequest;
+import com.epam.hotel.web.util.SavePreviousCommand;
+import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,9 +29,8 @@ public class Profile implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String prevURL = new URLFromRequest().createURL(req);
+        SavePreviousCommand.saveCommand(req);
         HttpSession session = req.getSession();
-        session.setAttribute(StringConstants.PREV_PAGE_URL, prevURL);
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
 
         Pagination activeOrdersPaginator = (Pagination)req.getSession().getAttribute(StringConstants.ACTIVE_PAGINATOR);

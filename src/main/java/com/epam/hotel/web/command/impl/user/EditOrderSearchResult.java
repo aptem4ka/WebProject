@@ -1,16 +1,13 @@
 package com.epam.hotel.web.command.impl.user;
 
-import com.epam.hotel.dao.DaoFactory;
 import com.epam.hotel.entity.Room;
-import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.command.impl.SearchResultCommand;
-import com.epam.hotel.web.util.StringConstants;
-import com.epam.hotel.web.util.URLConstants;
-import com.epam.hotel.web.util.URLFromRequest;
+import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
