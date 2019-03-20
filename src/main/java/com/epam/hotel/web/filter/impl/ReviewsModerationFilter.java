@@ -15,7 +15,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * @author Artsem Lashuk
+ *
+ * This class is used to get information about number of reviews
+ * that waiting for moderation.
+ *
+ * @see Filter
+ */
+
 public class ReviewsModerationFilter extends Filter {
+
+
+    /**
+     * The method check if the user is an admin by checking {@link User#getUserID()}
+     * and calls {@link com.epam.hotel.service.ReviewService} to read number of
+     * reviews, waiting for moderation.
+     *
+     * @param servletRequest {@link ServletRequest}
+     * @param servletResponse {@link ServletResponse}
+     * @param filterChain {@link FilterChain}
+     * @throws IOException if In/Out exception occurs
+     * @throws ServletException if Servlet exception occurs
+     * @see User
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 

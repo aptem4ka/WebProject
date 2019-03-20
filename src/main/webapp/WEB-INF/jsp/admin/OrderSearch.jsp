@@ -111,7 +111,7 @@
                         </tbody>
                     </table>
 
-                    <form action="admin" method="get">
+                    <form action="" method="get">
                         <input type="hidden" name="command" value="search_order_by_name"/>
                         <input type="hidden" name="name" value="${requestScope.name}"/>
                         <input type="hidden" name="surname" value="${requestScope.surname}"/>

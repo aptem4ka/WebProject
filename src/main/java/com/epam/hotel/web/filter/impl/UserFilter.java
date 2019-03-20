@@ -13,8 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Artsem Lashuk
+ *
+ * This class is used to control access to user content
+ *
+ * @see Filter
+ */
 public class UserFilter extends Filter {
 
+    /**
+     * The method checks availability of the user in the current session.
+     * It redirects to the login page if there is no user in the session.
+     *
+     * @param servletRequest {@link ServletRequest}
+     * @param servletResponse {@link ServletResponse}
+     * @param filterChain {@link FilterChain}
+     * @throws IOException if the In/Out exception occurs
+     * @throws ServletException if Servlet exception occurs
+     * @see javax.servlet.http.HttpSession
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;

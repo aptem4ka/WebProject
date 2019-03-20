@@ -12,6 +12,7 @@
 <fmt:message bundle="${loc}" key="locale.room.result.baby" var="baby_cots"/>
 <fmt:message bundle="${loc}" key="locale.room.find_room" var="find_room"/>
 <fmt:message bundle="${loc}" key="locale.room.quick_search" var="quick_search"/>
+<fmt:message bundle="${loc}" key="locale.intro" var="intro"/>
 
 <html>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
@@ -41,8 +42,8 @@
                     </div>
 
                    <hr/>
-                    Отель EPAM, построенный в конце ХХ века, в течение двух десятков лет принимает туристов и гостей города. С того времени в его стенах произошли кардинальные изменения: о комфорте туристов позаботились современные дизайнеры, которые модернизировали интерьеры номеров. Отель EPAM готов предложить номера, которые удовлетворят все ваши требования.
-<hr/>
+                    ${intro}
+                    <hr/>
 
 
                     <p>

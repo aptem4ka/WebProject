@@ -2,6 +2,7 @@ package com.epam.hotel.dao;
 
 import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.DAOException;
+import com.epam.hotel.web.util.pagination.Pagination;
 
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public interface RoomDAO {
 
     String priceRange(Room.RoomType type) throws DAOException;
 
-    List<Room> roomSearchResult(Room room) throws DAOException;
+    List<Room> roomSearchResult(Room room, Pagination pagination) throws DAOException;
 
     List<Room> changeOrderSearchResult(Room room, int orderID) throws DAOException;
 

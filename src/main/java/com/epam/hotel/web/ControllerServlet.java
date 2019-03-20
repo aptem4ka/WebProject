@@ -9,9 +9,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**@author Artsem Lashuk
+ *
+ * This class redirects requests to the command
+ *
+ * @see CommandManager
+ * @see Command
+ */
+
 public class ControllerServlet extends HttpServlet {
     private final String COMMAND="command";
 
+    /**
+     * Method redirecting http-pust requests for further processing.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out Exception occurs
+     * @throws ServletException if any other exception occurs
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Command command=CommandManager.getInstance().getCommand(req.getParameter(COMMAND));
@@ -19,6 +36,14 @@ public class ControllerServlet extends HttpServlet {
         command.execute(req,resp);
     }
 
+    /**
+     * Method redirecting http-pust requests for further processing.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out Exception occurs
+     * @throws ServletException if any other exception occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Command command=CommandManager.getInstance().getCommand(req.getParameter(COMMAND));

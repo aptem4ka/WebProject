@@ -6,6 +6,7 @@ import com.epam.hotel.service.AdminService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
 import com.epam.hotel.web.util.constants.StringConstants;
+import com.epam.hotel.web.util.constants.URLConstants;
 import com.epam.hotel.web.util.pagination.Pagination;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,7 +45,7 @@ public class SearchOrderByPhone implements Command {
         req.setAttribute(StringConstants.CURRENT_DATE, new Date());
         req.setAttribute(StringConstants.PHONE, phone);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/OrderSearch.jsp").forward(req, resp);
+        req.getRequestDispatcher(URLConstants.ORDER_SEARCH_PAGE).forward(req, resp);
 
 
     }

@@ -21,6 +21,7 @@
 <fmt:message bundle="${loc}" key="locale.user.booking_history" var="booking_istory"/>
 <fmt:message bundle="${loc}" key="locale.order.change" var="change"/>
 <fmt:message bundle="${loc}" key="locale.order.comment" var="comment"/>
+<fmt:message bundle="${loc}" key="locale.room.room" var="roomId"/>
 
 <html>
 <head>
@@ -62,6 +63,7 @@
                     <thead>
                     <tr>
                         <th>${order_number}</th>
+                        <th>${roomId}</th>
                         <th>${reserved_from}</th>
                         <th>${reserved_to}</th>
                         <th>${order_status}</th>
@@ -75,6 +77,7 @@
 
                     <tr>
                         <td>${it.orderID}</td>
+                        <td>${it.roomID}</td>
                         <td>${resFrom}</td>
                         <td>${resTo}</td>
                         <td><fmt:message bundle="${loc}" key="locale.order.status.${fn:toLowerCase(it.status)}"/></td>
@@ -122,6 +125,7 @@
                     <thead>
                     <tr>
                         <th>${order_number}</th>
+                        <th>${roomId}</th>
                         <th>${reserved_from}</th>
                         <th>${reserved_to}</th>
                         <th>${order_status}</th>
@@ -132,6 +136,7 @@
                     <c:forEach items="${requestScope.historyOrderList}" var="it">
                             <tr>
                                 <td>${it.orderID}</td>
+                                <td>${it.roomID}</td>
                                 <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                 <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                 <td><fmt:message bundle="${loc}" key="locale.order.status.${fn:toLowerCase(it.status)}"/></td>

@@ -12,12 +12,12 @@ public class SqlQuery {
             "WHERE type=? AND allocation=? AND available=1 AND roomID NOT IN(" +
             "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
             "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
-            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo)));";
+            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo))) LIMIT ?,?;";
     public final static String FIND_ROOM_IGNORE_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
                     "WHERE allocation=? AND available=1 AND roomID NOT IN(" +
                     "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
                     "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
-                    "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo)));";
+                    "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo))) LIMIT ?,?;";
     public final static String CHANGE_ORDER_IGNORE_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
             "WHERE allocation=? AND available=1 AND roomID NOT IN(" +
             "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
@@ -52,5 +52,5 @@ public class SqlQuery {
     public static final String UPDATE_REVIEW_STATUS = "UPDATE reviews SET status=?, answer=? WHERE reviewID=?;";
     public static final String POSTED_REVIEWS = "SELECT * FROM reviews WHERE status='POSTED' LIMIT ?,?;";
     public static final String UNMODERATED_REVIEWS = "SELECT COUNT(*) as count FROM reviews WHERE status='WAITING';";
-    public static final String WAITING_FOR_CONFIRM_ORDERS ="SELECT COUNT(*) as count FROM orders WHERE status = 'APPLIED' and resFrom<?;";
+    public static final String WAITING_FOR_CONFIRM_ORDERS ="SELECT COUNT(*) as count FROM orders WHERE status = 'APPLIED' and resFrom<=?;";
 }

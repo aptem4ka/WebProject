@@ -3,9 +3,15 @@ package com.epam.hotel.web.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * @author Artsem Lashuk
+ *
+ * This class describes basic filter methods.
+ */
 public abstract class Filter implements javax.servlet.Filter {
 
     private FilterConfig filterConfig;
+
 
     @Override
     public abstract void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

@@ -5,8 +5,25 @@ import com.epam.hotel.web.util.constants.StringConstants;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
+
+/**
+ * @author  Artsem Lashuk
+ *
+ * This class is designed to save previous Http-request to the Http-session
+ *
+ * @see HttpServletRequest
+ * @see javax.servlet.http.HttpSession
+ */
 public class SavePreviousCommand {
 
+    /**
+     * The method gets HTTP-session and saves
+     * previous HTTP-GET request as an attribute.
+     * "page" - is the name of HTTP-request parameter which used
+     * to identify page scrolling. It shouldn't be saved.
+     *
+     * @param req {@link HttpServletRequest}
+     */
     public static void saveCommand(HttpServletRequest req){
         String paramName;
         StringBuffer url;

@@ -123,7 +123,7 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
-        Order order = null;
+
         ResultSet resultSet = null;
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.USER_ACTIVE_ORDERS)) {
@@ -133,9 +133,8 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
             resultSet = ps.executeQuery();
 
-            addOrderToList(resultSet, orderList);
+            addOrdersToList(resultSet, orderList);
         } catch (SQLException e) {
-            logger.warn(e);
             throw new DAOException(e);
         } finally {
             releaseConnection(connection);
@@ -148,7 +147,6 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
-        Order order = null;
         ResultSet resultSet = null;
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.USER_ORDERS_HISTORY)) {
@@ -158,10 +156,9 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
             resultSet = ps.executeQuery();
 
-            addOrderToList(resultSet, orderList);
+            addOrdersToList(resultSet, orderList);
 
         } catch (SQLException e) {
-            logger.warn(e);
             throw new DAOException(e);
         } finally {
             releaseConnection(connection);
@@ -170,7 +167,7 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     }
 
-    private void addOrderToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
+    private void addOrdersToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
 
         while (resultSet.next()) {
             Order order = new Order();

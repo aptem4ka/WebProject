@@ -28,7 +28,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
     public List<Order> activeOrderList(Pagination pagination) throws DAOException {
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
-        Order order = null;
         ResultSet resultSet = null;
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ACTIVE_ORDERS)) {
@@ -37,10 +36,9 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ps.setInt(3, pagination.getOffset());
             resultSet = ps.executeQuery();
 
-            addOrderToList(resultSet, orderList);
+            addOrdersToList(resultSet, orderList);
 
         } catch (SQLException e) {
-            logger.warn(e);
             throw new DAOException(e);
         } finally {
             releaseConnection(connection);
@@ -53,7 +51,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
     public List<Order> needConfirmationOrderList(Pagination pagination) throws DAOException {
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
-        Order order = null;
         ResultSet resultSet = null;
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ORDERS_HISTORY)) {
@@ -63,10 +60,9 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ps.setInt(3, pagination.getOffset());
             resultSet = ps.executeQuery();
 
-            addOrderToList(resultSet, orderList);
+            addOrdersToList(resultSet, orderList);
 
         } catch (SQLException e) {
-            logger.warn(e);
             throw new DAOException(e);
         } finally {
             releaseConnection(connection);
@@ -89,7 +85,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
                 throw new DAOException("Updating order status error");
             }
         } catch (SQLException e) {
-            logger.warn(e);
             throw new DAOException(e);
         } finally {
             releaseConnection(connection);
@@ -127,7 +122,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             return null;
         }
         }catch (SQLException e){
-            logger.warn(e);
             throw new DAOException(e);
         }finally {
             releaseConnection(connection);
@@ -142,13 +136,10 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.COUNT_ORDERS_BY_STATUS)){
             ps.setString(1,status.toString());
             ResultSet resultSet = ps.executeQuery();
-
             resultSet.next();
-
             return resultSet.getInt(SQLConstants.COUNT);
 
         }catch (SQLException e){
-            logger.warn(e);
             throw new DAOException(e);
         }finally {
             releaseConnection(connection);
@@ -173,7 +164,7 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            addOrderToList(resultSet, orderList);
+            addOrdersToList(resultSet, orderList);
 
         }catch (SQLException e){
             throw new DAOException(e);
@@ -188,7 +179,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
     public List<Order> searchOrderByPhone(String phone, Pagination paginator) throws DAOException {
         Connection connection = getConnection();
         List<Order> orderList = new ArrayList<>();
-        Order order = null;
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.SEARCH_ORDER_BY_PHONE)){
             ps.setString(1, phone);
@@ -199,7 +189,7 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             ps.setInt(6, paginator.getOffset());
             ResultSet resultSet = ps.executeQuery();
 
-            addOrderToList(resultSet, orderList);
+            addOrdersToList(resultSet, orderList);
 
         }catch (SQLException e){
             throw new DAOException(e);
@@ -259,7 +249,7 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         }
     }
 
-    private void addOrderToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
+    private void addOrdersToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
 
         while (resultSet.next()){
             Order order = new Order();

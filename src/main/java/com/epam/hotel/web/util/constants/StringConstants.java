@@ -1,5 +1,10 @@
 package com.epam.hotel.web.util.constants;
 
+/**
+ * @author Artsem Lashuk
+ *
+ * The class is used to keep string constants used in the web layer of the app
+ */
 public class StringConstants {
 
     public final static String USER_ID = "userID";
@@ -55,6 +60,7 @@ public class StringConstants {
     public final static String ORDERS_PAGINATOR = "ordersPaginator";
     public final static String SEARCH_BY_ORDER_ACTIVE_PAGINATOR = "searchByOrderActivePaginator";
     public final static String SEARCH_BY_ORDER_HISTORY_PAGINATOR = "searchByOrderHistoryPaginator";
+    public final static String SEARCH_RESULT_PAGINATOR = "searchResultPaginator";
     public final static String ACTIVE = "active";
     public final static String HISTORY = "history";
     public final static String NEED_CONFIRM = "needConfirm";

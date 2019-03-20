@@ -124,6 +124,20 @@
                         </form>
                     </div>
 
+                    <form action="main" method="get">
+                        <input type="hidden" name="command" value="search_result"/>
+
+                        <ul class="pagination justify-content-center">
+                            <c:if test="${sessionScope.searchResultPaginator.startPos > '0'}">
+                                <li class="page-item"><button class="page-link" type="submit" name="page" value="prev">Prev</button></li>
+                            </c:if>
+                            <c:if test="${sessionScope.searchResultPaginator.lastPage!=true}">
+                                <li class="page-item"><button class="page-link" type="submit" name="page" value="next">Next</button></li>
+                            </c:if>
+
+                        </ul>
+                    </form>
+
 
                 </div>
                 </c:if>

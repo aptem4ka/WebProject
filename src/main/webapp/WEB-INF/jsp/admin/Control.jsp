@@ -66,7 +66,7 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
-                    <form action="admin" method="get">
+                    <form action="" method="get">
                         <input type="hidden" name="command" value="control"/>
                         <input type="hidden" name="paginatorType" value="active">
                     <ul class="pagination justify-content-center">
@@ -140,7 +140,7 @@
                         </tbody>
                     </table>
 
-                    <form action="admin" method="get">
+                    <form action="" method="get">
                         <input type="hidden" name="command" value="control"/>
                         <input type="hidden" name="paginatorType" value="needConfirm">
                         <ul class="pagination justify-content-center">

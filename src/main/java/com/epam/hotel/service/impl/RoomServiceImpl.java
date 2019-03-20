@@ -8,6 +8,7 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.validation.ValidatorManager;
 import com.epam.hotel.service.validation.ValidatorName;
+import com.epam.hotel.web.util.pagination.Pagination;
 
 import java.util.*;
 
@@ -106,10 +107,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> roomsByRequest(Room room) throws ServiceException {
+    public List<Room> roomsByRequest(Room room, Pagination pagination) throws ServiceException {
         if (room.getAllocation()==null){
             throw new ServiceException("Allocation is null");
         }
+        if (pagination == null){
+            throw new ServiceException("Pagination is null");
+        }
+
         if (!validatorManager.getValidator(ValidatorName.DATE).isValid(room.getResFrom())
                 || !validatorManager.getValidator(ValidatorName.DATE).isValid(room.getResTo())
                 || room.getResFrom().after(room.getResTo())){
@@ -117,7 +122,7 @@ public class RoomServiceImpl implements RoomService {
         }
 
         try {
-            return DaoFactory.getInstance().getRoomDAO().roomSearchResult(room);
+            return DaoFactory.getInstance().getRoomDAO().roomSearchResult(room, pagination);
         }catch (DAOException e){
             throw new ServiceException(e);
         }

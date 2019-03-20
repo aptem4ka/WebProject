@@ -59,7 +59,7 @@ public class OrderDAOImpl extends ParentDao implements OrderDAO {
             return order;
         }else {
             releaseConnection(connection);
-            throw new DAOException("Adding order fail");
+            throw new DAOException("Failed to add order");
         }
     }
 

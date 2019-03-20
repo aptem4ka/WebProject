@@ -50,7 +50,8 @@
 
                         <thead>
                         <tr>
-                            <th>Номер заказа</th>
+                            <th>Заказ</th>
+                            <th>Номер</th>
                             <th>Бронь с</th>
                             <th>Бронь по</th>
                             <th>Статус</th>
@@ -62,6 +63,7 @@
 
                                     <tr>
                                         <td>${it.orderID}</td>
+                                        <td>${it.roomID}</td>
                                         <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                         <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                         <td>${it.status}</td>
@@ -73,7 +75,7 @@
                     </table>
 
                     <c:if test="${requestScope.searcherCommand eq 'search_user_by_id'}">
-                        <form action="admin" method="get">
+                        <form action="" method="get">
                             <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
                             <input type="hidden" name="paginatorType" value="active">
                             <input type="hidden" name="userID" value="${requestScope.user.userID}">
@@ -92,7 +94,7 @@
 
                         <c:if test="${requestScope.searcherCommand eq 'search_user_by_order'}">
 
-                            <form action="admin" method="get">
+                            <form action="" method="get">
                                 <input type="hidden" name="command" value="${requestScope.searcherCommand}"/>
                                 <input type="hidden" name="paginatorType" value="active">
                                 <input type="hidden" name="userID" value="${requestScope.user.userID}">
@@ -118,7 +120,8 @@
 
                         <thead>
                         <tr>
-                            <th>Номер заказа</th>
+                            <th>Заказ</th>
+                            <th>Номер</th>
                             <th>Бронь с</th>
                             <th>Бронь по</th>
                             <th>Статус</th>
@@ -130,6 +133,7 @@
 
                                 <tr>
                                     <td>${it.orderID}</td>
+                                    <td>${it.roomID}</td>
                                     <td><fmt:formatDate value="${it.resFrom}" type="date" dateStyle="short"/></td>
                                     <td><fmt:formatDate value="${it.resTo}" type="date" dateStyle="short"/></td>
                                     <td><c:if test="${it.status eq apply}">COMPLETED</c:if><c:if test="${it.status ne apply}">${it.status}</c:if></td>

@@ -2,6 +2,7 @@ package com.epam.hotel.service;
 
 import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.ServiceException;
+import com.epam.hotel.web.util.pagination.Pagination;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface RoomService {
 
     String priceRange(Room.RoomType type) throws ServiceException;
 
-    List<Room> roomsByRequest(Room room) throws ServiceException;
+    List<Room> roomsByRequest(Room room, Pagination pagination) throws ServiceException;
 
     Room roomInfoByRoomID(int roomID) throws ServiceException;
 
