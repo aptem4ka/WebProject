@@ -12,10 +12,23 @@ import com.epam.hotel.service.validation.ValidatorName;
 
 import java.util.List;
 
+/**
+ * This {@link OrderService} implementation realizes activities with orders
+ *
+ * @author Artsem Lashuk
+ */
 public class OrderServiceImpl implements OrderService {
     private ValidatorManager validatorManager=ValidatorManager.getInstance();
     private OrderDAO orderDAO=DaoFactory.getInstance().getOrderDAO();
 
+    /**
+     * Validates incoming data and gets booking statistics for the specified user.
+     *
+     * @param userID identifier of the specified user
+     * @return list of orders associated with a specified user
+     * @throws ServiceException if validation fails or in case of catching DAOException.
+     * @see User
+     */
     @Override
     public List<Order> userBookingStatistics(int userID) throws ServiceException {
         if (userID<=0){
@@ -29,6 +42,14 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * Method validates incoming data and adds guest order data to the DB.
+     *
+     * @param order {@link Order}
+     * @return the same order instance with filled {@link Order#getOrderID()} which
+     *         is a primary key with auto-increment in the orders DB table
+     * @throws ServiceException if validation fails or in case of catching DAOException
+     */
     @Override
     public Order registeredUserBooking(Order order) throws ServiceException {
        if (!validatorManager.getValidator(ValidatorName.ORDER).isValid(order)){
@@ -42,6 +63,15 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * Method validates incoming data and adds user order data to the DB.
+     *
+     * @param order {@link Order}
+     * @param user {@link User}
+     * @return the same order instance with filled {@link Order#getOrderID()} which
+     *         is a primary key with auto-increment in the orders DB table
+     * @throws ServiceException if validation fails or in case of catching DAOException.
+     */
     @Override
     public Order unregisteredUserBooking(Order order, User user) throws ServiceException {
 
@@ -69,6 +99,15 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * Validates incoming data and gets price of the specified order made by specified user.
+     *
+     * @param userID identifier of the specified user
+     * @param orderID identifier of the specified order
+     * @return price value associated with a specified order
+     * @throws ServiceException if validation fails or in case of catching DAOException.
+     * @see User
+     */
     @Override
     public double orderPrice(int userID, int orderID) throws ServiceException {
         if (userID<=0 || orderID<=0){
@@ -82,6 +121,13 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * Method validates incoming data and changes specified record in the DB
+     * according to the order identifier.
+     *
+     * @param order {@link Order}
+     * @throws ServiceException if validation fails or in case of catching DAOException.
+     */
     @Override
     public void editOrder(Order order) throws ServiceException {
 

@@ -8,23 +8,6 @@ public class SqlQuery {
     public final static String MIN_AND_MAX_PRICE = "SELECT MAX(price) AS max, MIN(price) AS min FROM rooms WHERE type=?;";
     public final static String ALLOCATIONS_FOR_TYPE = "SELECT DISTINCT allocation FROM rooms WHERE type=?;";
     public final static String ALLOCATIONS_IGNORE_TYPE = "SELECT DISTINCT allocation FROM rooms;";
-    public final static String FIND_ROOM_BY_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
-            "WHERE type=? AND allocation=? AND available=1 AND roomID NOT IN(" +
-            "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
-            "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
-            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo))) LIMIT ?,?;";
-    public final static String FIND_ROOM_IGNORE_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
-                    "WHERE allocation=? AND available=1 AND roomID NOT IN(" +
-                    "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
-                    "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
-                    "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo))) LIMIT ?,?;";
-    public final static String CHANGE_ORDER_IGNORE_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
-            "WHERE allocation=? AND available=1 AND roomID NOT IN(" +
-            "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
-            "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
-            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo)) AND orders.orderID<>?);";
-
-
     public static final String LOGIN = "SELECT * FROM users WHERE email=?;";
     public static final String CHECK_EMAIL_QUERY = "SELECT * FROM users WHERE email=?;";
     public static final String REGISTER_QUERY = "INSERT INTO users (name,surname,email,phone,password) values (?,?,?,?,?);";
@@ -53,4 +36,20 @@ public class SqlQuery {
     public static final String POSTED_REVIEWS = "SELECT * FROM reviews WHERE status='POSTED' LIMIT ?,?;";
     public static final String UNMODERATED_REVIEWS = "SELECT COUNT(*) as count FROM reviews WHERE status='WAITING';";
     public static final String WAITING_FOR_CONFIRM_ORDERS ="SELECT COUNT(*) as count FROM orders WHERE status = 'APPLIED' and resFrom<=?;";
+    public final static String FIND_ROOM_BY_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
+            "WHERE type=? AND allocation=? AND available=1 AND roomID NOT IN(" +
+            "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
+            "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
+            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo))) LIMIT ?,?;";
+    public final static String FIND_ROOM_IGNORE_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
+            "WHERE allocation=? AND available=1 AND roomID NOT IN(" +
+            "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
+            "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
+            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo))) LIMIT ?,?;";
+    public final static String CHANGE_ORDER_IGNORE_TYPE = "SELECT roomID, type, allocation, price, view, floor FROM rooms " +
+            "WHERE allocation=? AND available=1 AND roomID NOT IN(" +
+            "SELECT rooms.roomID FROM orders INNER JOIN rooms ON rooms.roomID=orders.roomID " +
+            "WHERE status='APPLIED' AND((? > orders.resFrom AND ? < orders.resTo) OR " +
+            "(? > orders.resFrom AND ? < orders.resTo) OR (? < orders.resFrom AND ? > orders.resTo)) AND orders.orderID<>?);";
+
 }

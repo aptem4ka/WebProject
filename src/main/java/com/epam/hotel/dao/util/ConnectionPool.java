@@ -24,12 +24,12 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         try {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("DBConnection");
-            String url = resourceBundle.getString("database.url");
-            String login = resourceBundle.getString("database.login");
-            String pass = resourceBundle.getString("database.password");
-            int connectionsLimit = Integer.parseInt(resourceBundle.getString("database.connectionsLimit"));
-            Class.forName(resourceBundle.getString("database.driver"));
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(SQLConstants.DB_BUNDLE);
+            String url = resourceBundle.getString(SQLConstants.DB_URL_KEY);
+            String login = resourceBundle.getString(SQLConstants.DB_LOGIN_KEY);
+            String pass = resourceBundle.getString(SQLConstants.DB_PASSWORD_KEY);
+            int connectionsLimit = Integer.parseInt(resourceBundle.getString(SQLConstants.DB_CONNECTION_LIMIT_KEY));
+            Class.forName(resourceBundle.getString(SQLConstants.DB_DRIVER_KEY));
 
             connectionsAvailable = new LinkedBlockingQueue<>(connectionsLimit);
             connectionsTaken = new LinkedBlockingQueue<>(connectionsLimit);
@@ -49,31 +49,22 @@ public class ConnectionPool {
 
     public Connection takeConnection() throws InterruptedException{
         Connection connection;
-        lock.lock();
 
-        try {
             connection = connectionsAvailable.take();
             connectionsTaken.put(connection);
-        }finally {
-            lock.unlock();
-        }
+
         if (connectionsTaken.size()==5){
-            System.out.println("ALL CONNECTIONS ARE BUSY");
+            logger.warn("all connections are busy");
         }
         return connection;
     }
 
     public void releaseConnection(Connection connection) throws InterruptedException{
-        lock.lock();
-        try {
             if (connectionsTaken.remove(connection)) {
                 connectionsAvailable.put(connection);
             } else {
                 throw new InterruptedException("Release connection error");
             }
-        }finally {
-            lock.unlock();
-        }
     }
 
     public void closeConnections(){

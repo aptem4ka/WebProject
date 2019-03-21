@@ -33,4 +33,11 @@ public class SQLConstants {
     public final static String RATING = "rating";
     public final static String ANSWER = "answer";
 
+    public final static String DB_BUNDLE = "DBConnection";
+    public final static String DB_URL_KEY = "database.url";
+    public final static String DB_LOGIN_KEY = "database.login";
+    public final static String DB_PASSWORD_KEY = "database.password";
+    public final static String DB_CONNECTION_LIMIT_KEY = "database.connectionsLimit";
+    public final static String DB_DRIVER_KEY = "database.driver";
+
 }

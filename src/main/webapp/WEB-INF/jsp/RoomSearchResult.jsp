@@ -19,6 +19,7 @@
 <fmt:message bundle="${loc}" key="locale.room.allocation.${fn:toLowerCase(sessionScope.allocation)}" var="allocation"/>
 <fmt:message bundle="${loc}" key="locale.room.result.type" var="room_type"/>
 <fmt:message bundle="${loc}" key="locale.room.result.day_price" var="day_price"/>
+<fmt:message bundle="${loc}" key="locale.room.result.discount_price" var="discount_price"/>
 <fmt:message bundle="${loc}" key="locale.room.result.period_price" var="period_price"/>
 <fmt:message bundle="${loc}" key="locale.room.result.book" var="book"/>
 <fmt:message bundle="${loc}" key="locale.room.result.view" var="view"/>
@@ -104,12 +105,12 @@
                                 ${room_type} ${type}<br/>
                                 ${floor} ${it.floor}<br/>
                                 ${view} ${windowView}<br/>
-                                ${day_price} ${it.price}<br/>
+                                ${day_price} ${it.price}$<br/>
                                 <c:set value="${it.price}" var="price"/>
                                 <c:set value="${sessionScope.days}" var="days"/>
-                                <h5>${period_price} ${price*days}</h5>
+                                <h5>${period_price} ${price*days}$</h5>
                                 <c:if test="${sessionScope.currentUser.discount>0}">
-                                <h5>Цена со скидкой: ${(price*days)*(100-sessionScope.currentUser.discount)/100}</h5></c:if>
+                                <h5>${discount_price} ${(price*days)*(100-sessionScope.currentUser.discount)/100}$</h5></c:if>
 
                                 <input type="hidden" name="total_price${it.roomID}" value="${(price*days)*(100-sessionScope.currentUser.discount)/100}"/>
                                 <input type="hidden" name="roomID${it.roomID}" value="${it.roomID}"/>

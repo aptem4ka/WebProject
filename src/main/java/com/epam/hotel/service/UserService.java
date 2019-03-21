@@ -13,6 +13,7 @@ import java.util.List;
  * This interface defines methods for authorized user activities.
  *
  * @author Artsem Lashuk
+ * @see User
  */
 public interface UserService {
 
