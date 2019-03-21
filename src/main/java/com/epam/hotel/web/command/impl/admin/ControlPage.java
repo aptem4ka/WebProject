@@ -19,11 +19,27 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to dispatch an admin to the control page.
+ *
+ * @author Artsem Lashuk
+ */
 public class ControlPage implements Command {
     private final static Logger logger= LogManager.getLogger(ControlPage.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
-
+    /**
+     * This method tries to get two lists of orders using {@link AdminService}.
+     * The first list is active orders list, and the second is orders history list.
+     * The content of this lists will be displayed on the control page.
+     * {@link Pagination} is used to limit amount of data that will be received from the DB.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Order
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);

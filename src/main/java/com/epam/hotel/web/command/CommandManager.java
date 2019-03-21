@@ -11,7 +11,6 @@ import java.util.Map;
  * This singleton class contains all the commands bound with {@link CommandName}
  *
  * @author Artsem Lashuk
- *
  * @see Command
  */
 

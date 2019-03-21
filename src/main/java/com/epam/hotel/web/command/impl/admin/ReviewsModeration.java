@@ -19,10 +19,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to get reviews waiting for moderation.
+ *
+ * @author Artsem Lashuk
+ */
 public class ReviewsModeration implements Command {
     private ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
     private final static Logger logger= LogManager.getLogger(ReviewsModeration.class);
 
+    /**
+     * This method calls {@link ReviewService} which has an access to the DAO object,
+     * which makes a query to the DB and gets reviews that waiting for moderation.
+     * {@link Pagination} is used to limit amount of data that will be received from the DB.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Review
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);
