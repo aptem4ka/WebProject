@@ -11,28 +11,27 @@ import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
- * This {@link Command} implementations is used to get required data for the index page.
+ * This {@link Command} implementation is used to dispatch client
+ * to the list of available rooms
  *
  * @author Artsem Lashuk
  */
-public class IndexPageCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(IndexPageCommand.class);
+public class RoomList implements Command {
     private RoomService roomService=ServiceFactory.getInstance().getRoomService();
+    private final static Logger logger = LogManager.getLogger(RoomList.class);
 
     /**
-     * The method calls {@link RoomService#allRoomImages()} to get room images for
-     * the carousel on the index page.
-     * Also it calls {@link RoomService#allocationsIgnoreType()} to get all available
-     * room allocations for quick booking.
+     * The method saves previous request by calling {@link SavePreviousCommand#saveCommand(HttpServletRequest)}
+     * and then receive room preview images from the DB. After all the method
+     * dispatches response to the client. Previews are stored in the {@link Map}
+     * according to the {@link com.epam.hotel.entity.Room.RoomType}.
      *
      * @param req {@link HttpServletRequest}
      * @param resp {@link HttpServletResponse}
@@ -42,19 +41,16 @@ public class IndexPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);
-
-        Set<String> images=null;
-        List<Room.AllocationType> allocations = null;
-
+        Map<Room.RoomType,String> roomPreviews = null;
         try {
-            images = roomService.allRoomImages();
-            allocations = roomService.allocationsIgnoreType();
+            roomPreviews=roomService.roomPreviews();
         }catch (ServiceException e){
             logger.warn(e);
         }
-        req.setAttribute(StringConstants.CAROUSEL_IMAGES, images);
-        req.setAttribute(StringConstants.ALLOCATIONS, allocations);
+        req.setAttribute(StringConstants.ROOM_PREVIEWS, roomPreviews);
 
-        req.getRequestDispatcher(URLConstants.INDEX_PAGE).forward(req,resp);
+        req.getRequestDispatcher(URLConstants.ROOM_LIST_PAGE).forward(req,resp);
+
+
     }
 }

@@ -15,11 +15,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This {@link Command} implementation is used to apply or discard an order.
+ *
+ * @author Artsem Lashuk
+ */
 public class UpdateOrderStatus implements Command {
     private final static Logger logger = LogManager.getLogger(UpdateOrderStatus.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
-
+    /**
+     * This method gets order data from the request and new order status
+     * which will be applied to the specified order.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Order
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Order order = new Order();

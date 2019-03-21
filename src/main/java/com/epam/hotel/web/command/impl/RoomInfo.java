@@ -24,9 +24,9 @@ import java.util.List;
  *
  * @author Artsem Lashuk
  */
-public class RoomInfoCommand implements Command {
+public class RoomInfo implements Command {
     private RoomService roomService=ServiceFactory.getInstance().getRoomService();
-    private final static Logger logger = LogManager.getLogger(RoomInfoCommand.class);
+    private final static Logger logger = LogManager.getLogger(RoomInfo.class);
 
     /**
      * This method collects data about available {@link com.epam.hotel.entity.Room.AllocationType},

@@ -22,11 +22,30 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to collect information about current
+ * order data for further using in the new order form.
+ *
+ * @author Artsem Lashuk
+ */
 public class EditOrderForm implements Command {
     private final static Logger logger= LogManager.getLogger(EditOrderForm.class);
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
     private RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
+    /**
+     * This method collect data about actual order from the request and additional
+     * data from the DB about available allocation to create an edit order form.
+     * If getting data successful, the client will be redirected to the search result
+     * page. In other case he well be returned to the profile page.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Room
+     * @see com.epam.hotel.entity.Room.AllocationType
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);

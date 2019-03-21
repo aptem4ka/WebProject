@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This {@link Command} implementation is used to dispatch client to the register page.
+ * This {@link Command} implementation is used to dispatch client to the specified page.
  *
  * @author Artsem Lashuk
  */
-public class RegisterPageCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(RegisterPageCommand.class);
+public class LoginPage implements Command {
+    private final static Logger logger= LogManager.getLogger(LoginPage.class);
 
     /**
-     * This method saves previous command and dispatches client to the register page.
+     * This method saves previous command and dispatches client to the login page.
      * @param req {@link HttpServletRequest}
      * @param resp {@link HttpServletResponse}
      * @throws IOException if In/Out errors occur
@@ -30,7 +30,6 @@ public class RegisterPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);
-        req.getRequestDispatcher(URLConstants.REGISTER_PAGE).forward(req,resp);
+        req.getRequestDispatcher(URLConstants.LOGIN_PAGE).forward(req,resp);
     }
-
 }

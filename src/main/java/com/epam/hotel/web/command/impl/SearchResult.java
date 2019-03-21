@@ -29,8 +29,8 @@ import java.util.List;
  *
  * @author Artsem Lashuk
  */
-public class SearchResultCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(SearchResultCommand.class);
+public class SearchResult implements Command {
+    private final static Logger logger = LogManager.getLogger(SearchResult.class);
     private RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
 

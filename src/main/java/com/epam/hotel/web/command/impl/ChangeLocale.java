@@ -17,8 +17,8 @@ import java.io.IOException;
  *
  * @author Artsem Lashuk
  */
-public class ChangeLocaleCommand implements Command {
-    private final static Logger logger= LogManager.getLogger(ChangeLocaleCommand.class);
+public class ChangeLocale implements Command {
+    private final static Logger logger= LogManager.getLogger(ChangeLocale.class);
 
     /**
      * The method gets new locale from the request and put it to the session

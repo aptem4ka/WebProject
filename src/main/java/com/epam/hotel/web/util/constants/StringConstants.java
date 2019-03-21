@@ -76,6 +76,7 @@ public class StringConstants {
 
 
     //public final static String REQUEST_DATE_FORMAT_RU = "d MMM yyyy";
+    public final static String INPUT_DATE_FORMAT = "yyyy-MM-dd";
     public final static String REQUEST_DATE_FORMAT_RU = "dd.MM.yyyy";
     public final static String REQUEST_DATE_FORMAT_EN = "M/dd/yyyy";
 

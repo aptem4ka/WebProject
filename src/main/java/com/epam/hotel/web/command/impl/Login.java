@@ -22,7 +22,7 @@ import java.io.IOException;
  *
  * @author Artsem Lashuk
  */
-public class LoginCommand implements Command {
+public class Login implements Command {
     private final static Logger logger= LogManager.getLogger();
     private UserService userService=ServiceFactory.getInstance().getUserService();
 

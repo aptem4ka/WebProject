@@ -21,9 +21,9 @@ import java.io.IOException;
  *
  * @author Artsem Lashuk
  */
-public class RegisterCommand implements Command {
+public class Register implements Command {
     private UserService userService =ServiceFactory.getInstance().getUserService();
-    private final static Logger logger = LogManager.getLogger(RegisterCommand.class);
+    private final static Logger logger = LogManager.getLogger(Register.class);
 
     /**
      * This method collects all data received from request and calls {@link UserService}

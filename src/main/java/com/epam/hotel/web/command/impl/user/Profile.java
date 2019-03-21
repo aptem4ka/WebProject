@@ -22,11 +22,28 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to go to the profile page.
+ *
+ * @author Artsem Lashuk
+ */
 public class Profile implements Command {
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
     private UserService userService = ServiceFactory.getInstance().getUserService();
     private final static Logger logger = LogManager.getLogger(Profile.class);
 
+    /**
+     * This method is used to get personal user data and data about actual and previous orders.
+     * All collected data will be displayed on the profile page. {@link Pagination} is used to
+     * limit amount of data that will be received from the DB. Then response dispatches to the client.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see HttpSession
+     * @see Order
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);

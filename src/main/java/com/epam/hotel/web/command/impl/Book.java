@@ -23,9 +23,9 @@ import java.util.Date;
  *
  * @author Artsem Lashuk
  */
-public class BookCommand implements Command {
+public class Book implements Command {
     private OrderService orderService= ServiceFactory.getInstance().getOrderService();
-    private final static Logger logger= LogManager.getLogger(BookCommand.class);
+    private final static Logger logger= LogManager.getLogger(Book.class);
 
 
     /**

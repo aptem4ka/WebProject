@@ -12,18 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This {@link Command} implementation is used to dispatch client to the congratulations page
- * after leaving feedback
+ * This {@link Command} implementation is used to dispatch client to the register page.
  *
  * @author Artsem Lashuk
  */
-public class SuccessReviewPageCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(SuccessReviewPageCommand.class);
+public class RegisterPage implements Command {
+    private final static Logger logger = LogManager.getLogger(RegisterPage.class);
 
     /**
-     * The method saves previous command to the HTTP session and dispatches
-     * client to the congratulations page.
-     *
+     * This method saves previous command and dispatches client to the register page.
      * @param req {@link HttpServletRequest}
      * @param resp {@link HttpServletResponse}
      * @throws IOException if In/Out errors occur
@@ -33,7 +30,7 @@ public class SuccessReviewPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);
-
-        req.getRequestDispatcher(URLConstants.SUCCESS_REVIEW_PAGE).forward(req, resp);
+        req.getRequestDispatcher(URLConstants.REGISTER_PAGE).forward(req,resp);
     }
+
 }

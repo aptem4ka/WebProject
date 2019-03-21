@@ -5,7 +5,7 @@ import com.epam.hotel.exception.ServiceException;
 import com.epam.hotel.service.RoomService;
 import com.epam.hotel.service.ServiceFactory;
 import com.epam.hotel.web.command.Command;
-import com.epam.hotel.web.command.impl.SearchResultCommand;
+import com.epam.hotel.web.command.impl.SearchResult;
 import com.epam.hotel.web.util.constants.StringConstants;
 import com.epam.hotel.web.util.constants.URLConstants;
 import org.apache.logging.log4j.LogManager;
@@ -22,10 +22,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to search available rooms to edit
+ * current order's data.
+ *
+ * @author Artsem Lashuk
+ */
 public class EditOrderSearchResult implements Command {
-    private final static Logger logger = LogManager.getLogger(SearchResultCommand.class);
+    private final static Logger logger = LogManager.getLogger(SearchResult.class);
     private RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
+    /**
+     * First of all, this method gets new dates and allocation for current order.
+     * Then method calls {@link RoomService} to validate this new data and to get
+     * an access to the DAO layer. After all the client will be redirected to the
+     * search result page.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -33,7 +50,7 @@ public class EditOrderSearchResult implements Command {
         Room room = new Room();
         List<Room> roomList = new ArrayList<>();
 
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format=new SimpleDateFormat(StringConstants.INPUT_DATE_FORMAT);
         try {
             room.setResFrom(format.parse(req.getParameter(StringConstants.RESERVED_FROM)));
             room.setResTo(format.parse(req.getParameter(StringConstants.RESERVED_TO)));

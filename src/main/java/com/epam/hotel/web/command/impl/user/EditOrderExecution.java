@@ -18,10 +18,29 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * This {@link Command} implementation is used to change DB record about specific order.
+ *
+ * @author Artsem Lashuk
+ */
 public class EditOrderExecution implements Command {
-    private final static Logger logger= LogManager.getLogger(EditOrderExecution.class);
+    private final static Logger logger = LogManager.getLogger(EditOrderExecution.class);
     private OrderService orderService = ServiceFactory.getInstance().getOrderService();
 
+    /**
+     * This method gets input data from the session entered on the previous page's form.
+     * Calling {@link OrderService} validates data, make changes in specified DB record
+     * and redirecting to the congratulations page. In case of incorrect data user will be
+     * redirected to the previous page with an error message.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Order
+     * @see User
+     * @see HttpSession
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

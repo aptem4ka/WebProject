@@ -20,11 +20,29 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to search user data by order ID.
+ *
+ * @author Artsem Lashuk
+ * @see User
+ * @see Order
+ */
 public class SearchUserByOrder implements Command {
     private final static Logger logger = LogManager.getLogger(SearchUserByOrder.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
     private UserService userService = ServiceFactory.getInstance().getUserService();
 
+    /**
+     * This method is used to search user profile by specified {@link Order#getOrderID()}.
+     * In case of success search admin will be dispatched to the user profile.
+     * {@link Pagination} is used to limit amount of data that will be received from the DB.
+     * Then response dispatches to the client.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

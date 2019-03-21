@@ -55,7 +55,6 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ORDERS_HISTORY)) {
             ps.setDate(1, new java.sql.Date(new Date().getTime()));
-            System.out.println(pagination.getStartPos());
             ps.setInt(2,pagination.getStartPos());
             ps.setInt(3, pagination.getOffset());
             resultSet = ps.executeQuery();

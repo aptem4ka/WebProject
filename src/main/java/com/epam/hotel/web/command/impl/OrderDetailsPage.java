@@ -16,8 +16,8 @@ import java.io.IOException;
  *
  * @author Artsem Lashuk
  */
-public class OrderDetailsPageCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(OrderDetailsPageCommand.class);
+public class OrderDetailsPage implements Command {
+    private final static Logger logger = LogManager.getLogger(OrderDetailsPage.class);
 
     /**
      * This method saves previous command and dispatches client to the order details page.

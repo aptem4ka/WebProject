@@ -20,20 +20,20 @@ public class CommandManager {
     private final Map<CommandName, Command> commands=new HashMap<>();
 
     private CommandManager(){
-        commands.put(CommandName.LOGIN, new LoginCommand());
-        commands.put(CommandName.REGISTER, new RegisterCommand());
-        commands.put(CommandName.ROOM_LIST,new RoomListCommand());
-        commands.put(CommandName.LOGOUT,new LogoutCommand());
-        commands.put(CommandName.SEARCH_RESULT, new SearchResultCommand());
-        commands.put(CommandName.SEARCH_RESULT_PAGE, new SearchResultPageCommand());
-        commands.put(CommandName.INDEX_PAGE, new IndexPageCommand());
-        commands.put(CommandName.REGISTER_PAGE, new RegisterPageCommand());
-        commands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
-        commands.put(CommandName.LOGIN_PAGE, new LoginPageCommand());
-        commands.put(CommandName.ROOM_INFO, new RoomInfoCommand());
+        commands.put(CommandName.LOGIN, new Login());
+        commands.put(CommandName.REGISTER, new Register());
+        commands.put(CommandName.ROOM_LIST,new RoomList());
+        commands.put(CommandName.LOGOUT,new Logout());
+        commands.put(CommandName.SEARCH_RESULT, new SearchResult());
+        commands.put(CommandName.SEARCH_RESULT_PAGE, new SearchResultPage());
+        commands.put(CommandName.INDEX_PAGE, new IndexPage());
+        commands.put(CommandName.REGISTER_PAGE, new RegisterPage());
+        commands.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
+        commands.put(CommandName.LOGIN_PAGE, new LoginPage());
+        commands.put(CommandName.ROOM_INFO, new RoomInfo());
         commands.put(CommandName.PROFILE, new Profile());
-        commands.put(CommandName.BOOK, new BookCommand());
-        commands.put(CommandName.ORDER_DETAILS, new OrderDetailsPageCommand());
+        commands.put(CommandName.BOOK, new Book());
+        commands.put(CommandName.ORDER_DETAILS, new OrderDetailsPage());
         commands.put(CommandName.CONTROL, new ControlPage());
         commands.put(CommandName.UPDATE_ORDER_STATUS, new UpdateOrderStatus());
         commands.put(CommandName.SEARCH_USER_BY_ORDER, new SearchUserByOrder());
@@ -43,14 +43,14 @@ public class CommandManager {
         commands.put(CommandName.EDIT_BOOK, new EditOrderExecution());
         commands.put(CommandName.SEARCH_ORDER_BY_NAME, new SearchOrderByName());
         commands.put(CommandName.SEARCH_ORDER_BY_PHONE, new SearchOrderByPhone());
-        commands.put(CommandName.REVIEWS_PAGE, new ReviewsPageCommand());
-        commands.put(CommandName.LEAVE_REVIEW, new LeaveReviewCommand());
+        commands.put(CommandName.REVIEWS_PAGE, new ReviewsPage());
+        commands.put(CommandName.LEAVE_REVIEW, new LeaveReview());
         commands.put(CommandName.SEARCH_USER_BY_ID, new SearchUserByID());
-        commands.put(CommandName.SUCCESS_REVIEW_PAGE, new SuccessReviewPageCommand());
+        commands.put(CommandName.SUCCESS_REVIEW_PAGE, new SuccessReviewPage());
         commands.put(CommandName.REVIEW_MODERATION, new ReviewsModeration());
         commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatus());
         commands.put(CommandName.CHANGE_ORDER_CONGRATS_PAGE, new EditOrderCongratsPage());
-        commands.put(CommandName.ABOUT_PAGE, new AboutPageCommand());
+        commands.put(CommandName.ABOUT_PAGE, new AboutPage());
     }
 
     /**

@@ -20,9 +20,9 @@ import java.io.IOException;
  *
  * @author Artsem Lashuk
  */
-public class LeaveReviewCommand implements Command {
+public class LeaveReview implements Command {
     private ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-    private final static Logger logger= LogManager.getLogger(LeaveReviewCommand.class);
+    private final static Logger logger= LogManager.getLogger(LeaveReview.class);
 
     /**
      * This method gets input data from request and calls {@link ReviewService} which

@@ -19,11 +19,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link Command} implementation is used to search specified order by phone.
+ *
+ * @author Artsem Lashuk
+ */
 public class SearchOrderByPhone implements Command {
     private final static Logger logger= LogManager.getLogger(SearchOrderByPhone.class);
     private AdminService adminService = ServiceFactory.getInstance().getAdminService();
 
-
+    /**
+     * This method is used to search orders by phone number got from the request.
+     * The {@link List} of orders save in the request as an attribute.
+     * {@link Pagination} is used to limit amount of data that will be received from the DB.
+     * Then response dispatches to the client.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Pagination#setupPaginator(HttpServletRequest, String)
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
