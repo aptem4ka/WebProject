@@ -1,9 +1,8 @@
 package com.epam.hotel.web.util.constants;
 
 /**
+ * The class is used to keep string constants used in the web layer of the app.
  * @author Artsem Lashuk
- *
- * The class is used to keep string constants used in the web layer of the app
  */
 public class StringConstants {
 
@@ -41,6 +40,7 @@ public class StringConstants {
     public final static String LOCALE = "locale";
     public final static String ALLOCATIONS = "allocations";
     public final static String ORDER = "order";
+    public final static String ORDERS_WAITING = "ordersWaiting";
     public final static String ACTIVE_ORDER_LIST = "activeOrderList";
     public final static String ORDER_LIST = "orderList";
     public final static String ROOM_LIST = "roomList";
@@ -53,6 +53,9 @@ public class StringConstants {
     public final static String REVIEW_LIST = "reviewList";
     public final static String REVIEW_ID = "reviewID";
     public final static String ANSWER = "answer";
+    public final static String REVIEWS_WAITING = "reviewsWaiting";
+    public final static String PAGE = "page";
+    public final static String TOTAL_PRICE = "total_price";
 
     public final static String ACTIVE_PAGINATOR = "activePaginator";
     public final static String HISTORY_PAGINATOR = "historyPaginator";

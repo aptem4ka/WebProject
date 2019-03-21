@@ -1,5 +1,10 @@
 package com.epam.hotel.web.command;
 
+/**
+ * This class contains the names of the commands.
+ *
+ * @author Artsem Lashuk
+ */
 public enum CommandName {
     LOGIN, LOGOUT, REGISTER, ROOM_LIST, SEARCH_RESULT, SEARCH_RESULT_PAGE, INDEX_PAGE, REGISTER_PAGE, CHANGE_LOCALE,
     LOGIN_PAGE, ROOM_INFO, PROFILE, BOOK, ORDER_DETAILS, CONTROL, UPDATE_ORDER_STATUS, SEARCH_USER_BY_ORDER,

@@ -24,8 +24,8 @@
 
         <div class="col-md-7" style="margin-left:-15px">
             <div class="card bg-light">
-                <article class="card-body mx-auto" style="width: 400px;">
-                <h2>${temp_unavailable}</h2>
+                <article class="card-body mx-auto" style="width: 600px;">
+                <h3>${temp_unavailable}</h3>
 
                 </article>
             </div>

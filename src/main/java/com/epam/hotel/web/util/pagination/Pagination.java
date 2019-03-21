@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @author Artsem Lashuk
- *
  * This class is used to paginate long lists.
+ *
+ * @author Artsem Lashuk
  */
 
 public class Pagination {

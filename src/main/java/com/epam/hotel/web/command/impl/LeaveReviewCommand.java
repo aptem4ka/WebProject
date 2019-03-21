@@ -15,13 +15,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This {@link Command} implementation is used to leave a review about hotel.
+ *
+ * @author Artsem Lashuk
+ */
 public class LeaveReviewCommand implements Command {
     private ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
     private final static Logger logger= LogManager.getLogger(LeaveReviewCommand.class);
 
+    /**
+     * This method gets input data from request and calls {@link ReviewService} which
+     * validates data and has an access to the DAO layer. If data is correct, review
+     * will be added to the DB, in other case client will be reported about incorrect data.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see com.epam.hotel.entity.Review
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 
         int rating = Integer.parseInt(req.getParameter(StringConstants.RATING));
         boolean reviewAdded = true;

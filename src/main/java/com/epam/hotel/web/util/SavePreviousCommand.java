@@ -7,9 +7,9 @@ import java.util.Enumeration;
 
 
 /**
- * @author  Artsem Lashuk
+ * This class is designed to save previous Http-request to the Http-session.
  *
- * This class is designed to save previous Http-request to the Http-session
+ * @author  Artsem Lashuk
  *
  * @see HttpServletRequest
  * @see javax.servlet.http.HttpSession

@@ -7,6 +7,14 @@ import com.epam.hotel.web.command.impl.user.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This singleton class contains all the commands bound with {@link CommandName}
+ *
+ * @author Artsem Lashuk
+ *
+ * @see Command
+ */
+
 public class CommandManager {
     private static final CommandManager instance=new CommandManager();
     private final Map<CommandName, Command> commands=new HashMap<>();
@@ -45,10 +53,18 @@ public class CommandManager {
         commands.put(CommandName.ABOUT_PAGE, new AboutPageCommand());
     }
 
+    /**
+     * @return instance of {@link CommandManager}
+     */
     public static CommandManager getInstance() {
         return instance;
     }
 
+    /**
+     * Get command according to {@link CommandName}
+     * @param commandName String from request with the name of the command.
+     * @return {@link Command} implementation
+     */
     public Command getCommand(String commandName){
         CommandName command=CommandName.valueOf(commandName.toUpperCase());
         return commands.get(command);

@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-/**@author Artsem Lashuk
- *
+/**
  * This class redirects requests to the command
+ *
+ * @author Artsem Lashuk
  *
  * @see CommandManager
  * @see Command
@@ -27,7 +28,7 @@ public class ControllerServlet extends HttpServlet {
      * @param req {@link HttpServletRequest}
      * @param resp {@link HttpServletResponse}
      * @throws IOException if In/Out Exception occurs
-     * @throws ServletException if any other exception occurs
+     * @throws ServletException if any Servlet exception occurs
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

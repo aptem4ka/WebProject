@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * @author Artsem Lashuk
- *
  * This class is designed to get keys from resource locale bundle
+ *
+ * @author Artsem Lashuk
  *
  * @see Enumeration
  */

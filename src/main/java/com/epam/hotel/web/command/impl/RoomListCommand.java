@@ -17,11 +17,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-
+/**
+ * This {@link Command} implementation is used to dispatch client
+ * to the list of available rooms
+ *
+ * @author Artsem Lashuk
+ */
 public class RoomListCommand implements Command {
     private RoomService roomService=ServiceFactory.getInstance().getRoomService();
     private final static Logger logger = LogManager.getLogger(RoomListCommand.class);
 
+    /**
+     * The method saves previous request by calling {@link SavePreviousCommand#saveCommand(HttpServletRequest)}
+     * and then receive room preview images from the DB. After all the method
+     * dispatches response to the client. Previews are stored in the {@link Map}
+     * according to the {@link com.epam.hotel.entity.Room.RoomType}.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);

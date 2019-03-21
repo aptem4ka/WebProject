@@ -19,10 +19,26 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This {@link Command} implementations is used to get required data for the index page.
+ *
+ * @author Artsem Lashuk
+ */
 public class IndexPageCommand implements Command {
     private final static Logger logger= LogManager.getLogger(IndexPageCommand.class);
     private RoomService roomService=ServiceFactory.getInstance().getRoomService();
 
+    /**
+     * The method calls {@link RoomService#allRoomImages()} to get room images for
+     * the carousel on the index page.
+     * Also it calls {@link RoomService#allocationsIgnoreType()} to get all available
+     * room allocations for quick booking.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);
@@ -39,8 +55,6 @@ public class IndexPageCommand implements Command {
         req.setAttribute(StringConstants.CAROUSEL_IMAGES, images);
         req.setAttribute(StringConstants.ALLOCATIONS, allocations);
 
-
         req.getRequestDispatcher(URLConstants.INDEX_PAGE).forward(req,resp);
-
     }
 }

@@ -16,12 +16,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
+/**
+ * This {@link Command} implementation is used to sign in user by getting
+ * his data from the DB.
+ *
+ * @author Artsem Lashuk
+ */
 public class LoginCommand implements Command {
     private final static Logger logger= LogManager.getLogger();
     private UserService userService=ServiceFactory.getInstance().getUserService();
 
-
+    /**
+     * This method collects all data received from request and calls {@link UserService}
+     * which validates data and has an access to the DAO layer. If validation successful,
+     * user will be added to the current HTTP session. In other case client will be
+     * redirected to login page with an error message.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see HttpSession
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

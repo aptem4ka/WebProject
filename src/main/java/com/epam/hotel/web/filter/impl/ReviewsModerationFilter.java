@@ -16,21 +16,20 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * @author Artsem Lashuk
- *
  * This class is used to get information about number of reviews
  * that waiting for moderation.
+ *
+ * @author Artsem Lashuk
  *
  * @see Filter
  */
 
 public class ReviewsModerationFilter extends Filter {
 
-
     /**
-     * The method check if the user is an admin by checking {@link User#getUserID()}
+     * The method checks if the user is an admin by calling {@link User#getUserID()}
      * and calls {@link com.epam.hotel.service.ReviewService} to read number of
-     * reviews, waiting for moderation.
+     * reviews waiting for moderation and to put them in the session as an attribute.
      *
      * @param servletRequest {@link ServletRequest}
      * @param servletResponse {@link ServletResponse}
@@ -38,6 +37,7 @@ public class ReviewsModerationFilter extends Filter {
      * @throws IOException if In/Out exception occurs
      * @throws ServletException if Servlet exception occurs
      * @see User
+     * @see HttpSession
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -53,7 +53,7 @@ public class ReviewsModerationFilter extends Filter {
             if (user.getUserID()==1){
                 try {
                     reviews = ServiceFactory.getInstance().getReviewService().waitingForModerationReviews();
-                    session.setAttribute("reviewsWaiting", reviews);
+                    session.setAttribute(StringConstants.REVIEWS_WAITING, reviews);
                 }catch (ServiceException e){
                     throw new ServletException(e);
                 }

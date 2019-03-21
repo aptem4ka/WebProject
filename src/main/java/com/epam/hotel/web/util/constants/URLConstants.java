@@ -1,9 +1,10 @@
 package com.epam.hotel.web.util.constants;
 
 /**
+ * The class is used to keep links to the JSP pages and commands
+ *
  * @author Artsem Lashuk
  *
- * The class is used to keep links to the JSP pages and commands
  * @see com.epam.hotel.web.command.Command
  */
 public class URLConstants {

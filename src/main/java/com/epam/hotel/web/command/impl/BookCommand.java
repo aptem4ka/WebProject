@@ -18,11 +18,29 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * This {@link Command} implementation is used to make an order.
+ *
+ * @author Artsem Lashuk
+ */
 public class BookCommand implements Command {
     private OrderService orderService= ServiceFactory.getInstance().getOrderService();
     private final static Logger logger= LogManager.getLogger(BookCommand.class);
 
 
+    /**
+     * The method gets input information from the request and then call {@link OrderService}
+     * which validates date and has an access to the DAO layer. In case of successful validation
+     * data will be added to the DB using DAO layer. In other case client will be redirected
+     * to the previous page with an error message.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see User
+     * @see Order
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Order order=new Order();
@@ -32,12 +50,10 @@ public class BookCommand implements Command {
         User user = (User)session.getAttribute(StringConstants.CURRENT_USER);
         User guest = new User();
 
-
-            order.setResFrom((Date)session.getAttribute("resFrom"));
-            order.setResTo((Date)session.getAttribute("resTo"));
-            order.setTotalPrice(Double.parseDouble(req.getParameter("total_price"+formNumber)));
-            order.setRoomID(Integer.parseInt(req.getParameter("roomID"+formNumber)));
-
+        order.setResFrom((Date)session.getAttribute(StringConstants.RESERVED_FROM));
+        order.setResTo((Date)session.getAttribute(StringConstants.RESERVED_TO));
+        order.setTotalPrice(Double.parseDouble(req.getParameter(StringConstants.TOTAL_PRICE+formNumber)));
+        order.setRoomID(Integer.parseInt(req.getParameter(StringConstants.ROOM_ID+formNumber)));
 
         try {
             if (user!=null){

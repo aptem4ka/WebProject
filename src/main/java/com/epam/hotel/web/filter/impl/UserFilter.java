@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Artsem Lashuk
- *
  * This class is used to control access to user content
+ *
+ * @author Artsem Lashuk
  *
  * @see Filter
  */

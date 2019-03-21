@@ -4,9 +4,9 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * @author Artsem Lashuk
- *
  * This class describes basic filter methods.
+ *
+ * @author Artsem Lashuk
  */
 public abstract class Filter implements javax.servlet.Filter {
 

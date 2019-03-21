@@ -19,10 +19,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This {@link Command} implementation is used to dispatch client to the reviews page.
+ *
+ * @author Artsem Lashuk
+ */
 public class ReviewsPageCommand implements Command {
     private ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
     private final static Logger logger= LogManager.getLogger(ReviewsPageCommand.class);
 
+    /**
+     * The purpose of this method is to get all reviews from the DB. {@link Pagination} is used
+     * to control amount of data that will be received from the DB.
+     *
+     * @param req {@link HttpServletRequest}
+     * @param resp {@link HttpServletResponse}
+     * @throws IOException if In/Out errors occur
+     * @throws ServletException if any Servlet errors occur
+     * @see Review
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SavePreviousCommand.saveCommand(req);
