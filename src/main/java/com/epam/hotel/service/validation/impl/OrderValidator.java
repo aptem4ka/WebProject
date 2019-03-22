@@ -6,8 +6,20 @@ import com.epam.hotel.service.validation.Validator;
 import com.epam.hotel.service.validation.ValidatorManager;
 import com.epam.hotel.service.validation.ValidatorName;
 
+/**
+ * This {@link Validator} implementation validates orders.
+ *
+ * @author Artsem Lashuk
+ * @see Order
+ */
 public class OrderValidator implements Validator {
 
+    /**
+     * This method checks if the order instance fields have correct values.
+     *
+     * @param obj incoming parameter to validate
+     * @return true if all fields has correct values
+     */
     @Override
     public boolean isValid(Object obj) {
         if (obj == null){
@@ -24,11 +36,7 @@ public class OrderValidator implements Validator {
                 || order.getResFrom().after(order.getResTo())){
             return false;
         }
-        if (order.getTotalPrice()<=0 || order.getRoomID()<=0 || order.getUserID()<0){
-            return false;
-        }
 
-
-        return true;
+        return order.getTotalPrice()<=0 || order.getRoomID()<=0 || order.getUserID()<0;
     }
 }

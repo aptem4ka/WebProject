@@ -3,8 +3,20 @@ package com.epam.hotel.service.validation.impl;
 import com.epam.hotel.entity.Review;
 import com.epam.hotel.service.validation.Validator;
 
+/**
+ * This {@link Validator} implementation validates reviews.
+ *
+ * @author Artsem Lashuk
+ * @see Review
+ */
 public class ReviewValidator implements Validator {
 
+    /**
+     * This method cheks if the review instance fields have correct values.
+     *
+     * @param review incoming parameter to validate
+     * @return true is all fields of {@link Review} instance are correct
+     */
     @Override
     public boolean isValid(Object review) {
         if (review==null){

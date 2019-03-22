@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This class executes requests from {@link com.epam.hotel.web.ControllerServlet}
+ * This interface defines method for executing requests from {@link com.epam.hotel.web.ControllerServlet}
  *
  * @author Artsem Lashuk
  */
