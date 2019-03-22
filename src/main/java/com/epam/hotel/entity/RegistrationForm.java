@@ -3,14 +3,42 @@ package com.epam.hotel.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * This entity is used to store information from registration form.
+ *
+ * @author Artsem Lashuk
+ */
 public class RegistrationForm implements Serializable {
     private static final long serialVersionUID = 1032896608084890089L;
 
+    /**
+     * user name from the input form.
+     */
     private String name;
+
+    /**
+     * user surname from the input form.
+     */
     private String surname;
+
+    /**
+     * user password from the input form.
+     */
     private String password;
+
+    /**
+     * repeated password from the input form.
+     */
     private String confirmPassword;
+
+    /**
+     * user phone from the input form.
+     */
     private String phone;
+
+    /**
+     * user e-mail from the input form.
+     */
     private String email;
 
     public RegistrationForm() {

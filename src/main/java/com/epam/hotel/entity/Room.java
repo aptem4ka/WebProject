@@ -4,18 +4,63 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This entity is used to store information about rooms.
+ *
+ * @author Artsem Lashuk
+ */
 public class Room implements Serializable {
     private static final long serialVersionUID = 6302590932017315156L;
 
+    /**
+     * Room unique identifier
+     */
     private int roomID;
+
+    /**
+     * Room type.
+     */
     private RoomType type;
+
+    /**
+     * Room allocation.
+     */
     private AllocationType allocation;
+
+    /**
+     * Reservation from.
+     */
     private Date resFrom;
+
+    /**
+     * Reservation to.
+     */
     private Date resTo;
+
+    /**
+     * Room price.
+     */
     private double price;
+
+    /**
+     * Defines additional baby conts in the room.
+     * This field affects price.
+     */
     private int children;
+
+    /**
+     * Defines if room available for booking.
+     */
     private boolean available;
+
+    /**
+     * Room window view.
+     */
     private WindowView windowView;
+
+    /**
+     * Room floor.
+     */
     private int floor;
 
     public Room() {
@@ -139,15 +184,24 @@ public class Room implements Serializable {
                 '}';
     }
 
+    /**
+     * This enum defines available room allocations.
+     */
     public enum AllocationType {
         SNGL, DBL, TWN, TRPL, QDPL;
 
     }
 
+    /**
+     * This enum defines available room types.
+     */
     public enum RoomType {
         STD, STUDIO, FAMSTUDIO, LUX, BUSINESS;
     }
 
+    /**
+     * This enum defines available window views.
+     */
     public enum WindowView {
         CV, PV, IV
     }

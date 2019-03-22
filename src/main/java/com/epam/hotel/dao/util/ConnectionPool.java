@@ -14,14 +14,30 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * This class is used to keep available connections to the DB.
+ *
+ * @author Artsem Lashuk
+ * @see Connection
+ */
 public class ConnectionPool {
     private final static Logger logger= LogManager.getLogger(ConnectionPool.class);
 
     private static final ConnectionPool instance = new ConnectionPool();
-    private Lock lock = new ReentrantLock();
+    /**
+     * Thread-safe collection of available connections that might be taken.
+     */
     private BlockingQueue<Connection> connectionsAvailable;
+
+    /**
+     * Thread-safe collection of taken connections that might be brought back.
+     */
     private BlockingQueue<Connection> connectionsTaken;
 
+    /**
+     * Private constructor initializes a connection to the DB. All data is taken from
+     * the resource bundle.
+     */
     private ConnectionPool() {
         try {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(SQLConstants.DB_BUNDLE);
@@ -42,11 +58,21 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Get instance of the connection pool
+     * @return {@link ConnectionPool} instance
+     */
     public static ConnectionPool getInstance() {
         return instance;
     }
 
-
+    /**
+     * Take one connection if there are available connections in the collection.
+     * Taken connection puts at the appropriate collection.
+     * @return {@link Connection}
+     * @throws InterruptedException if any error occurred during taking or putting connection
+     *                              to one of the collections.
+     */
     public Connection takeConnection() throws InterruptedException{
         Connection connection;
 
@@ -59,6 +85,12 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Bring connection back to the {@link #connectionsAvailable} collection
+     * @param connection {@link Connection} that you want to release
+     * @throws InterruptedException if any error occurred during taking or putting connection
+     *                              to one of the collections.
+     */
     public void releaseConnection(Connection connection) throws InterruptedException{
             if (connectionsTaken.remove(connection)) {
                 connectionsAvailable.put(connection);
@@ -67,6 +99,9 @@ public class ConnectionPool {
             }
     }
 
+    /**
+     * Closing all connections from both collections.
+     */
     public void closeConnections(){
 
        try {

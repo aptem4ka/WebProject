@@ -1,5 +1,10 @@
 package com.epam.hotel.dao.util;
 
+/**
+ * This class contains String constants used in the DAO layer.
+ *
+ * @author Artsem Lashuk
+ */
 public class SQLConstants {
 
     public final static String USER_ID = "userID";

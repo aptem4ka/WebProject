@@ -4,17 +4,58 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This entity is used to store information about reviews.
+ *
+ * @author Artsem Lashuk
+ */
 public class Review implements Serializable {
     private static final long serialVersionUID = 8840948383634522642L;
 
+    /**
+     * Unique review identifier.
+     */
     private int reviewID;
+
+    /**
+     * ID of the user who left a review.
+     * Guests has ID = 0.
+     */
     private int userID;
+
+    /**
+     * User or guest name.
+     */
     private String name;
+
+    /**
+     * User or guest phone.
+     */
     private String phone;
+
+    /**
+     * The date of leaving a review.
+     */
     private Date added;
+
+    /**
+     * Hotel service evaluation.
+     */
     private int rating;
+
+    /**
+     * Comment to the review
+     */
     private String comment;
+
+    /**
+     * Current status of the review.
+     */
     private Status status;
+
+    /**
+     * Admin answer to the review
+     */
     private String answer;
 
     public int getReviewID() {

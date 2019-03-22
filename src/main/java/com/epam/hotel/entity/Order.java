@@ -4,16 +4,52 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This entity is used to store information about orders.
+ *
+ * @author Artsem Lashuk
+ */
 public class Order implements Serializable{
     private static final long serialVersionUID = -1228973035781116234L;
 
+    /**
+     * Unique order identifier.
+     */
     private int orderID;
+
+    /**
+     * ID of user who made an order.
+     */
     private int userID;
+
+    /**
+     * ID of the booked room.
+     */
     private int roomID;
+
+    /**
+     * Reservation from date.
+     */
     private Date resFrom;
+
+    /**
+     * Reservation to date.
+     */
     private Date resTo;
+
+    /**
+     * Order status. Applied as default.
+     */
     private Status status = Status.APPLIED;
+
+    /**
+     * Order total price.
+     */
     private double totalPrice;
+
+    /**
+     * Admin comment to the order in case of cancellation
+     */
     private String comment;
 
     public double getTotalPrice() {

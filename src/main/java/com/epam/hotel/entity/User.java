@@ -3,18 +3,57 @@ package com.epam.hotel.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+/**
+ * This entity is used to store user information.
+ *
+ * @author Artsem Lashuk
+ */
 public class User implements Serializable {
     private static final long serialVersionUID = 5431448090527565071L;
 
+    /**
+     * User unique identifier.
+     */
     private int userID;
+
+    /**
+     * User password.
+     */
     private String password;
+
+    /**
+     * User e-mail.
+     */
     private String email;
+
+    /**
+     * User name.
+     */
     private String name;
+
+    /**
+     * User surname.
+     */
     private String surname;
+
+    /**
+     * User phone.
+     */
     private String phone;
+
+    /**
+     * User personal discount.
+     */
     private int discount;
+
+    /**
+     * Account role.
+     */
     private String role;
+
+    /**
+     * This field is used for signing in. It sets to the true if signing in successful.
+     */
     private boolean valid;
 
     public User() {
@@ -126,7 +165,4 @@ public class User implements Serializable {
                 '}';
     }
 
-    public enum AccountRole {
-        ADMIN,USER;
-    }
 }

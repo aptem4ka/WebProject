@@ -1,5 +1,11 @@
 package com.epam.hotel.dao.util;
 
+/**
+ * This class contains SQL queries for prepared statement/
+ *
+ * @author Artsem Lashuk
+ * @see java.sql.PreparedStatement
+ */
 public class SqlQuery {
     public final static String ROOM_TYPES_QUERY = "SELECT DISTINCT type FROM rooms;";
     public final static String ALL_ROOM_IMAGES_QUERY = "SELECT link FROM images WHERE preview=0;";
