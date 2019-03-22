@@ -21,10 +21,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * This {@link UserDAO} implementation realizes DB activities associated with user.
+ *
+ * @author Artsem Lashuk
+ * @see User
+ */
 public class UserDAOImpl extends ParentDao implements UserDAO {
     private final static Logger logger = LogManager.getLogger(UserDAOImpl.class);
 
+    /**
+     * This method check user data in the DB table and return user with
+     * filled field {@link User#isValid()}
+     *
+     * @param user user that tries to sign in
+     * @return user with {@link User#isValid()} true if signing in succeeded
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public User loginUser(User user) throws DAOException{
         Connection connection = getConnection();
@@ -55,7 +68,13 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
         return user;
     }
 
-
+    /**
+     * This method check through DB if the e-mail is unique.
+     *
+     * @param email user e-mail
+     * @return true if entered e-mail is unique
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public boolean checkEmail(String email) throws DAOException{
         Connection connection=getConnection();
@@ -71,7 +90,12 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
         }
     }
 
-
+    /**
+     * This method make a record in the DB with userdata.
+     *
+     * @param form {@link RegistrationForm}
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public void registerUser(RegistrationForm form) throws DAOException{
         Connection connection = getConnection();
@@ -93,6 +117,13 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     }
 
+    /**
+     * This method searches through the DB the number of the specified user completed orders.
+     * Discount is equal to the number of completed orders but not greater than 10%.
+     * @param userID unique identifier of the user
+     * @return discount value
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public int userDiscount(int userID) throws DAOException {
         Connection connection=getConnection();
@@ -118,6 +149,15 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     }
 
+    /**
+     * This method searches throw the DB orders with status APPLIED made by specified user.
+     *
+     * @param pagination {@link Pagination}
+     * @param userID unique identifier of the user
+     * @return list of {@link Order} with status APPLIED
+     * @throws DAOException if DB query executes with errors
+     * @see Order.Status
+     */
     @Override
     public List<Order> activeOrderList(Pagination pagination, int userID) throws DAOException {
 
@@ -142,6 +182,16 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
         return orderList;
     }
 
+    /**
+     * This method searches throw the DB orders with status COMPLETED or CANCELLED
+     * made by specified user.
+     *
+     * @param pagination {@link Pagination}
+     * @param userID unique identifier of the user
+     * @return list of {@link Order} with status CANCELLED or COMPLETED
+     * @throws DAOException if DB query executes with errors
+     * @see Order.Status
+     */
     @Override
     public List<Order> orderHistoryList(Pagination pagination, int userID) throws DAOException {
 
@@ -167,6 +217,13 @@ public class UserDAOImpl extends ParentDao implements UserDAO {
 
     }
 
+    /**
+     * Additional method for adding order to list.
+     *
+     * @param resultSet the result of SQL query
+     * @param orderList list of orders from the sql query
+     * @throws SQLException if {@link ResultSet} handling occurs with errors.
+     */
     private void addOrdersToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
 
         while (resultSet.next()) {

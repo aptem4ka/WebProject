@@ -20,9 +20,24 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * This {@link ReviewDAO} implementation realizes DB activities associated with reviews.
+ *
+ * @author Artsem Lashuk
+ * @see Review
+ */
 public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
     private final static Logger logger = LogManager.getLogger(ReviewDAOImpl.class);
 
+    /**
+     * Add review to the DB left by guest.
+     *
+     * @param rating client's rating entered in the appropriate input
+     * @param comment client's comment to the review entered in the appropriate input
+     * @param phone client's phone entered in the appropriate input
+     * @param name client's name entered in the appropriate input
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public void guestLeaveReview(int rating, String comment, String phone, String name) throws DAOException {
         Connection connection = getConnection();
@@ -44,9 +59,16 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
         }finally {
             releaseConnection(connection);
         }
-
     }
 
+    /**
+     * Add review to the DB left by user.
+     *
+     * @param rating client's rating entered in the appropriate input
+     * @param comment client's comment to the review entered in the appropriate input
+     * @param user {@link User}
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public void userLeaveReview(int rating, String comment, User user) throws DAOException {
         Connection connection = getConnection();

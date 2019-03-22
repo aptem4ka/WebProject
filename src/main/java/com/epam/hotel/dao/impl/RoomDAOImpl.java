@@ -4,6 +4,7 @@ import com.epam.hotel.dao.ParentDao;
 import com.epam.hotel.dao.RoomDAO;
 import com.epam.hotel.dao.util.SQLConstants;
 import com.epam.hotel.dao.util.SqlQuery;
+import com.epam.hotel.entity.Order;
 import com.epam.hotel.entity.Room;
 import com.epam.hotel.exception.DAOException;
 import com.epam.hotel.web.util.pagination.Pagination;
@@ -16,9 +17,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This {@link RoomDAO} implementation realizes DB activities associated with rooms.
+ *
+ * @author Artsem Lashuk
+ * @see Room
+ */
 public class RoomDAOImpl extends ParentDao implements RoomDAO {
     private final static Logger logger = LogManager.getLogger(RoomDAOImpl.class);
 
+    /**
+     * Find available room types from the DB.
+     *
+     * @return list of room types
+     * @throws DAOException if DB query executes with errors
+     * @see Room.RoomType
+     */
     @Override
     public List<Room.RoomType> roomTypes() throws DAOException {
         Connection connection = getConnection();
@@ -40,6 +54,14 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return types;
     }
 
+    /**
+     * Find available allocations for specified room type
+     *
+     * @param type {@link Room.RoomType}
+     * @return list of allocation types
+     * @throws DAOException if DB query executes with errors
+     * @see Room.AllocationType
+     */
     @Override
     public List<Room.AllocationType> allocationsForType(Room.RoomType type) throws DAOException {
         Connection connection=getConnection();
@@ -60,6 +82,12 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return allocationList;
     }
 
+    /**
+     * Find available allocation ignoring room type
+     * @return list of allocation types
+     * @throws DAOException if DB query executes with errors
+     * @see Room.AllocationType
+     */
     @Override
     public List<Room.AllocationType> allocationsIgnoreType() throws DAOException {
         Connection connection=getConnection();
@@ -81,6 +109,12 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return allocationList;
     }
 
+    /**
+     * Find all room images from DB except preview images
+     *
+     * @return set of image URLs
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public Set<String> allRoomImages() throws DAOException{
         Connection connection = getConnection();
@@ -102,12 +136,18 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return images;
     }
 
+    /**
+     * Find all room images from DB associated with specified room type except preview
+     *
+     * @param type {@link Room.RoomType}
+     * @return list of image URLs
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public List<String> roomImagesByType(Room.RoomType type) throws DAOException{
         Connection connection = getConnection();
         List<String> images = new ArrayList<>();
         ResultSet resultSet = null;
-
 
         try (PreparedStatement ps = connection.prepareStatement(SqlQuery.ROOM_IMAGES_FOR_TYPE)){
             ps.setString(1,type.toString());
@@ -126,7 +166,12 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return images;
     }
 
-
+    /**
+     * Find all room preview from DB images.
+     *
+     * @return list of image URLs
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public List<String> roomPreviews() throws DAOException{
         Connection connection = getConnection();
@@ -148,7 +193,14 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return previews;
     }
 
-
+    /**
+     * Find min and max prices from DB for specified room type.
+     *
+     * @param type {@link Room.RoomType}
+     * @return string in format "min_price - max_price"
+     * @throws DAOException if DB query executes with errors
+     * @see Room.RoomType
+     */
     @Override
     public String priceRange(Room.RoomType type) throws DAOException {
         Connection connection = getConnection();
@@ -169,6 +221,13 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return priceRange;
     }
 
+    /**
+     * Get information about room according to the room id.
+     *
+     * @param roomID identifier of the room
+     * @return {@link Room} with filled fields
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public Room roomInfoByRoomID(int roomID) throws DAOException {
         Connection connection = getConnection();
@@ -196,6 +255,15 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         }
     }
 
+    /**
+     * Find all rooms from DB satisfying search criteria except room
+     * associated with {@link Order#getOrderID()}.
+     *
+     * @param room {@link Room}
+     * @param orderID identifier of order that will be changed
+     * @return list of rooms satisfying search criteria
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public List<Room> changeOrderSearchResult(Room room, int orderID) throws DAOException {
         Connection connection = getConnection();
@@ -227,6 +295,15 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
 
     }
 
+    /**
+     * Find all rooms from DB satisfying search criteria which saved in
+     * the incoming parameter.
+     *
+     * @param room {@link Room}
+     * @param pagination {@link Pagination}
+     * @return list of rooms satisfying search criteria
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public List<Room> roomSearchResult(Room room, Pagination pagination) throws DAOException {
 
@@ -249,6 +326,16 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
     }
 
 
+    /**
+     * This method gets room associated with specified type from {@link ResultSet}, saves it
+     * to the room and adds it instance to the list.
+     *
+     * @param preparedStatement {@link PreparedStatement}
+     * @param room {@link Room}
+     * @param pagination {@link Pagination}
+     * @return list of rooms saved from the result set
+     * @throws DAOException if DB query executes with errors
+     */
     private List<Room> roomsByType(PreparedStatement preparedStatement, Room room, Pagination pagination) throws DAOException {
         List<Room> roomList=new ArrayList<>();
         ResultSet resultSet=null;
@@ -277,7 +364,16 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return roomList;
     }
 
-
+    /**
+     * This method gets room ignoring specified type from {@link ResultSet}, saves it
+     * to the room and adds it instance to the list.
+     *
+     * @param preparedStatement {@link PreparedStatement}
+     * @param room {@link Room}
+     * @param pagination {@link Pagination}
+     * @return list of rooms saved from the result set
+     * @throws DAOException if DB query executes with errors
+     */
     private List<Room> roomsIgnoreType(PreparedStatement preparedStatement, Room room, Pagination pagination) throws DAOException {
 
         ResultSet resultSet=null;
@@ -310,8 +406,13 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
         return roomList;
     }
 
-
-
+    /**
+     *  This method adds room got from the result set to the list
+     * @param resultSet {@link ResultSet}
+     * @param roomList list for adding rooms
+     * @param room {@link Room}
+     * @throws SQLException if DB query executes with errors
+     */
     private void addRoomToList(ResultSet resultSet, List<Room> roomList, Room room) throws SQLException{
             room = new Room();
             room.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
@@ -321,6 +422,5 @@ public class RoomDAOImpl extends ParentDao implements RoomDAO {
             room.setWindowView(Room.WindowView.valueOf(resultSet.getString(SQLConstants.VIEW).toUpperCase()));
             room.setFloor(resultSet.getInt(SQLConstants.FLOOR));
             roomList.add(room);
-
     }
 }
