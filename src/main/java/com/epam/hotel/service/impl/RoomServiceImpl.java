@@ -183,7 +183,7 @@ public class RoomServiceImpl implements RoomService {
 
         if (!validatorManager.getValidator(ValidatorName.DATE).isValid(room.getResFrom())
                 || !validatorManager.getValidator(ValidatorName.DATE).isValid(room.getResTo())
-                || room.getResFrom().after(room.getResTo())){
+                || room.getResFrom().after(room.getResTo())||room.getResFrom().equals(room.getResTo())){
             throw new ServiceException("Incorrect date error");
         }
 
@@ -231,9 +231,10 @@ public class RoomServiceImpl implements RoomService {
         if (room.getAllocation()==null){
             throw new ServiceException("Allocation is null");
         }
+
         if (!validatorManager.getValidator(ValidatorName.DATE).isValid(room.getResFrom())
         || !validatorManager.getValidator(ValidatorName.DATE).isValid(room.getResTo())
-        || !room.getResFrom().before(room.getResTo())){
+        || room.getResFrom().after(room.getResTo()) || room.getResFrom().equals(room.getResTo())){
             throw new ServiceException("Incorrect date");
         }
         if (orderID<=0){

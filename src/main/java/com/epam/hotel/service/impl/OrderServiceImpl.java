@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 
         if (!validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResFrom())
                 || !validatorManager.getValidator(ValidatorName.DATE).isValid(order.getResTo())
-                || order.getResFrom().after(order.getResTo())){
+                || order.getResFrom().after(order.getResTo())|| order.getResFrom().equals(order.getResTo())){
             throw new ServiceException("Incorrect date error");
         }
 

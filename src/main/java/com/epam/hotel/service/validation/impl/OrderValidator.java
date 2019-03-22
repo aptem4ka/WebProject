@@ -33,10 +33,10 @@ public class OrderValidator implements Validator {
 
         if (!ValidatorManager.getInstance().getValidator(ValidatorName.DATE).isValid(order.getResFrom())
                 || !ValidatorManager.getInstance().getValidator(ValidatorName.DATE).isValid(order.getResTo())
-                || order.getResFrom().after(order.getResTo())){
+                || order.getResFrom().after(order.getResTo()) ){
             return false;
         }
 
-        return order.getTotalPrice()<=0 || order.getRoomID()<=0 || order.getUserID()<0;
+        return !(order.getTotalPrice()<=0 && order.getRoomID()<=0 && order.getUserID()<0);
     }
 }

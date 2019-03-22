@@ -36,7 +36,6 @@ public class ReviewValidator implements Validator {
             return false;
         }else if (rev.getStatus()== Review.Status.POSTED){
                 return !(rev.getAnswer()==null);
-
         }
 
         return true;

@@ -71,7 +71,7 @@ public class Book implements Command {
 
         }catch (ServiceException e){
             logger.warn(e);
-            resp.sendRedirect(session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectData=true");
+            //resp.sendRedirect(session.getAttribute(StringConstants.PREV_PAGE_URL)+"&incorrectData=true");
 
         }
 

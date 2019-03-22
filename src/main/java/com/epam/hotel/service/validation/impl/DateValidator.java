@@ -32,7 +32,7 @@ public class DateValidator implements Validator {
 
         Date date=(Date)obj;
 
-       return date.before(getZeroTimeDate(new Date()));
+       return date.after(getZeroTimeDate(new Date()));
     }
 
     /**

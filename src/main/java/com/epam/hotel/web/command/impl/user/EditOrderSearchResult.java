@@ -60,7 +60,7 @@ public class EditOrderSearchResult implements Command {
         room.setAllocation(Room.AllocationType.valueOf(req.getParameter(StringConstants.ALLOCATION).toUpperCase()));
 
         try {
-            roomList = roomService.changeOrderSearchResult(room, (int)req.getSession().getAttribute("orderID"));
+            roomList = roomService.changeOrderSearchResult(room, (int)req.getSession().getAttribute(StringConstants.ORDER_ID));
         }catch (ServiceException e){
             logger.warn(e);
         }
@@ -77,8 +77,10 @@ public class EditOrderSearchResult implements Command {
         session.setAttribute(StringConstants.RESERVED_TO, room.getResTo());
         session.setAttribute(StringConstants.CHILDREN, room.getChildren());
         session.setAttribute(StringConstants.ALLOCATION, room.getAllocation());
+
         resp.sendRedirect(URLConstants.CHANGE_ORDER_RESULT_PAGE_COMMAND);
 
+        //req.getRequestDispatcher(URLConstants.CHANGE_ORDER_RESULT_PAGE).forward(req, resp);
     }
 
     private int daysBetween(Date d1, Date d2){
