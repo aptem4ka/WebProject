@@ -2,6 +2,9 @@ package com.epam.hotel.dao;
 
 import com.epam.hotel.dao.impl.*;
 
+/**
+ * @author Artsem Lashuk
+ */
 public class DaoFactory {
     private static final DaoFactory instance=new DaoFactory();
 
@@ -19,22 +22,38 @@ public class DaoFactory {
         return instance;
     }
 
+    /**
+     * @return {@link UserDAO} implementation instance
+     */
     public UserDAO getUserDAO() {
         return userDAO;
     }
 
+    /**
+     * @return {@link RoomDAO} implementation instance
+     */
     public RoomDAO getRoomDAO() {
         return roomDAO;
     }
 
+    /**
+     * @return {@link OrderDAO} implementation instance
+     */
     public OrderDAO getOrderDAO() {
         return orderDAO;
     }
 
+    /**
+     * @return {@link AdminDAO} implementation instance
+     */
     public AdminDAO getAdminDAO() {
         return adminDAO;
     }
 
-    public ReviewDAO getReviewDAO() { return reviewDAO;
+    /**
+     * @return {@link ReviewDAO} implementation instance
+     */
+    public ReviewDAO getReviewDAO() {
+        return reviewDAO;
     }
 }

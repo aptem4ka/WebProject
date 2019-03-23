@@ -21,9 +21,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This {@link AdminDAO} implementation realizes method associated with admin.
+ *
+ * @author Artsem Lashuk
+ */
 public class AdminDAOImpl extends ParentDao implements AdminDAO {
     private final static Logger logger = LogManager.getLogger(AdminDAOImpl.class);
 
+    /**
+     * This method gets orders which reservation hasn't come yet.
+     *
+     * @param pagination {@link Pagination}
+     * @return list of active orders
+     * @throws DAOException if DB query executes with errors
+     * @see Order
+     */
     @Override
     public List<Order> activeOrderList(Pagination pagination) throws DAOException {
         Connection connection = getConnection();
@@ -47,6 +60,14 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
     }
 
 
+    /**
+     * This method gets orders which reservation has already come.
+     *
+     * @param pagination {@link Pagination}
+     * @return list of orders which need confirmation
+     * @throws DAOException if DB query executes with errors
+     * @see Order
+     */
     @Override
     public List<Order> needConfirmationOrderList(Pagination pagination) throws DAOException {
         Connection connection = getConnection();
@@ -70,6 +91,12 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
     }
 
+    /**
+     * Change order status in the DB record.
+     *
+     * @param order {@link Order} that contains order ID, new status and a comment
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public void updateOrderStatus(Order order) throws DAOException {
         Connection connection = getConnection();
@@ -91,6 +118,13 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
     }
 
+    /**
+     * Get user profile by specified order identifier.
+     *
+     * @param orderID identifier of the order associated with user
+     * @return {@link User} instance with filled fields
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public User searchUserByOrder(int orderID) throws DAOException {
         Connection connection = getConnection();
@@ -128,6 +162,13 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         return user;
     }
 
+    /**
+     * Get number of orders with specified status
+     *
+     * @param status {@link Order.Status}
+     * @return number of orders
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public int ordersQtyByStatus(Order.Status status) throws DAOException {
         Connection connection = getConnection();
@@ -146,6 +187,15 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
 
     }
 
+    /**
+     * Get orders by user or guest full name.
+     *
+     * @param name user or guest first name
+     * @param surname user or guest surname
+     * @param paginator {@link Pagination}
+     * @return list of orders associated with specified full name
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public List<Order> searchOrderByFullName(String name, String surname, Pagination paginator) throws DAOException {
         Connection connection = getConnection();
@@ -174,6 +224,14 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         return orderList;
     }
 
+    /**
+     *  Get orders by user or guest phone number.
+     *
+     * @param phone phone number associated with specified user or guest
+     * @param paginator {@link Pagination}
+     * @return list of orders associated with specified phone number
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public List<Order> searchOrderByPhone(String phone, Pagination paginator) throws DAOException {
         Connection connection = getConnection();
@@ -198,6 +256,13 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         return orderList;
     }
 
+    /**
+     * Get user profile by specified user identifier.
+     *
+     * @param userID user identifier
+     * @return {@link User} instance with filled fields
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public User searchUserByID(int userID) throws DAOException {
         Connection connection = getConnection();
@@ -228,6 +293,13 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         }
     }
 
+    /**
+     * Change review status in the DB record
+     *
+     * @param review {@link Review} that contains review ID, new status, and admin answer
+     *
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public void updateReviewStatus(Review review) throws DAOException {
         Connection connection = getConnection();
@@ -248,21 +320,13 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
         }
     }
 
-    private void addOrdersToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
 
-        while (resultSet.next()){
-            Order order = new Order();
-            order.setUserID(resultSet.getInt(SQLConstants.USER_ID));
-            order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
-            order.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
-            order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
-            order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
-            order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
-            orderList.add(order);
-        }
-
-    }
-
+    /**
+     * Get number of orders which reservation date has already come.
+     *
+     * @return number  of orders
+     * @throws DAOException if DB query executes with errors
+     */
     @Override
     public int needConfirmationOrders() throws DAOException {
         Connection connection = getConnection();
@@ -281,5 +345,27 @@ public class AdminDAOImpl extends ParentDao implements AdminDAO {
             releaseConnection(connection);
         }
         return count;
+    }
+
+
+    /**
+     * This method adds orders from result set to the list
+     *
+     * @param resultSet {@link ResultSet}
+     * @param orderList list of orders
+     * @throws SQLException if Result set handling occurs with errors
+     */
+    private void addOrdersToList(ResultSet resultSet, List<Order> orderList) throws SQLException{
+
+        while (resultSet.next()){
+            Order order = new Order();
+            order.setUserID(resultSet.getInt(SQLConstants.USER_ID));
+            order.setOrderID(resultSet.getInt(SQLConstants.ORDER_ID));
+            order.setRoomID(resultSet.getInt(SQLConstants.ROOM_ID));
+            order.setResFrom(new Date(resultSet.getDate(SQLConstants.RESERVED_FROM).getTime()));
+            order.setResTo(new Date(resultSet.getDate(SQLConstants.RESERVED_TO).getTime()));
+            order.setStatus(Order.Status.valueOf(resultSet.getString(SQLConstants.STATUS).toUpperCase()));
+            orderList.add(order);
+        }
     }
 }
