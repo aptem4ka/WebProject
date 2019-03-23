@@ -33,7 +33,7 @@ public class OrderValidator implements Validator {
 
         if (!ValidatorManager.getInstance().getValidator(ValidatorName.DATE).isValid(order.getResFrom())
                 || !ValidatorManager.getInstance().getValidator(ValidatorName.DATE).isValid(order.getResTo())
-                || order.getResFrom().after(order.getResTo()) ){
+                || order.getResFrom().after(order.getResTo()) || order.getResFrom().equals(order.getResTo()) ){
             return false;
         }
 
