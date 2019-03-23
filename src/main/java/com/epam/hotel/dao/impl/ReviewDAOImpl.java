@@ -92,6 +92,14 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
         }
     }
 
+    /**
+     * Get reviews from the DB with status WAITING.
+     *
+     * @param pagination {@link Pagination}
+     * @return list of reviews
+     * @throws DAOException if DB query executes with errors
+     * @see Review.Status
+     */
     @Override
     public List<Review> takeReviewsForModeration(Pagination pagination) throws DAOException {
         Connection connection = getConnection();
@@ -125,6 +133,14 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
         return reviewList;
     }
 
+    /**
+     * Get reviews from the DB with status POSTED.
+     *
+     * @param pagination {@link Pagination}
+     * @return list of reviews
+     * @throws DAOException if DB query executes with errors
+     * @see Review.Status
+     */
     @Override
     public List<Review> takePostedReviews(Pagination pagination) throws DAOException {
         Connection connection = getConnection();
@@ -160,6 +176,13 @@ public class ReviewDAOImpl extends ParentDao implements ReviewDAO {
 
     }
 
+    /**
+     * Get number of reviews from the DB with status WAITING.
+     *
+     * @return number of reviews
+     * @throws DAOException if DB query executes with errors
+     * @see Review.Status
+     */
     @Override
     public int waitingForModerationReviews() throws DAOException {
         Connection connection = getConnection();
