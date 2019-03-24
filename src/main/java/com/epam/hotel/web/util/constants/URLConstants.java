@@ -28,8 +28,10 @@ public class URLConstants {
     public final static String ORDER_SEARCH_PAGE = "/WEB-INF/jsp/admin/OrderSearch.jsp";
     public final static String USER_SEARCH_PAGE = "/WEB-INF/jsp/admin/UserSearch.jsp";
     public final static String ABOUT_PAGE = "/WEB-INF/jsp/About.jsp";
+    public final static String REGISTER_CONGRATS_PAGE = "/WEB-INF/jsp/RegisterSuccess.jsp";
 
     public final static String RETRY_REGISTRATION_COMMAND = "main?command=register_page&";
+    public final static String REGISTER_CONGRATS_PAGE_COMMAND = "main?command=register_congrats_page";
     public final static String LOGIN_PAGE_COMMAND = "main?command=login_page";
     public final static String ORDER_DETAILS_COMMAND = "main?command=order_details";
     public final static String CHANGE_ORDER_CONGRATS_PAGE_COMMAND = "user?command=change_order_congrats_page";

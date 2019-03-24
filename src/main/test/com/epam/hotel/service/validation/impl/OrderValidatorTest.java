@@ -4,11 +4,7 @@ import com.epam.hotel.entity.Order;
 import com.epam.hotel.service.validation.Validator;
 import com.epam.hotel.service.validation.ValidatorManager;
 import com.epam.hotel.service.validation.ValidatorName;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +47,7 @@ public class OrderValidatorTest {
     @Test
     public void yesterdayReservation(){
         Date date = new Date();
-        date = new Date(date.getTime()-1000000);
+        date = new Date(date.getTime()-100000000);
         order.setResFrom(date);
         order.setResTo(new Date());
         assertFalse(validator.isValid(order));

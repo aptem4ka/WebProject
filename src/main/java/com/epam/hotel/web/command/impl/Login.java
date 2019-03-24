@@ -48,6 +48,7 @@ public class Login implements Command {
         try {
             user=userService.loginUser(user);
             user.setDiscount(userService.userDiscount(user.getUserID()));
+
         }catch (ServiceException e){
             logger.warn(e);
         }

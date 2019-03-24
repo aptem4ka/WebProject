@@ -50,6 +50,7 @@ public class CommandManager {
         commands.put(CommandName.UPDATE_REVIEW_STATUS, new UpdateReviewStatus());
         commands.put(CommandName.CHANGE_ORDER_CONGRATS_PAGE, new EditOrderCongratsPage());
         commands.put(CommandName.ABOUT_PAGE, new AboutPage());
+        commands.put(CommandName.REGISTER_CONGRATS_PAGE, new RegisterCongratsPage());
     }
 
     /**
